@@ -2,3 +2,4 @@ flask
 redis
 jsonify
 requests
+gunicorn
