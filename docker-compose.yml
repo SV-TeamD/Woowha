@@ -23,6 +23,7 @@ services:
       - POSTGRES_DB=app
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=1234
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
 
   webserver:
     build:
@@ -32,8 +33,10 @@ services:
       - "5000:5000"
     networks:
       - team-d
-    # depends_on:
-    #   - redis
+    depends_on:
+      - redis
+    links:
+      - postgres_db
     env_file:
       - app.env
     environment:
@@ -46,6 +49,7 @@ services:
       placement:
         constraints:
           - node.role == manager
+    command: /start-dev.sh
 
   modelserver:
     image: shanesoh/modelserver
@@ -70,6 +74,7 @@ services:
       placement:
         constraints:
           - node.role == worker
+    command: /start-dev.sh
 
   client:
     build:

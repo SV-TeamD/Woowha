@@ -1,7 +1,7 @@
 # Woowha
 2021 Silicon Valley Online Internship Team D
 
-정지원, 조광식, 최병도, 김하윤, 노민주
+정지원, 조광식, 최병도, 김하윤
 
 # How to use a docker and composer
 ## Docker Prerequisites:
