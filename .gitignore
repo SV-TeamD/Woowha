@@ -23,3 +23,4 @@ yarn-error.log*
 
 client/.eslintcache
 postgresql/
+.python-version

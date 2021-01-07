@@ -76,3 +76,9 @@ https://www.pgadmin.org/download/
 psql --host=localhost --username=user --password --dbname=app
 Password for user postgres: 1234
 ```
+---
+
+## Development
+```shell
+./local-set-install.sh
+```

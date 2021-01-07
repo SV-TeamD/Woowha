@@ -1,0 +1,1 @@
+pip install -r ./vscode-python-requirements.txt
