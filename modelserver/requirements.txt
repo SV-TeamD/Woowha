@@ -2,5 +2,10 @@ flask
 redis
 jsonify
 requests
-torch
 cmake
+torch
+torchvision
+numpy
+argparse
+pillow
+opencv-python

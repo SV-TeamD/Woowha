@@ -24,3 +24,9 @@ yarn-error.log*
 client/.eslintcache
 postgresql/
 .python-version
+
+**/__pycache__/
+
+modelserver/test_img/
+modelserver/test_output/
+*.pth

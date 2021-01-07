@@ -9,5 +9,3 @@ RUN pip install -r requirements.txt
 # RUN python -c "from keras.applications import ResNet50; ResNet50(weights='imagenet')"
 
 ENV PYTHONUNBUFFERED=0
-
-# CMD ["python", "/app/main.py"]
