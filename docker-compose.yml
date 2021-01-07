@@ -44,12 +44,13 @@ services:
       - CLIENT_MAX_TRIES=100 # Num tries by web server to retrieve results from Redis before giving up
     restart: always
     volumes:
-      - ./webserver/web:/app
+      - ./webserver/start-dev.sh:/app/start-dev.sh:ro
+      - ./webserver:/app
     deploy:
       placement:
         constraints:
           - node.role == manager
-    command: /start-dev.sh
+    command: [sh, /app/start-dev.sh]
 
   modelserver:
     image: shanesoh/modelserver
@@ -66,6 +67,7 @@ services:
       - SERVER_SLEEP=0.25 # Time in ms between each poll by model server against Redis
       - BATCH_SIZE=32
     volumes:
+      - ./modelserver/start-dev.sh:/app/start-dev.sh:ro
       - ./modelserver:/app
     deploy:
       replicas: 1
@@ -74,7 +76,7 @@ services:
       placement:
         constraints:
           - node.role == worker
-    command: /start-dev.sh
+    command: [sh, /app/start-dev.sh]
 
   client:
     build:

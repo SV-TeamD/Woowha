@@ -2,3 +2,5 @@ flask
 redis
 jsonify
 requests
+torch
+cmake
