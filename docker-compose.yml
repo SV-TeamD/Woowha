@@ -54,6 +54,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - redis
+    ports:
+      - "5001:5001"
     networks:
       - team-d
     env_file:

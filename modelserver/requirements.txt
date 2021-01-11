@@ -9,3 +9,5 @@ numpy
 argparse
 pillow
 opencv-python
+Flask-Script
+pytest

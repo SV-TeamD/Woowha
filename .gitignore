@@ -34,3 +34,4 @@ postgresql/
 modelserver/test_img/
 modelserver/test_output/
 *.pth
+.pytest*
