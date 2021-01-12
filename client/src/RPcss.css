@@ -22,13 +22,13 @@ li a:hover {
   background-color: #2699fb;
 }
 
-div.upload {
+div.result {
   text-align: center;
 }
 
-div.select {
+div.sns {
   background-color: #bce0fd;
-  height: 400px;
+  height: 200px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;

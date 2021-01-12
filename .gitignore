@@ -1,3 +1,5 @@
+.vscode/
+
 # dependencies
 client/node_modules
 client/.pnp
@@ -21,10 +23,12 @@ yarn-debug.log*
 yarn-error.log*
 
 
-client/.eslintcache
 postgresql/
 .python-version
 
+**/*lock.json
+**/*.lock
+**/.eslintcache
 **/__pycache__/
 
 modelserver/test_img/
