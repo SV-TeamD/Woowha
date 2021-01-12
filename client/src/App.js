@@ -10,7 +10,7 @@ function App() {
   const ov_img_style ={
     width: "80px",
     heigh: "80px",
-    marginRight: "10px"
+    marginRight: "15px"
   }
   return (
     <div>
