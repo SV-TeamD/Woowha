@@ -13,7 +13,10 @@ from Transformer import Transformer
 
 class Runner:
     def __init__(
-        self, model_dir="./pretrained_model", input_dir="../test_img", output_dir="../test_output"
+        self,
+        model_dir="./pretrained_model",
+        input_dir="../image_input",
+        output_dir="../image_output",
     ):
         filepath_this = os.path.dirname(os.path.abspath(__file__))
         self.input_dir = os.path.join(filepath_this, input_dir)

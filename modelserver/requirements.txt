@@ -1,6 +1,4 @@
-flask
 redis
-jsonify
 requests
 cmake
 torch
@@ -8,5 +6,4 @@ torchvision
 numpy
 pillow
 opencv-python
-Flask-Script
 pytest
