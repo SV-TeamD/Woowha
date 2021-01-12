@@ -8,7 +8,7 @@ import torchvision.transforms as transforms
 from torch.autograd import Variable
 import torchvision.utils as vutils
 
-from Transformer import Transformer
+from network.Transformer import Transformer
 
 
 class Runner:
