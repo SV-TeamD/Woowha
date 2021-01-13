@@ -32,11 +32,14 @@ class Runner:
             self.validate_ext(imagefile_name)
             input_image = self.preprocess_image(input_image_path, load_size)
             output_image = self.output_image(input_image)
-        except:
-            raise Exception("Runner Exception")
+        except Exception as e:
+            print("{}: Runner Exception".format(imagefile_name))
+            print(e)
+            return
 
         self.check_exist_dir(self.output_dir)
         self.save_image(output_image, input_image_path, style, self.output_dir)
+        print("create {} style image : {}".format(style, imagefile_name))
 
     def check_exist_dir(self, dir_path):
         try:
@@ -111,5 +114,9 @@ class Runner:
 if __name__ == "__main__":
     input_img_name = "01.jpg"
     r = Runner()
+    r.run(imagefile_name=input_img_name, style="Hayaho")
     r.run(imagefile_name=input_img_name, style="Hayao")
+    r.run(imagefile_name=input_img_name, style="Hosoda")
+    r.run(imagefile_name=input_img_name, style="Hello")
+    r.run(imagefile_name=input_img_name, style="Shinkai")
     print("Done!!")

@@ -1,6 +1,6 @@
 FROM python:3.7-slim-buster
 
-ENV PYTHONUNBUFFERED=0
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
