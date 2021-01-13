@@ -6,7 +6,8 @@ client/.pnp
 client/.pnp.js
 
 # testing
-client/coverage
+**/coverage
+.pytest*
 
 # production
 client/build
@@ -17,14 +18,26 @@ client/build
 .env.development.local
 .env.test.local
 .env.production.local
+.python-version
 
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# models
+*.pth
 
+# statics
+modelserver/image_input/
+modelserver/image_output/
+
+# cache
+client/.eslintcache
+**/__pycache__/
+
+# db
 postgresql/
-.python-version
 
 **/*lock.json
 **/*.lock
@@ -35,3 +48,7 @@ modelserver/image_input/
 modelserver/image_output/
 *.pth
 .pytest*
+
+# message queue
+rabbitmq/data/
+rabbitmq/logs

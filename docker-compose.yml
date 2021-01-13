@@ -1,12 +1,21 @@
 version: "3.8"
 
 services:
-  redis:
-    image: "redis:alpine"
+  rabbitmq:
+    build:
+      context: ./rabbitmq
+      dockerfile: Dockerfile
+    restart: on-failure
     networks:
       - team-d
+    volumes:
+      - ./rabbitmq/etc/definitions.json:/etc/rabbitmq/definitions.json
+      - ./rabbitmq/etc/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./rabbitmq/data:/var/lib/rabbitmq/
+      - ./rabbitmq/logs:/var/log/rabbitmq/
     ports:
-      - "6379:6379"
+      - 5672:5672
+      - 15672:15672
 
   postgres_db:
     image: "postgres"
@@ -16,7 +25,7 @@ services:
     volumes:
       - ./postgresql/db:/var/lib/postgresql/data/
     ports:
-      - "5432:5432"
+      - 5432:5432
     cap_add:
       - SYS_NICE
     environment:
@@ -30,19 +39,16 @@ services:
       context: ./webserver
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - 5000:5000
     networks:
       - team-d
     depends_on:
-      - redis
+      - rabbitmq
     links:
       - postgres_db
     env_file:
       - app.env
-    environment:
-      - CLIENT_SLEEP=0.25 # Time in ms between each poll by web server against Redis
-      - CLIENT_MAX_TRIES=100 # Num tries by web server to retrieve results from Redis before giving up
-    restart: always
+    # restart: on-failure
     volumes:
       - ./webserver/start-dev.sh:/app/start-dev.sh:ro
       - ./webserver:/app
@@ -53,15 +59,13 @@ services:
       context: ./modelserver
       dockerfile: Dockerfile
     depends_on:
-      - redis
+      - rabbitmq
     ports:
-      - "5001:5001"
+      - 5001:5001
     networks:
       - team-d
     env_file:
       - app.env
-    environment:
-      - SERVER_SLEEP=0.25 # Time in ms between each poll by model server against Redis
     volumes:
       - ./modelserver/start-dev.sh:/app/start-dev.sh:ro
       - ./modelserver/load-models.sh:/app/load-models.sh
@@ -73,7 +77,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - 3000:3000
     volumes:
       - ./client:/app
       - "/app/node_modules"
