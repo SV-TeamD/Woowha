@@ -2,3 +2,4 @@ flask
 jsonify
 requests
 gunicorn
+pika
