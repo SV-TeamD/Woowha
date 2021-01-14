@@ -9,4 +9,5 @@ echo "${LCYAN}Web Server Start"
 #     ...
 #     -- COMMAND ARGS             Execute command with args after the test finishes
 bash ../wait-for-it.sh rabbitmq:15672 -s -t 30
-python3 src/new_task.py
+
+python3 src/app.py
