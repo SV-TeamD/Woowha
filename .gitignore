@@ -1,7 +1,8 @@
 .vscode/
 
 # dependencies
-client/node_modules
+node_modules/
+client/node_modules/
 client/.pnp
 client/.pnp.js
 
@@ -29,11 +30,11 @@ yarn-error.log*
 *.pth
 
 # statics
-image_input/
-image_output/
+image_input/*
+image_output/*
 
 # cache
-client/.eslintcache
+**/.eslintcache
 **/__pycache__/
 
 # db
@@ -41,12 +42,10 @@ postgresql/
 
 **/*lock.json
 **/*.lock
-**/.eslintcache
-**/__pycache__/
 
 *.pth
 .pytest*
 
 # message queue
 rabbitmq/data/
-rabbitmq/logs
+rabbitmq/logs/
