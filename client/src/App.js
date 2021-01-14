@@ -1,78 +1,14 @@
-import './App.css';
-import img from './img/empty_image.PNG';
+import React from "react";
+import { Route, Link } from "react-router-dom";
+import mainpage from "./mainpage";
+import resultpage from "./resultpage";
 
-function App() {
-  const st_img_style ={
-    width: "220px",
-    height: "267px",
-    marginRight: "40px"
-  }
-  const ov_img_style ={
-    width: "80px",
-    heigh: "80px",
-    marginRight: "10px"
-  }
+const App = () => {
   return (
     <div>
-    <header>
-      <ul>
-        <li>
-          <a className="active" href="#home">
-            Woowha
-          </a>
-        </li>
-        <li>
-          <a href="#image">Image</a>
-        </li>
-        <li>
-          <a href="#overview">Overveiw</a>
-        </li>
-        <li>
-          <a href="#about">About</a>
-        </li>
-      </ul>
-    </header>
-    <div className="upload">
-      <h2>Image Upload</h2>
-      <img src={img} alt="empty_image"/> <br/><br/><br/>
-      <button>Upload</button> <br/><br/><br/><br/>
-    </div>
-    <div className="select">
-      <br/><br/>
-      <img src={img} alt="empty_image" style={st_img_style}/>
-      <img src={img} alt="empty_image" style={st_img_style}/>
-      <img src={img} alt="empty_image" style={st_img_style}/>
-      <img src={img} alt="empty_image" style={st_img_style}/>
-      <br/><br/>
-      <button>Convert</button>
-    </div>
-    <div className="overview">
-      <h2>Overveiw</h2><br/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/><br/><br/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/><br/><br/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/><br/><br/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/>
-      <img src={img} alt="empty_image" style={ov_img_style}/><br/><br/>
-
-    </div>
-
-    <div className="about">
-      <h2>About</h2>
-      <p>Thank you!</p>
-    </div>
+      <Route path="/" component={mainpage} />
     </div>
   );
-}
+};
 
 export default App;

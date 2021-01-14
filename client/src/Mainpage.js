@@ -1,21 +1,20 @@
 import React, { Component, useState } from "react";
-import "./resultpage.css";
+import { Route, Link, Router } from "react-router-dom";
+import "./mainpage.css";
 import img from "./img/empty_image.PNG";
-import facebook from "./img/facebookicon.PNG";
-import twitter from "./img/twittericon.PNG";
-import instagram from "./img/instagramicon.PNG";
 
-class resultpage extends Component {
+class mainpage extends Component {
   render() {
-    const sns_img_style = {
-      marginRight: "50px",
+    const st_img_style = {
+      width: "220px",
+      height: "267px",
+      marginRight: "40px",
     };
     const ov_img_style = {
       width: "80px",
       heigh: "80px",
       marginRight: "10px",
     };
-
     return (
       <div>
         <br />
@@ -38,26 +37,27 @@ class resultpage extends Component {
             </li>
           </ul>
         </header>
-        <div className="result">
-          <h2>Image Result</h2>
-          <img src={img} style={sns_img_style} alt="empty_image" />
-          <img src={img} style={sns_img_style} alt="empty_image" />
+        <div className="upload">
+          <h2>Image Upload</h2>
+          <img src={img} alt="empty_image" /> <br />
           <br />
           <br />
-          <button style={sns_img_style}>Save</button>
-          <button>Retry</button>
+          <button>Upload</button>
+          <br />
           <br />
           <br />
           <br />
         </div>
-        <div className="sns">
+        <div className="select">
           <br />
           <br />
-          <img src={twitter} alt="empty_image" style={sns_img_style} />
-          <img src={facebook} alt="empty_image" style={sns_img_style} />
-          <img src={instagram} alt="empty_image" style={sns_img_style} />
+          <img src={img} alt="empty_image" style={st_img_style} />
+          <img src={img} alt="empty_image" style={st_img_style} />
+          <img src={img} alt="empty_image" style={st_img_style} />
+          <img src={img} alt="empty_image" style={st_img_style} />
           <br />
           <br />
+          <button>Convert</button>
         </div>
         <div className="overview">
           <h2>Overveiw</h2>
@@ -96,4 +96,5 @@ class resultpage extends Component {
     );
   }
 }
-export default resultpage;
+
+export default mainpage;
