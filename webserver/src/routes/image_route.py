@@ -1,4 +1,6 @@
 import os
+import time
+import json
 
 from flask import Blueprint, render_template, request
 from werkzeug.utils import redirect, secure_filename
@@ -27,10 +29,11 @@ def upload_file():
 
         if file and _utils.allowed_file(file.filename):
             filename = secure_filename(request.files["file"].filename)
-            file_url = os.path.join(INPUT_FOLDER, "{}_{}".format(file_author, filename))
-            file.save(file_url)  # file save in local
+            file_url = os.path.join(INPUT_FOLDER, filename)
+            f.save(file_url)  # file save in local
 
-            jobProducer.add_job(file_url)
+            message = {"filename": filename, "author": file_author}
+            jobProducer.add_job(message=json.dumps(message))
             print("SEND : {}_{}".format(file_author, filename))
             return "파일 로컬파일에 저장."
 

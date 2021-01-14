@@ -8,7 +8,6 @@ RUN apt-get update -y && \
   python3-venv
 
 ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
 ENV PYTHONUNBUFFERED=1
 
 COPY requirements.txt requirements.txt
