@@ -12,7 +12,4 @@ ENV FLASK_RUN_HOST=0.0.0.0
 ENV PYTHONUNBUFFERED=1
 
 COPY requirements.txt requirements.txt
-
 RUN pip3 install -r requirements.txt
-
-EXPOSE 5000
