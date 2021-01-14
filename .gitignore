@@ -29,8 +29,8 @@ yarn-error.log*
 *.pth
 
 # statics
-modelserver/image_input/
-modelserver/image_output/
+modelserver/image_input
+modelserver/image_output
 
 # cache
 client/.eslintcache
@@ -44,8 +44,6 @@ postgresql/
 **/.eslintcache
 **/__pycache__/
 
-modelserver/image_input/
-modelserver/image_output/
 *.pth
 .pytest*
 

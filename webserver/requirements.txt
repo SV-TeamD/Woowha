@@ -3,3 +3,4 @@ jsonify
 requests
 gunicorn
 pika
+werkzeug
