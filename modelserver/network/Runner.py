@@ -15,8 +15,8 @@ class Runner:
     def __init__(
         self,
         model_dir="./pretrained_model",
-        input_dir="../image_input",
-        output_dir="../image_output",
+        input_dir="/data/image_input",
+        output_dir="/data/image_output",
     ):
         filepath_this = os.path.dirname(os.path.abspath(__file__))
         self.input_dir = os.path.join(filepath_this, input_dir)
@@ -109,14 +109,3 @@ class Runner:
         filename = input_image_path.split("/")[-1].split(".")[0] + "_" + style + ".jpg"
         output_path = os.path.join(output_dir, filename)
         vutils.save_image(output_image, output_path)
-
-
-if __name__ == "__main__":
-    input_img_name = "01.jpg"
-    r = Runner()
-    r.run(imagefile_name=input_img_name, style="Hayaho")
-    r.run(imagefile_name=input_img_name, style="Hayao")
-    r.run(imagefile_name=input_img_name, style="Hosoda")
-    r.run(imagefile_name=input_img_name, style="Hello")
-    r.run(imagefile_name=input_img_name, style="Shinkai")
-    print("Done!!")
