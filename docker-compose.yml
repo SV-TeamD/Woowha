@@ -50,6 +50,8 @@ services:
     volumes:
       - ./webserver/start-dev.sh:/app/start-dev.sh:ro
       - ./wait-for-it.sh:/wait-for-it.sh
+      - ./image_input:/data/image_input
+      - ./image_output:/data/image_output
       - ./webserver:/app
     command: [sh, /app/start-dev.sh]
 
@@ -70,6 +72,8 @@ services:
       - ./modelserver/start-dev.sh:/app/start-dev.sh:ro
       - ./modelserver/load-models.sh:/app/load-models.sh
       - ./wait-for-it.sh:/wait-for-it.sh
+      - ./image_input:/data/image_input
+      - ./image_output:/data/image_output
       - ./modelserver:/app
     command: [sh, /app/start-dev.sh]
 

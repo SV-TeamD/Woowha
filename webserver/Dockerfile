@@ -9,7 +9,7 @@ RUN apt-get update -y && \
 
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV PYTHONUNBUFFERED=0
+ENV PYTHONUNBUFFERED=1
 
 COPY requirements.txt requirements.txt
 
