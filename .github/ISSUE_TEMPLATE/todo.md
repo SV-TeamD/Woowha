@@ -15,6 +15,6 @@ assignees: ''
 * [ ] todo2
 
 
-**Label 확인해주세요**
-**Projects 확인해주세요**
-**Milestone 확인해주세요**
+<!-- **Label 확인해주세요** -->
+<!-- **Projects 확인해주세요** -->
+<!-- **Milestone 확인해주세요** -->
