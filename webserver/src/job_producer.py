@@ -7,10 +7,14 @@ channel = connection.channel()
 
 
 class JobProducer:
-    def __init__(self):
+    """Message Queue에 Job을 넣는다."""
+
+    @classmethod
+    def __init__(cls):
         channel.queue_declare(queue="job_queue", durable=True)
 
-    def add_job(self, message):
+    @classmethod
+    def add_job(cls, message):
         channel.basic_publish(
             exchange="",
             routing_key="job",
@@ -19,5 +23,6 @@ class JobProducer:
         )
         print("Sent {}".format(message))
 
-    def close_connection(self):
+    @classmethod
+    def close_connection(cls):
         connection.close()

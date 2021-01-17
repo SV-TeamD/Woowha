@@ -1,7 +1,6 @@
 import os
-import time
 
-from flask import Blueprint, url_for, render_template, request
+from flask import Blueprint, render_template, request
 from werkzeug.utils import redirect, secure_filename
 
 from JobProducer import JobProducer
@@ -21,16 +20,15 @@ _utils = _Utils()
 def upload_file():
     if request.method == "POST":
         if "file" not in request.files:
-            flash("No file")
+            print("No file")
             return redirect(request.url)
-        f = request.files["file"]
+        file = request.files["file"]
         file_author = request.form["author"]
 
-        # TODO: make it to async
-        if f and _utils.allowed_file(f.filename):
+        if file and _utils.allowed_file(file.filename):
             filename = secure_filename(request.files["file"].filename)
             file_url = os.path.join(INPUT_FOLDER, "{}_{}".format(file_author, filename))
-            f.save(file_url)  # file save in local
+            file.save(file_url)  # file save in local
 
             jobProducer.add_job(file_url)
             print("SEND : {}_{}".format(file_author, filename))
@@ -43,12 +41,11 @@ def upload_file():
 # http://locahost:5000/image/result/filename?author=Hayao
 @bp.route("/result/<string:filename>", methods=["GET"])
 def result_page(filename):
-    try:
-        author = request.args.get("author")
-        output_filename = "{}_{}".format(author, filename)
-        file_url = os.path.join(OUTPUT_FOLDER, output_filename)
-        _utils.is_file_until_yes(file_url)
-        return output_filename, 200
-    except expression as e:
-        print(e)
-        return "ERROR", 500
+    author = request.args.get("author")
+    if not author:
+        raise Exception("no author in url")
+
+    output_filename = "{}_{}".format(author, filename)
+    file_url = os.path.join(OUTPUT_FOLDER, output_filename)
+    _utils.is_file_until_yes(file_url)  # polling
+    return output_filename, 200
