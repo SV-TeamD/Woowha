@@ -50,11 +50,6 @@ jobs:
           cd $GITHUB_WORKSPACE/webserver
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Lint with  pylint
-        run: |
-          cd $GITHUB_WORKSPACE
-          pip install pylint
-          python lint.py -p ./webserver -r .pylintrc -t 9
       - name: Test with pytest
         run: |
           cd $GITHUB_WORKSPACE/webserver
@@ -84,11 +79,6 @@ jobs:
           cd $GITHUB_WORKSPACE/modelserver
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Lint with  pylint
-        run: |
-          cd $GITHUB_WORKSPACE
-          pip install pylint
-          python lint.py -p ./modelserver -r .pylintrc -t 9
       - name: Test with pytest
         run: |
           cd $GITHUB_WORKSPACE/modelserver
