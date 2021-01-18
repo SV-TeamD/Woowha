@@ -16,6 +16,14 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-rc",
+    "--rcfile",
+    help="path to .pylintrc | " "Default: %(default)s | " "Type: %(type)s ",
+    default=".pylintrc",
+    type=str,
+)
+
+parser.add_argument(
     "-t",
     "--threshold",
     help="score threshold to fail pylint runner | " "Default: %(default)s | " "Type: %(type)s ",
@@ -25,11 +33,12 @@ parser.add_argument(
 
 args = parser.parse_args()
 path = str(args.path)
+rcfile = str(args.rcfile)
 threshold = float(args.threshold)
 
 logging.info("PyLint Starting | " "Path: {} | " "Threshold: {} ".format(path, threshold))
 
-results = Run([path], do_exit=False)
+results = Run(args=["--rcfile", rcfile, path], do_exit=False)
 final_score = results.linter.stats["global_note"]
 
 if final_score < threshold:
