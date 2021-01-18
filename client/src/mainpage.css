@@ -57,5 +57,17 @@ button {
   font-size: 23px;
   border: 0;
   outline: 0;
-  text-decoration: none;
+  position: relative;
+}
+div.uploadbutton {
+  background-color: #7fc4fd;
+  color: white;
+  text-align: center;
+  width: 148px;
+  height: 48px;
+  border-radius: 6px;
+  font-size: 23px;
+  border: 0;
+  outline: 0;
+  position: relative;
 }
