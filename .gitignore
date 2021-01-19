@@ -49,3 +49,7 @@ postgresql/
 # message queue
 rabbitmq/data/
 rabbitmq/logs/
+
+# model stuff
+dataset/
+checkpoints/
