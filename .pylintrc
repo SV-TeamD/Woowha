@@ -6,11 +6,16 @@ jobs=1
 limit-inference-results=100
 
 
+[BASIC]
+variable-rgx=((([a-z_][a-z0-9_]{2,})|(_[a-z0-9_]*)|(__[a-z][a-z0-9_]+__))$)|([A-Z_][A-Z0-9_]+$)
+
+
 [MESSAGES CONTROL]
 disable=C0111,
         C0114,
         E0401,
-        W0511
+        W0511,
+        R0903
 
 
 [REFACTORING]
