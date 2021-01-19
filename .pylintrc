@@ -15,6 +15,7 @@ disable=C0111,
         C0114,
         E0401,
         W0511,
+        W0703,
         R0903
 
 
@@ -33,6 +34,7 @@ good-names=i,
            Run,
            e,
            logger,
+           db,
            _
 
 [pre-commit-hook]

@@ -5,4 +5,7 @@ gunicorn
 pika
 werkzeug
 flask_sqlalchemy
+Flask-Migrate
+pylint-flask
+pylint-flask-sqlalchemy
 psycopg2
