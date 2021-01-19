@@ -27,8 +27,22 @@ header {
   left: 0;
   right: 0;
 }
+
 div.upload {
   text-align: center;
+}
+
+button {
+  background-color: #7fc4fd;
+  color: white;
+  text-align: center;
+  width: 148px;
+  height: 48px;
+  border-radius: 6px;
+  font-size: 23px;
+  border: 0;
+  outline: 0;
+  position: relative;
 }
 
 div.select {
@@ -47,27 +61,23 @@ div.about {
   text-align: center;
 }
 
-button {
+div.upload label {
+  display: inline-block;
   background-color: #7fc4fd;
   color: white;
-  text-align: center;
   width: 148px;
   height: 48px;
   border-radius: 6px;
   font-size: 23px;
+  text-align: center;
   border: 0;
   outline: 0;
-  position: relative;
+  cursor: pointer;
 }
-div.uploadbutton {
-  background-color: #7fc4fd;
-  color: white;
+div.upload input[type="file"] {
+  position: absolute;
+  overflow: hidden;
   text-align: center;
-  width: 148px;
-  height: 48px;
-  border-radius: 6px;
-  font-size: 23px;
+  clip: rect(0, 0, 0, 0);
   border: 0;
-  outline: 0;
-  position: relative;
 }

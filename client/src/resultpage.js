@@ -4,7 +4,6 @@ import img from "./img/empty_image.PNG";
 import facebook from "./img/facebookicon.PNG";
 import twitter from "./img/twittericon.PNG";
 import instagram from "./img/instagramicon.PNG";
-import buttonevent from "./buttonevent";
 
 class resultpage extends Component {
   render() {

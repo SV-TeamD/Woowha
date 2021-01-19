@@ -1,9 +1,27 @@
 import React, { Component } from "react";
 import "./mainpage.css";
 import img from "./img/empty_image.PNG";
-import buttonevent from "./buttonevent";
-
 class mainpage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { file: "", imagePreviewUrl: "" };
+  }
+
+  _handleImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result,
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }
   render() {
     const st_img_style = {
       width: "220px",
@@ -15,6 +33,13 @@ class mainpage extends Component {
       heigh: "80px",
       marginRight: "10px",
     };
+
+    let { imagePreviewUrl } = this.state;
+    let $imagePreview = <img src={img} />;
+    if (imagePreviewUrl) {
+      $imagePreview = <img src={imagePreviewUrl} />;
+    }
+
     return (
       <div>
         <br />
@@ -22,7 +47,7 @@ class mainpage extends Component {
         <header>
           <ul>
             <li>
-              <a className="active" href="#home">
+              <a classNamde="active" href="#home">
                 Woowha
               </a>
             </li>
@@ -39,10 +64,22 @@ class mainpage extends Component {
         </header>
         <div className="upload">
           <h2>Image Upload</h2>
-          <img src={img} alt="empty_image" /> <br />
           <br />
           <br />
-          <button>Upload</button>
+          <div>
+            <div className="imgPreview">{$imagePreview}</div>
+            <br />
+            <br />
+            <form action="image_route.py" method="post">
+              <label id="upload_file">
+                <input
+                  type="file"
+                  onChange={(e) => this._handleImageChange(e)}
+                />
+                Upload
+              </label>
+            </form>
+          </div>
           <br />
           <br />
           <br />
