@@ -5,7 +5,7 @@ import json
 from flask import Blueprint, render_template, request
 from werkzeug.utils import redirect, secure_filename
 
-from JobProducer import JobProducer
+from job_producer import JobProducer
 from utils import _Utils
 
 
