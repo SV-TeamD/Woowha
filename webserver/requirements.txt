@@ -4,3 +4,5 @@ requests
 gunicorn
 pika
 werkzeug
+flask_sqlalchemy
+psycopg2
