@@ -11,7 +11,6 @@ from utils import _Utils
 
 bp = Blueprint("image_route", __name__, url_prefix="/image")
 jobProducer = JobProducer()
-_utils = _Utils()
 
 # http://locahost:5000/image/upload
 @bp.route("/upload", methods=["POST"])
@@ -22,25 +21,20 @@ def upload_file():
     file = request.files["file"]
     author = request.form["author"]
 
-    if not file or not _utils.allowed_file(file.filename):
+    if not file or not _Utils.allowed_file(file.filename):
         return render_template("test.html")
 
     img = Image.open(file)
-    file_id = _utils.get_file_id(img)
-    input_filename = _utils.get_input_filename(file_id)
+    file_id = _Utils.get_file_id(img)
+    input_filename = _Utils.get_input_filename(file_id)
 
     if Cache.exist_output_image(file_id, author):
         return str(file_id)
     if not Cache.exist_image(file_id):
-        _utils.save_image(img, input_filename, file_id)
+        _Utils.save_image(img, input_filename, file_id)
 
-    jobProducer.add_job(message=_utils.get_job_message(input_filename, author))
+    jobProducer.add_job(message=_Utils.get_job_message(input_filename, author))
     print("SEND : {} to {}".format(input_filename, author))
-
-    imagemodel = ImageModel(file_id=file_id, styles=[author])
-    db.session.add(imagemodel)
-    db.session.commit()
-    print("SAVE : {} to {}".format(input_filename, author))
 
     return str(file_id)
 
@@ -52,6 +46,8 @@ def result_page(file_id):
     if not author:
         raise Exception("no author in url")
 
-    output_filename = _utils.get_output_filename(file_id, author)
-    _utils.is_file_until_yes(output_filename)
-    return output_filename, 200
+    try:
+        Cache.wait_for_image_until_10(file_id, author)
+        return 200
+    except TimeoutError:
+        return 500

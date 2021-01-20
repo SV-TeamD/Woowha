@@ -1,8 +1,10 @@
 from typing import List
+import time
 
 import redis
 
 from .image_model import ImageModel
+from utils import _Utils
 
 cache = redis.Redis(host="redis", port=6379)
 
@@ -40,3 +42,14 @@ class Cache:
     @classmethod
     def exist_output_image(cls, file_id: str, author: str):
         return bool(cache.sismember(author, file_id))
+
+    @classmethod
+    @_Utils.timeout()  # defulat=30. 30초 안으로 끝나지 않으면 Exception 발생
+    def wait_for_image_until_10(cls, file_id: str, author: str):
+        try:
+            while True:
+                cls.exist_output_image(file_id, author)
+                time.sleep(2)  # 2초마다 실행
+        except TimeoutError as timeout_err:
+            print("Timeout : {}, {}".format(file_id, author))
+            raise TimeoutError from timeout_err
