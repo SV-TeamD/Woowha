@@ -8,13 +8,11 @@ from network.Runner import Runner
 INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
 
-parameters = pika.ConnectionParameters("rabbitmq")
-connection = pika.BlockingConnection(parameters)
+connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
 channel = connection.channel()
 runner = Runner(input_dir=INPUT_FOLDER, output_dir=OUTPUT_FOLDER)
 
 
-# TODO: MessageQueue abstract 만들고 상속하자
 class JobConsumer:
     @classmethod
     def __init__(cls):
@@ -24,16 +22,23 @@ class JobConsumer:
 
     @classmethod
     def generate_image(cls, _channel, method, _, body):
-        message = json.loads(body)
-        print(" [x] Received {}".format(body.decode()))
-        # TODO: generate image
-        runner.run(imagefile_name=message["filename"], style=message["author"])
-        print(" [x] Done")
-        _channel.basic_ack(delivery_tag=method.delivery_tag)
+        try:
+            message = json.loads(body)
+            print(" [x] Received {}".format(body.decode()))
+            runner.run(
+                imagefile_name=message["filename"], style=message["author"]
+            )  # GAN run (generate image)
+            print(" [x] Done")
+            _channel.basic_ack(delivery_tag=method.delivery_tag)
+        except Exception as e:
+            print(e)
+            _channel.basic_reject(delivery_tag=method.delivery_tag, requeue=False)
 
     @classmethod
     def start(cls):
-        channel.basic_consume(queue="job_queue", on_message_callback=cls.generate_image)
+        channel.basic_consume(
+            queue="job_queue", auto_ack=False, on_message_callback=cls.generate_image
+        )
         channel.start_consuming()
 
     @classmethod

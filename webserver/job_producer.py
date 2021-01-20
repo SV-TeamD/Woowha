@@ -13,7 +13,8 @@ class JobProducer:
     def __init__(cls):
         channel.queue_declare(queue="job_queue", durable=True)
 
-    def add_job(self, message):
+    @classmethod
+    def add_job(cls, message):
         print("add job in queue {}".format(message))
         channel.basic_publish(
             exchange="",
