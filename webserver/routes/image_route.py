@@ -1,5 +1,4 @@
 import os
-import time
 import json
 
 from flask import Blueprint, render_template, request
@@ -32,7 +31,7 @@ def upload_file():
 
         if file and _utils.allowed_file(file.filename):
             img = Image.open(file)
-            file_id = imagehash.phash(img)
+            file_id = str(imagehash.phash(img))
             input_filename = _utils.get_input_filename(file_id)
             file_url = os.path.join(INPUT_FOLDER, input_filename)
             img.save(file_url)  # file save in local

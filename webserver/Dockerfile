@@ -10,7 +10,7 @@ RUN apt-get update -y && \
 ENV FLASK_APP=app.py
 ENV PYTHONUNBUFFERED=1
 
-ENV DATABASE_URL=postgres_db+psycopg2://user:1234@postgres_db:5432/app
+ENV DATABASE_URL=postgresql+psycopg2://user:1234@postgres_db:5432/app
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt

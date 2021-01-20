@@ -10,6 +10,8 @@ def create_app():
 
     # ORM
     db.init_app(_app)
+    with _app.app_context():
+        db.create_all()
 
     # blueprint
     _app.register_blueprint(main_route.bp)
