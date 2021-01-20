@@ -27,23 +27,22 @@ def upload_file():
             print("No file")
             return redirect(request.url)
         file = request.files["file"]
-        file_author = request.form["author"]
+        author = request.form["author"]
 
         if file and _utils.allowed_file(file.filename):
             img = Image.open(file)
             file_id = str(imagehash.phash(img))
             input_filename = _utils.get_input_filename(file_id)
-            file_url = os.path.join(INPUT_FOLDER, input_filename)
-            img.save(file_url)  # file save in local
+            img.save(os.path.join(INPUT_FOLDER, input_filename))  # file save in local
 
-            message = {"filename": input_filename, "author": file_author}
+            message = {"filename": input_filename, "author": author}
             jobProducer.add_job(message=json.dumps(message))
-            print("SEND : {} to {}".format(input_filename, file_author))
+            print("SEND : {} to {}".format(input_filename, author))
 
-            imagemodel = ImageModel(image_id=file_id, image_url=file_url)
+            imagemodel = ImageModel(file_id=file_id, styles=[author])
             db.session.add(imagemodel)
             db.session.commit()
-            print("SAVE : {} to {}".format(input_filename, file_author))
+            print("SAVE : {} to {}".format(input_filename, author))
 
             return str(file_id)
 

@@ -1,6 +1,7 @@
 from flask import Flask
 
 from database import db
+from database.image_model import ImageModel
 from routes import main_route, image_route
 
 
@@ -11,6 +12,7 @@ def create_app():
     # ORM
     db.init_app(_app)
     with _app.app_context():
+        db.drop_all()
         db.create_all()
 
     # blueprint

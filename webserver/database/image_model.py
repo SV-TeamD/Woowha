@@ -4,19 +4,19 @@ from . import db
 class ImageModel(db.Model):
     __tablename__ = "images"
 
-    id = db.Column(db.String(16), primary_key=True)
-    url = db.Column(db.String(100), unique=True, nullable=False)
+    file_id = db.Column(db.String(16), primary_key=True)
+    styles = db.Column(db.ARRAY(db.String, dimensions=1), nullable=False)
 
-    def __init__(self, image_id: str, image_url: str):
-        self.id = image_id
-        self.url = image_url
+    def __init__(self, file_id: str, styles: str):
+        self.file_id = file_id
+        self.styles = styles
 
     def __repr__(self):
-        return "<ImageModel %r>" % self.url
+        return "<ImageModel %r>" % self.styles
 
     @classmethod
     def serialize(cls):
         return {
-            "image_id": cls.id,
-            "image_url": cls.url,
+            "file_id": cls.file_id,
+            "styles": cls.styles,
         }
