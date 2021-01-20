@@ -39,6 +39,8 @@ image_output/*
 
 # db
 postgresql/
+redis/data/
+redis/logs/
 
 **/*lock.json
 **/*.lock
