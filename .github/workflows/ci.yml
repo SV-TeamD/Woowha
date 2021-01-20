@@ -21,11 +21,11 @@ jobs:
           cd $GITHUB_WORKSPACE/client
           npm run build
 
-#       - name: Test app
-#         shell: bash
-#         run: |
-#           cd $GITHUB_WORKSPACE/client
-#           npm run test
+  #       - name: Test app
+  #         shell: bash
+  #         run: |
+  #           cd $GITHUB_WORKSPACE/client
+  #           npm run test
 
   webserver:
     runs-on: ubuntu-latest
