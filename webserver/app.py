@@ -1,7 +1,7 @@
 from flask import Flask
 
 from database import db
-from database.image_model import ImageModel
+from database.cache import Cache
 from routes import main_route, image_route
 
 
@@ -14,6 +14,7 @@ def create_app():
     with _app.app_context():
         db.drop_all()
         db.create_all()
+        Cache()
 
     # blueprint
     _app.register_blueprint(main_route.bp)

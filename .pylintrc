@@ -36,6 +36,8 @@ good-names=i,
            logger,
            db,
            _
+generated-members=redis.*
+
 
 [pre-commit-hook]
 params=--rcfile=.pylintrc
