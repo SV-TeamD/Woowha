@@ -3,8 +3,12 @@ import time
 import json
 
 from flask import Blueprint, render_template, request
-from werkzeug.utils import redirect, secure_filename
+from werkzeug.utils import redirect
+from PIL import Image
+import imagehash
 
+from database import db
+from database.image_model import ImageModel
 from job_producer import JobProducer
 from utils import _Utils
 
@@ -15,7 +19,6 @@ OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
 bp = Blueprint("image_route", __name__, url_prefix="/image")
 jobProducer = JobProducer()
 _utils = _Utils()
-
 
 # http://locahost:5000/image/upload
 @bp.route("/upload", methods=["GET", "POST"])
@@ -28,27 +31,35 @@ def upload_file():
         file_author = request.form["author"]
 
         if file and _utils.allowed_file(file.filename):
-            filename = secure_filename(request.files["file"].filename)
-            file_url = os.path.join(INPUT_FOLDER, filename)
-            f.save(file_url)  # file save in local
+            img = Image.open(file)
+            file_id = imagehash.phash(img)
+            input_filename = _utils.get_input_filename(file_id)
+            file_url = os.path.join(INPUT_FOLDER, input_filename)
+            img.save(file_url)  # file save in local
 
-            message = {"filename": filename, "author": file_author}
+            message = {"filename": input_filename, "author": file_author}
             jobProducer.add_job(message=json.dumps(message))
-            print("SEND : {}_{}".format(file_author, filename))
-            return "파일 로컬파일에 저장."
+            print("SEND : {} to {}".format(input_filename, file_author))
+
+            imagemodel = ImageModel(image_id=file_id, image_url=file_url)
+            db.session.add(imagemodel)
+            db.session.commit()
+            print("SAVE : {} to {}".format(input_filename, file_author))
+
+            return str(file_id)
 
         return render_template("test.html")
     return render_template("test.html")
 
 
-# http://locahost:5000/image/result/filename?author=Hayao
-@bp.route("/result/<string:filename>", methods=["GET"])
-def result_page(filename):
+# http://locahost:5000/image/result/file_id?author=Hayao
+@bp.route("/result/<string:file_id>", methods=["GET"])
+def result_page(file_id):
     author = request.args.get("author")
     if not author:
         raise Exception("no author in url")
 
-    output_filename = "{}_{}".format(author, filename)
+    output_filename = _utils.get_output_filename(file_id, author)
     file_url = os.path.join(OUTPUT_FOLDER, output_filename)
     _utils.is_file_until_yes(file_url)  # polling
     return output_filename, 200

@@ -18,3 +18,14 @@ class _Utils:
     @classmethod
     def _exist_file(cls, path):
         return os.path.isfile(path)
+
+    @classmethod
+    def get_input_filename(cls, file_id):
+        cls.file_id = file_id
+        cls.input_filename = "{}.jpg".format(file_id)
+        return cls.input_filename
+
+    @classmethod
+    def get_output_filename(cls, file_id, author):
+        cls.output_filename = "{}_{}.jpg".format(file_id, author)
+        return cls.output_filename

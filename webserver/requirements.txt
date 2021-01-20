@@ -9,3 +9,5 @@ Flask-Migrate
 pylint-flask
 pylint-flask-sqlalchemy
 psycopg2
+pillow
+imagehash

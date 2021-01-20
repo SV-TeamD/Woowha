@@ -1,6 +1,6 @@
 from flask import Flask
 
-from database import Database
+from database import db
 from routes import main_route, image_route
 
 
@@ -9,7 +9,7 @@ def create_app():
     _app.config.from_object("config")
 
     # ORM
-    Database(_app)
+    db.init_app(_app)
 
     # blueprint
     _app.register_blueprint(main_route.bp)
