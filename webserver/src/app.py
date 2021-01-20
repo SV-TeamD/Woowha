@@ -3,12 +3,12 @@ from routes import main_route, image_route
 
 
 def create_app():
-    app = Flask(__name__)
+    _app = Flask(__name__)
 
-    app.register_blueprint(main_route.bp)
-    app.register_blueprint(image_route.bp)
+    _app.register_blueprint(main_route.bp)
+    _app.register_blueprint(image_route.bp)
 
-    return app
+    return _app
 
 
 if __name__ == "__main__":
