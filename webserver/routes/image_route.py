@@ -29,6 +29,11 @@ def upload_file():
     file_id = _utils.get_file_id(img)
     input_filename = _utils.get_input_filename(file_id)
 
+    if Cache.exist_output_image(file_id, author):
+        return str(file_id)
+    if not Cache.exist_image(file_id):
+        _utils.save_image(img, input_filename, file_id)
+
     jobProducer.add_job(message=_utils.get_job_message(input_filename, author))
     print("SEND : {} to {}".format(input_filename, author))
 
