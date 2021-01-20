@@ -49,7 +49,7 @@ div.about {
   text-align: center;
 }
 
-button {
+.button {
   background-color: #7fc4fd;
   color: white;
   text-align: center;
@@ -59,4 +59,5 @@ button {
   font-size: 23px;
   border: 0;
   outline: 0;
+  position: relative;
 }
