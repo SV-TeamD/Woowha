@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "./mainpage.css";
+import { Route, Link } from "react-router-dom";
+import resultpage from "./resultpage";
 import img from "./img/empty_image.PNG";
 import hosoda_example from "./img/hosoda_example.PNG";
 import hayao_example from "./img/hayao_example.PNG";
 import paprika_example from "./img/paprika_example.PNG";
 import shinkai_example from "./img/shinkai_example.PNG";
+
 class mainpage extends Component {
   constructor(props) {
     super(props);
@@ -149,7 +152,10 @@ class mainpage extends Component {
               <br />
               <br />
               <br />
-              <button type="submit">Convert</button>
+              <Route path="/resultpage" component={resultpage} />
+              <Link to="/resultpage">
+                <button type="submit">Convert</button>
+              </Link>
             </div>
           </form>
         </div>

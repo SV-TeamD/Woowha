@@ -6,6 +6,22 @@ import twitter from "./img/twittericon.PNG";
 import instagram from "./img/instagramicon.PNG";
 
 class resultpage extends Component {
+  _handleImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result,
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   render() {
     const sns_img_style = {
       marginRight: "50px",
@@ -20,7 +36,7 @@ class resultpage extends Component {
       <div>
         <br />
         <br />
-        <header>
+        <header className="head">
           <ul>
             <li>
               <a className="active" href="#home">
