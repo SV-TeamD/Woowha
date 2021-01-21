@@ -1,4 +1,4 @@
-ul {
+header.head ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -6,11 +6,11 @@ ul {
   background-color: #7fc4fd;
 }
 
-li {
+header.head li {
   float: left;
 }
 
-li a {
+header.head li a {
   display: block;
   color: white;
   text-align: center;
@@ -18,7 +18,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover {
+header.head li a:hover {
   background-color: #2699fb;
 }
 
@@ -49,7 +49,7 @@ div.about {
   text-align: center;
 }
 
-button {
+.button {
   background-color: #7fc4fd;
   color: white;
   text-align: center;
@@ -59,4 +59,5 @@ button {
   font-size: 23px;
   border: 0;
   outline: 0;
+  position: relative;
 }
