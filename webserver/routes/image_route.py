@@ -2,8 +2,6 @@ from flask import Blueprint, render_template, request
 from werkzeug.utils import redirect
 from PIL import Image
 
-from database import db
-from database.image_model import ImageModel
 from database.cache import Cache
 from job_producer import JobProducer
 from utils import _Utils
@@ -29,12 +27,14 @@ def upload_file():
     input_filename = _Utils.get_input_filename(file_id)
 
     if Cache.exist_output_image(file_id, author):
+        print("exist output image in cache")
         return str(file_id)
     if not Cache.exist_image(file_id):
+        print("no image in cache")
         _Utils.save_image(img, input_filename, file_id)
 
-    jobProducer.add_job(message=_Utils.get_job_message(input_filename, author))
-    print("SEND : {} to {}".format(input_filename, author))
+    jobProducer.add_job(message=_Utils.get_job_message(file_id, author))
+    print("SEND : {} to {}".format(file_id, author))
 
     return str(file_id)
 
@@ -45,9 +45,10 @@ def result_page(file_id):
     author = request.args.get("author")
     if not author:
         raise Exception("no author in url")
+    # TODO: 이미지 읽어서 response
 
     try:
         Cache.wait_for_image_until_10(file_id, author)
-        return 200
+        return "success", 200
     except TimeoutError:
-        return 500
+        return "faile", 500
