@@ -1,90 +1,98 @@
-import torch
 import os
-import sys
 
+import torch
+import torchvision.transforms as transforms
+import torchvision.utils as vutils
 import numpy as np
 from PIL import Image
-import torchvision.transforms as transforms
-from torch.autograd import Variable
-import torchvision.utils as vutils
 
-from network.Transformer import Transformer
+from network.transformer import Transformer
 
 
 class Runner:
+    @classmethod
     def __init__(
-        self,
+        cls,
         model_dir="./pretrained_model",
         input_dir="/data/image_input",
         output_dir="/data/image_output",
     ):
         filepath_this = os.path.dirname(os.path.abspath(__file__))
-        self.input_dir = os.path.join(filepath_this, input_dir)
-        self.output_dir = os.path.join(filepath_this, output_dir)
-        self.model_dir = os.path.join(filepath_this, model_dir)
-        self.prev_style = None
+        cls.input_dir = os.path.join(filepath_this, input_dir)
+        cls.output_dir = os.path.join(filepath_this, output_dir)
+        cls.model_dir = os.path.join(filepath_this, model_dir)
+        cls.prev_style = None
 
-    def run(self, imagefile_name="01.jpg", load_size=450, style="Hayao"):
-        input_image_path = os.path.join(self.input_dir, imagefile_name)
+    @classmethod
+    def run(cls, imagefile_name="01.jpg", style="Hayao", load_size=450):
+        input_image_path = os.path.join(cls.input_dir, imagefile_name)
         try:
-            self.is_file(input_image_path)
-            self.load_weights(style, self.model_dir)
-            self.validate_ext(imagefile_name)
-            input_image = self.preprocess_image(input_image_path, load_size)
-            output_image = self.output_image(input_image)
-        except Exception as e:
-            print("{}: Runner Exception".format(imagefile_name))
+            cls.is_file(input_image_path)
+            cls.load_weights(style, cls.model_dir)
+            cls.validate_ext(imagefile_name)
+            input_image = cls.preprocess_image(input_image_path, load_size)
+            output_image = cls.output_image(input_image)
+
+            cls.exist_dir(cls.output_dir)
+            cls.save_image(output_image, input_image_path, style)
+            print("create {} style image : {}".format(style, imagefile_name))
+        except FileExistsError as file_exist_error:
+            print(file_exist_error)
+        except RuntimeError as e:
             print(e)
-            return
 
-        self.check_exist_dir(self.output_dir)
-        self.save_image(output_image, input_image_path, style, self.output_dir)
-        print("create {} style image : {}".format(style, imagefile_name))
-
-    def check_exist_dir(self, dir_path):
-        try:
-            if not os.path.exists(dir_path):
-                os.mkdir(dir_path)
-        except:
+    @classmethod
+    def exist_dir(cls, dir_path):
+        if not os.path.exists(dir_path):
             os.mkdir(dir_path)
 
-    def is_file(self, input_image_path):
+    @classmethod
+    def is_file(cls, input_image_path):
         if not os.path.isfile(input_image_path):
             raise Exception("{}: 파일이 존재하지 않습니다.".format(input_image_path))
 
-    def load_weights(self, style, model_dir="./pretrained_model"):
-        if self.prev_style and self.prev_style == style:
+    @classmethod
+    def load_weights(cls, style, model_dir="./pretrained_model"):
+        if cls.prev_style and cls.prev_style == style:
             return
-        self.prev_style = style
+        cls.prev_style = style
         model_path = os.path.join(model_dir, style + "_net_G_float.pth")
         try:
-            self.model = Transformer()
-            self.model.load_state_dict(torch.load(model_path))
-            self.model.eval()
-            self.model.float()
-        except:
-            raise Exception("{} 모델을 불러오는데 오류가 발생하였습니다.".format(style))
+            cls.model = Transformer()
+            cls.model.load_state_dict(torch.load(model_path))
+            cls.model.eval()
+            cls.model.float()
+        except FileNotFoundError as file_not_founr_err:
+            raise FileNotFoundError(
+                "{} 모델을 불러오는데 오류가 발생하였습니다.".format(style)
+            ) from file_not_founr_err
+        except FileExistsError as file_exists_err:
+            raise FileExistsError("{} 모델을 불러오는데 오류가 발생하였습니다.".format(style)) from file_exists_err
+        except Exception as e:
+            raise Exception("{} 예외가 발생하였습니다.".format(e)) from e
 
-    def validate_ext(self, imagefile_name):
+    @classmethod
+    def validate_ext(cls, imagefile_name):
         ext = imagefile_name.split(".")[1]
         valid_ext = ["jpg", "png"]
         if ext not in valid_ext:
             raise Exception("지원하지 않는 확장자입니다.")
 
-    def preprocess_image(self, input_image_path, load_size):
+    @classmethod
+    def preprocess_image(cls, input_image_path, load_size):
         # load image
         input_image = Image.open(input_image_path).convert("RGB")
         # resize image, keep aspect ratio
-        h = input_image.size[0]
-        w = input_image.size[1]
-        ratio = h * 1.0 / w
+        _h = input_image.size[0]
+        _w = input_image.size[1]
+        ratio = _h * 1.0 / _w
         if ratio > 1:
-            h = load_size
-            w = int(h * 1.0 / ratio)
+            _h = load_size
+            _w = int(_h * 1.0 / ratio)
         else:
-            w = load_size
-            h = int(w * ratio)
-        input_image = input_image.resize((h, w), Image.BICUBIC)
+            _w = load_size
+            _h = int(_w * ratio)
+        input_image = input_image.resize((_h, _w), Image.BICUBIC)
         input_image = np.asarray(input_image)
         # RGB -> BGR
         input_image = input_image[:, :, [2, 1, 0]]
@@ -94,9 +102,10 @@ class Runner:
         input_image = torch.Tensor(input_image)
         return input_image
 
-    def output_image(self, input_image):
+    @classmethod
+    def output_image(cls, input_image):
         # forward
-        output_image = self.model(input_image)
+        output_image = cls.model(input_image)
         output_image = output_image[0]
         # BGR -> RGB
         output_image = output_image[[2, 1, 0], :, :]
@@ -104,8 +113,9 @@ class Runner:
         output_image = output_image.data.cpu().float() * 0.5 + 0.5
         return output_image
 
-    def save_image(self, output_image, input_image_path, style, output_dir):
+    @classmethod
+    def save_image(cls, output_image, input_image_path, style):
         # save
         filename = input_image_path.split("/")[-1].split(".")[0] + "_" + style + ".jpg"
-        output_path = os.path.join(output_dir, filename)
+        output_path = os.path.join(cls.output_dir, filename)
         vutils.save_image(output_image, output_path)

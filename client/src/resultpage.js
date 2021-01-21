@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import "./resultpage.css";
 import img from "./img/empty_image.PNG";
 import facebook from "./img/facebookicon.PNG";

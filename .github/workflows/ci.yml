@@ -3,7 +3,7 @@ name: ci
 on: [push, pull_request]
 
 jobs:
-  client_test:
+  client:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the client
@@ -21,13 +21,13 @@ jobs:
           cd $GITHUB_WORKSPACE/client
           npm run build
 
-      - name: Test app
-        shell: bash
-        run: |
-          cd $GITHUB_WORKSPACE/client
-          npm run test
+  #       - name: Test app
+  #         shell: bash
+  #         run: |
+  #           cd $GITHUB_WORKSPACE/client
+  #           npm run test
 
-  webserver_test:
+  webserver:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -50,17 +50,13 @@ jobs:
           cd $GITHUB_WORKSPACE/webserver
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Lint with  pylint
-        run: |
-          pip install pylint
-          python lint.py -p ./webserver -t 9
       - name: Test with pytest
         run: |
           cd $GITHUB_WORKSPACE/webserver
           pip install pytest
           pytest
 
-  modelserver_test:
+  modelserver:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -83,10 +79,6 @@ jobs:
           cd $GITHUB_WORKSPACE/modelserver
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Lint with  pylint
-        run: |
-          pip install pylint
-          python lint.py -p ./modelserver -t 9
       - name: Test with pytest
         run: |
           cd $GITHUB_WORKSPACE/modelserver
