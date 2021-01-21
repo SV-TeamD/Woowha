@@ -1,7 +1,7 @@
 import pika
 
 
-parameters = pika.ConnectionParameters("rabbitmq")
+parameters = pika.ConnectionParameters("rabbitmq", heartbeat=600, blocked_connection_timeout=300)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 

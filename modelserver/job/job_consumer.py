@@ -8,7 +8,8 @@ from network.Runner import Runner
 INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
 
-connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
+parameters = pika.ConnectionParameters("rabbitmq", heartbeat=600, blocked_connection_timeout=300)
+connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 runner = Runner(input_dir=INPUT_FOLDER, output_dir=OUTPUT_FOLDER)
 
