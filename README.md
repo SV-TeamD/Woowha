@@ -1,84 +1,58 @@
-# Woowha
-2021 Silicon Valley Online Internship Team D
+# Cartoonizer using GAN
 
-정지원, 조광식, 최병도, 김하윤
+### Reference
+**[CartoonGAN-Test-Pytorch-Torch](https://github.com/Yijunmaverick/CartoonGAN-Test-Pytorch-Torch)**
 
-# How to use a docker and composer
-## Docker Prerequisites:
-- Windows
-https://docs.docker.com/docker-for-windows/install/
-- Mac
-https://docs.docker.com/docker-for-mac/install/
+> Pytorch and Torch testing code of [CartoonGAN](http://openaccess.thecvf.com/content_cvpr_2018/CameraReady/2205.pdf) `[Chen et al., CVPR18]`. With the released pretrained [models](http://cg.cs.tsinghua.edu.cn/people/~Yongjin/Yongjin.htm) by the authors, I made these simple scripts for a quick test.
 
+<p>
+    <img src='https://user-images.githubusercontent.com/25628507/105346214-a0bb2a80-5c28-11eb-974a-b4bf4bd4ad8e.png' width=300 />
+    <img src='https://user-images.githubusercontent.com/25628507/105346204-9c8f0d00-5c28-11eb-809c-48c68dcd41a1.png' width=300 />
+</p>
 
-### 1. git clone
-```
-git clone git@github.com:shpark76/docker-demo.git
-```
+## Architecture
 
-### 2. docker compose build and up 
-```
-$ docker-compose build
-$ docker-compose up --build
-```
+![3주차](https://user-images.githubusercontent.com/25628507/105339511-166ec880-5c20-11eb-80c6-69b4e058b047.png)
+~~Not the final version yet~~
 
-# Let’s run the API using docker
-## Let’s build the docker image
+## Getting started
+### Docker
 ```
-$ docker-compose build
+docker-compose up --build
 ```
+If you want to run services individually, you should check environment variables. (**`app.env`**, **`Dockerfile`**)
 
-## Docker compose up with all associated docker compose services
+### Client
 ```
-$ docker-compose up
+cd client
+npm install
+npm start
 ```
-#### Note:
-If you prefer to use a daemon mode, Let’s run the above command in the background:
+### API Server
 ```
-$ docker-compose up -d
+cd webserver
+pip install -r requirements.txt
 ```
 
-### 1. webserver (Flask)
+### Model Server
+```shell
+cd modelserver
+pip install -r requirements.txt
+./load-models.sh # you should download pre-trained models
 ```
-http://localhost:5000
+you can **scale up** Model Server using below command
 ```
-
-### 2. client (React)
+docker-compose up --scale modelserver=3
 ```
-http://localhost:3000
-```  
-
-
-#### If you want to build/run a specific application
-> ```
-> docker-compose build <custom service>
-> docker-compose run <custom service>
-> 
-> i.e. 
-> docker-compose build webserver
-> docker-compose run client
-> ```
-
----
-## How to use Redis and Postgres
-### 1. Redis
-https://redis.io/topics/rediscli
-```
-$ redis-cli -h localhost -p 6379
-localhost:6379> exit
-$ redis-cli ping
-PONG
-```
-
-### 2. Postgres
-https://www.pgadmin.org/download/
-```
-psql --host=localhost --username=user --password --dbname=app
-Password for user postgres: 1234
-```
----
 
 ## Development
 ```shell
 ./local-set-install.sh
 ```
+
+## Author
+- 2021 Silicon Valley Online Internship - Team D
+- [Jivvon](https://github.com/Jivvon),
+[ByeongdoChoi](https://github.com/ByeongdoChoi),
+[genius-jo](https://github.com/genius-jo),
+[iSuddenly](https://github.com/iSuddenly)
