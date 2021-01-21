@@ -44,6 +44,7 @@ services:
       - team-d
     depends_on:
       - rabbitmq
+      - postgres_db
     env_file:
       - app.env
     restart: on-failure
