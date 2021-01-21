@@ -85,11 +85,15 @@ class mainpage extends Component {
             action="http://locahost:5000/image/upload"
             method="post"
             encType="multipart/form-data"
-            target=""
           >
             <label id="file">
               Upload
-              <input type="file" onChange={(e) => this._handleImageChange(e)} />
+              <input
+                type="file"
+                name="file"
+                img_style="Hayao"
+                onChange={(e) => this._handleImageChange(e)}
+              />
             </label>
             <br />
             <br />
@@ -106,7 +110,7 @@ class mainpage extends Component {
                 <h3>Hayao</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" />
+                  <input type="radio" name="author" value="Hayao" />
                 </label>
               </div>
 
@@ -119,7 +123,7 @@ class mainpage extends Component {
                 <h3>Shinkai</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" />
+                  <input type="radio" name="author" value="Shinkai" />
                 </label>
               </div>
 
@@ -129,10 +133,10 @@ class mainpage extends Component {
                   alt="empty_image"
                   style={st_img_style}
                 />
-                <h3>paprika</h3>
+                <h3>Paprika</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" />
+                  <input type="radio" name="author" value="Paprika" />
                 </label>
               </div>
 
@@ -145,7 +149,7 @@ class mainpage extends Component {
                 <h3>Hosoda</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" />
+                  <input type="radio" name="author" value="Hosoda" />
                 </label>
               </div>
 
@@ -153,9 +157,8 @@ class mainpage extends Component {
               <br />
               <br />
               <Route path="/resultpage" component={resultpage} />
-              <Link to="/resultpage">
-                <button type="submit">Convert</button>
-              </Link>
+
+              <button type="submit">Convert</button>
             </div>
           </form>
         </div>
