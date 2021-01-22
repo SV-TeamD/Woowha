@@ -8,6 +8,8 @@ from PIL import Image
 
 from network.transformer import Transformer
 
+ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS")
+
 
 class Runner:
     @classmethod
@@ -24,7 +26,7 @@ class Runner:
         cls.prev_style = None
 
     @classmethod
-    def run(cls, imagefile_name="01.jpg", style="Hayao", load_size=450):
+    def run(cls, imagefile_name, style="Hayao", load_size=450):
         input_image_path = os.path.join(cls.input_dir, imagefile_name)
         try:
             cls.is_file(input_image_path)
@@ -74,8 +76,7 @@ class Runner:
     @classmethod
     def validate_ext(cls, imagefile_name):
         ext = imagefile_name.split(".")[1]
-        valid_ext = ["jpg", "png"]
-        if ext not in valid_ext:
+        if ext not in ALLOWED_EXTENSIONS:
             raise Exception("지원하지 않는 확장자입니다.")
 
     @classmethod
@@ -114,8 +115,14 @@ class Runner:
         return output_image
 
     @classmethod
-    def save_image(cls, output_image, input_image_path, style):
+    def output_image_filename(cls, imagefile_name: str, style: str):
+        imagefile_name_parts = imagefile_name.split(".")
+        imagefile_name_parts[0] += "_{}".format(style)
+        return ".".join(imagefile_name_parts)
+
+    @classmethod
+    def save_image(cls, output_image, imagefile_name: str, style: str):
         # save
-        filename = input_image_path.split("/")[-1].split(".")[0] + "_" + style + ".jpg"
-        output_path = os.path.join(cls.output_dir, filename)
-        vutils.save_image(output_image, output_path)
+        _output_image_filename = cls.output_image_filename(imagefile_name, style)
+        output_image_path = os.path.join(cls.output_dir, _output_image_filename)
+        vutils.save_image(output_image, output_image_path)

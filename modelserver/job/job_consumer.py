@@ -2,10 +2,10 @@ import json
 import os
 
 import pika
-from database.postgresql import Database
 
-from network.runner import Runner
 from database.cache import Cache
+from database.postgresql import Database
+from network.runner import Runner
 
 INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
@@ -32,24 +32,24 @@ class JobConsumer:
         print(" [x] Received {}".format(body.decode()))
         delivery_tag = method.delivery_tag
         message = json.loads(body)
-        file_id = message["file_id"]
+        filename = message["filename"]
         style = message["style"]
 
-        cls.generate_image(_channel, delivery_tag, file_id, style)
-        Cache.add(file_id=file_id, style=style)
-        print("{} {} saved in cache".format(file_id, style))
-        if Database.select_image(file_id):
-            Database.update(file_id, style)
-            print("{} {} updated in database".format(file_id, style))
+        cls.generate_image(_channel, delivery_tag, filename, style)
+        Cache.add(filename=filename, style=style)
+        print("{} {} saved in cache".format(filename, style))
+        if Database.select_image(filename):
+            Database.update(filename, style)
+            print("{} {} updated in database".format(filename, style))
         else:
-            Database.insert(file_id, [style])
-            print("{} {} inserted in database".format(file_id, style))
-        Database.select_image(file_id)
+            Database.insert(filename, [style])
+            print("{} {} inserted in database".format(filename, style))
+        Database.select_image(filename)
 
     @classmethod
-    def generate_image(cls, _channel, delivery_tag, file_id, style):
+    def generate_image(cls, _channel, delivery_tag, filename, style):
         try:
-            runner.run(imagefile_name="{}.jpg".format(file_id), style=style)
+            runner.run(filename, style=style)
             print(" [x] Done")
             _channel.basic_ack(delivery_tag)
         except Exception as e:

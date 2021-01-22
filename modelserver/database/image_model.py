@@ -18,22 +18,21 @@ class MutableList(Mutable, list):
 
     @classmethod
     def coerce(cls, key, value):
-        if not isinstance(value, MutableList):
-            if isinstance(value, list):
-                return MutableList(value)
-            return Mutable.coerce(key, value)
-        else:
+        if isinstance(value, MutableList):
             return value
+        if isinstance(value, list):
+            return MutableList(value)
+        return Mutable.coerce(key, value)
 
 
 class ImageModel(Base):
     __tablename__ = "images"
 
-    file_id = Column(String(16), primary_key=True)
+    filename = Column(String(20), primary_key=True)
     styles = Column(MutableList.as_mutable(ARRAY(String, dimensions=1)), nullable=False)
 
-    def __init__(self, file_id: str, styles: str):
-        self.file_id = file_id
+    def __init__(self, filename: str, styles: str):
+        self.filename = filename
         self.styles = styles
 
     def __repr__(self):
@@ -42,6 +41,6 @@ class ImageModel(Base):
     @classmethod
     def serialize(cls):
         return {
-            "file_id": cls.file_id,
+            "filename": cls.filename,
             "styles": cls.styles,
         }
