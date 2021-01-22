@@ -90,7 +90,7 @@ def generate_and_save_images(generator, test_image_loader, save_path):
         for i in range(len(generated_images)):
             image = generated_images[i]
             image = torch_to_image(image)
-            image.save(os.path.join(save_path, "{0}.jpg".format(image_ix)))
+            image.save(os.path.join(save_path, "{}.jpg".format(image_ix)))
             image_ix += 1
 
 
