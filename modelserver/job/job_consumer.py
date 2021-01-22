@@ -36,7 +36,12 @@ class JobConsumer:
         filename = message["filename"]
         style = message["style"]
 
-        cls.generate_image(_channel, delivery_tag, filename, style)
+        try:
+            cls.generate_image(_channel, delivery_tag, filename, style)
+        except Exception as e:
+            print(e)
+            print("{}를 생성하는데 실패하였습니다.".format(filename))
+            return
         Cache.add(filename=filename, style=style)
         print("{} {} saved in cache".format(filename, style))
         if Database.select_image(filename):
@@ -54,8 +59,8 @@ class JobConsumer:
             print(" [x] Done")
             _channel.basic_ack(delivery_tag)
         except Exception as e:
-            print(e)
             _channel.basic_reject(delivery_tag, requeue=False)
+            raise e from e
 
     @classmethod
     def close_connection(cls):

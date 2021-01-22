@@ -6,7 +6,7 @@ import torchvision.utils as vutils
 import numpy as np
 from PIL import Image
 
-from network.transformer import Transformer
+from network.transformer import Transformer, STYLES
 
 ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS")
 
@@ -30,8 +30,9 @@ class Runner:
         input_image_path = os.path.join(cls.input_dir, imagefile_name)
         try:
             cls.is_file(input_image_path)
-            cls.load_weights(style, cls.model_dir)
+            cls.validate_style(style)
             cls.validate_ext(imagefile_name)
+            cls.load_weights(style, cls.model_dir)
             input_image = cls.preprocess_image(input_image_path, load_size)
             output_image = cls.output_image(input_image)
 
@@ -78,6 +79,11 @@ class Runner:
         ext = imagefile_name.split(".")[1]
         if ext not in ALLOWED_EXTENSIONS:
             raise Exception("지원하지 않는 확장자입니다.")
+
+    @classmethod
+    def validate_style(cls, style: str):
+        if style not in STYLES:
+            raise Exception("지원하지 않는 모델입니다.")
 
     @classmethod
     def preprocess_image(cls, input_image_path, load_size):
