@@ -27,4 +27,5 @@ class Database:
     def update(cls, filename: str, style: str):
         with SQLAlchemyDBConnection() as session:
             imagemodel = session.query(ImageModel).filter(ImageModel.filename == filename).first()
-            imagemodel.styles.append(style)
+            if not style in imagemodel.styles:
+                imagemodel.styles.append(style)

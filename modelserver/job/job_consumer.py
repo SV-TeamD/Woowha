@@ -17,6 +17,7 @@ runner = Runner(input_dir=INPUT_FOLDER, output_dir=OUTPUT_FOLDER)
 
 
 class JobConsumer:
+    @classmethod
     def __init__(self):
         channel.queue_declare(queue="job_queue", durable=True)
         channel.basic_qos(prefetch_count=1)
