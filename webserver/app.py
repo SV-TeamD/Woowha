@@ -12,7 +12,7 @@ def create_app():
     # ORM
     db.init_app(_app)
     with _app.app_context():
-        db.drop_all()
+        # db.drop_all()
         db.create_all()
         Cache()
 

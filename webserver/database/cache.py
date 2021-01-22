@@ -11,8 +11,9 @@ cache = redis.Redis(host="redis", port=6379)
 class Cache:
     file_list_key = "images:file_list"
 
-    def __init__(self):
-        self.load_db()
+    @classmethod
+    def __init__(cls):
+        cls.load_db()
 
     @classmethod
     def load_db(cls):
@@ -43,7 +44,7 @@ class Cache:
         return bool(cache.sismember(style, filename))
 
     @classmethod
-    def wait_for_image_until_10(cls, filename: str, style: str):
+    def wait_for_image(cls, filename: str, style: str):
         count = 0
         try:
             while count < 10:

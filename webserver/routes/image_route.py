@@ -26,10 +26,10 @@ def upload_file():
     filename = str(file.filename)
     input_filename = _Utils.get_input_filename(img, filename)
 
-    if Cache.exist_output_image(filename, style):
+    if Cache.exist_output_image(input_filename, style):
         print("exist output image in cache")
-        return str(filename)
-    if not Cache.exist_image(filename):
+        return str(input_filename)
+    if not Cache.exist_image(input_filename):
         print("no image in cache")
         _Utils.save_image(img, input_filename)
 
@@ -48,7 +48,7 @@ def result_page(filename: str):
     # TODO: 이미지 읽어서 response
 
     try:
-        Cache.wait_for_image_until_10(filename, style)
+        Cache.wait_for_image(filename, style)
         return "success", 200
     except TimeoutError:
         return "faile", 500
