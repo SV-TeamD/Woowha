@@ -37,8 +37,8 @@ class _Utils:
         return cls.input_filename
 
     @classmethod
-    def get_output_filename(cls, file_id, author):
-        cls.output_filename = "{}_{}.jpg".format(file_id, author)
+    def get_output_filename(cls, file_id, style):
+        cls.output_filename = "{}_{}.jpg".format(file_id, style)
         return cls.output_filename
 
     @classmethod
@@ -49,5 +49,5 @@ class _Utils:
             img.save(os.path.join(INPUT_FOLDER, cls.get_input_filename(file_id)))
 
     @classmethod
-    def get_job_message(cls, file_id, author):
-        return json.dumps({"file_id": file_id, "author": author})
+    def get_job_message(cls, file_id, style):
+        return json.dumps({"file_id": file_id, "style": style})

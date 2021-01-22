@@ -11,9 +11,9 @@ class Cache:
     file_list_key = "images:file_list"
 
     @classmethod
-    def add(cls, file_id: str, author: str):
+    def add(cls, file_id: str, style: str):
         cache.sadd(cls.file_list_key, file_id)
-        cache.sadd(author, file_id)
+        cache.sadd(style, file_id)
 
     @classmethod
     def add_all_db_data(cls, all_data_in_db: List[ImageModel]):
@@ -29,5 +29,5 @@ class Cache:
         return bool(cache.sismember(cls.file_list_key, file_id))
 
     @classmethod
-    def exist_output_image(cls, file_id: str, author: str):
-        return bool(cache.sismember(author, file_id))
+    def exist_output_image(cls, file_id: str, style: str):
+        return bool(cache.sismember(style, file_id))

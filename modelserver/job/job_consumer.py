@@ -33,10 +33,10 @@ class JobConsumer:
         delivery_tag = method.delivery_tag
         message = json.loads(body)
         file_id = message["file_id"]
-        style = message["author"]
+        style = message["style"]
 
         cls.generate_image(_channel, delivery_tag, file_id, style)
-        Cache.add(file_id=file_id, author=style)
+        Cache.add(file_id=file_id, style=style)
         print("{} {} saved in cache".format(file_id, style))
         if Database.select_image(file_id):
             Database.update(file_id, style)
