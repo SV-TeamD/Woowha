@@ -37,7 +37,7 @@ class Runner:
             output_image = cls.output_image(input_image)
 
             cls.exist_dir(cls.output_dir)
-            cls.save_image(output_image, input_image_path, style)
+            cls.save_image(output_image, imagefile_name, style)
             print("create {} style image : {}".format(style, imagefile_name))
         except FileExistsError as file_exist_error:
             print(file_exist_error)
