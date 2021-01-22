@@ -4,11 +4,11 @@ from . import db
 class ImageModel(db.Model):
     __tablename__ = "images"
 
-    file_id = db.Column(db.String(16), primary_key=True)
+    filename = db.Column(db.String(16), primary_key=True)
     styles = db.Column(db.ARRAY(db.String, dimensions=1), nullable=False)
 
-    def __init__(self, file_id: str, styles: str):
-        self.file_id = file_id
+    def __init__(self, filename: str, styles: str):
+        self.filename = filename
         self.styles = styles
 
     def __repr__(self):
@@ -17,6 +17,6 @@ class ImageModel(db.Model):
     @classmethod
     def serialize(cls):
         return {
-            "file_id": cls.file_id,
+            "filename": cls.filename,
             "styles": cls.styles,
         }

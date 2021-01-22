@@ -12,6 +12,10 @@ WAIT_FOR_OUTPUT_IMAGE_SECOND = os.getenv("WAIT_FOR_OUTPUT_IMAGE_SECOND")
 
 class _Utils:
     @classmethod
+    def get_file_extension(cls, filename):
+        return filename.split(".")[1]
+
+    @classmethod
     def allowed_file(cls, filename):
         return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -31,23 +35,15 @@ class _Utils:
         return str(imagehash.phash(img))
 
     @classmethod
-    def get_input_filename(cls, file_id):
-        cls.file_id = file_id
-        cls.input_filename = "{}.jpg".format(file_id)
-        return cls.input_filename
+    def get_input_filename(cls, img, filename):
+        file_id = cls.get_file_id(img)
+        extension = cls.get_file_extension(filename)
+        return ".".join([file_id, extension])
 
     @classmethod
-    def get_output_filename(cls, file_id, style):
-        cls.output_filename = "{}_{}.jpg".format(file_id, style)
-        return cls.output_filename
+    def save_image(cls, img, input_filename):
+        img.save(os.path.join(INPUT_FOLDER, input_filename))
 
     @classmethod
-    def save_image(cls, img, input_filename=None, file_id=None):
-        if input_filename:
-            img.save(os.path.join(INPUT_FOLDER, input_filename))
-        elif file_id:
-            img.save(os.path.join(INPUT_FOLDER, cls.get_input_filename(file_id)))
-
-    @classmethod
-    def get_job_message(cls, file_id, style):
-        return json.dumps({"file_id": file_id, "style": style})
+    def get_job_message(cls, filename, style):
+        return json.dumps({"filename": filename, "style": style})

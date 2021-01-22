@@ -27,30 +27,30 @@ class Cache:
 
     @classmethod
     def add_all_db_data(cls, all_data_in_db: List[ImageModel]):
-        all_file_id = [x.file_id for x in all_data_in_db]
-        cache.sadd(cls.file_list_key, *all_file_id)
+        all_filename = [x.filename for x in all_data_in_db]
+        cache.sadd(cls.file_list_key, *all_filename)
         for image_model in all_data_in_db:
-            file_id = image_model.file_id
+            filename = image_model.filename
             for style in image_model.styles:
-                cache.sadd(style, file_id)
+                cache.sadd(style, filename)
 
     @classmethod
-    def exist_image(cls, file_id: str):
-        return bool(cache.sismember(cls.file_list_key, file_id))
+    def exist_image(cls, filename: str):
+        return bool(cache.sismember(cls.file_list_key, filename))
 
     @classmethod
-    def exist_output_image(cls, file_id: str, style: str):
-        return bool(cache.sismember(style, file_id))
+    def exist_output_image(cls, filename: str, style: str):
+        return bool(cache.sismember(style, filename))
 
     @classmethod
-    def wait_for_image_until_10(cls, file_id: str, style: str):
+    def wait_for_image_until_10(cls, filename: str, style: str):
         count = 0
         try:
             while count < 10:
-                if cls.exist_output_image(file_id, style):
+                if cls.exist_output_image(filename, style):
                     break
                 count += 1
                 time.sleep(2)  # 2초마다 실행
         except TimeoutError as timeout_err:
-            print("Timeout : {}, {}".format(file_id, style))
+            print("Timeout : {}, {}".format(filename, style))
             raise TimeoutError from timeout_err
