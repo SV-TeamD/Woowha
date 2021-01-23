@@ -1,29 +1,48 @@
+import os
+import logging
+
 import pika
 
-
-parameters = pika.ConnectionParameters("rabbitmq", heartbeat=600, blocked_connection_timeout=300)
-connection = pika.BlockingConnection(parameters)
-channel = connection.channel()
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
+IMAGE_QUEUE = os.getenv("IMAGE_QUEUE")
+ROUTING_KEY = os.getenv("ROUTING_KEY")
+EXCHANGE = os.getenv("EXCHANGE")
 
 
 class JobProducer:
-    """Message Queue에 Job을 넣는다."""
+    LOGGER = logging.getLogger(__name__)
 
-    @classmethod
-    def __init__(cls):
-        channel.queue_declare(queue="job_queue", durable=True)
-
-    @classmethod
-    def add_job(cls, message):
-        print("add job in queue {}".format(message))
-        channel.basic_publish(
-            exchange="",
-            routing_key="job_queue",
-            body=message,
-            properties=pika.BasicProperties(delivery_mode=2),
+    def __init__(self, amqp_url: str = RABBITMQ_HOST):
+        self._params = pika.ConnectionParameters(
+            amqp_url, heartbeat=600, blocked_connection_timeout=300
         )
-        print("Sent {}".format(message))
+        self._conn = None
+        self._channel = None
+        self._url = amqp_url
+        self.connect()
 
-    @classmethod
-    def close_connection(cls):
-        connection.close()
+    def connect(self):
+        if self._conn and not self._conn.is_closed:
+            return
+        self._conn = pika.BlockingConnection(self._params)
+        self._channel = self._conn.channel()
+        self._channel.queue_declare(queue=IMAGE_QUEUE, durable=True)
+
+    def _publish(self, msg):
+        self._channel.basic_publish(exchange=EXCHANGE, routing_key=ROUTING_KEY, body=msg)
+        self.LOGGER.info("Published message : %s", msg)
+
+    def publish(self, msg):
+        """Publish msg, reconnecting if necessary."""
+        try:
+            self._publish(msg)
+        except pika.exceptions.ConnectionClosed as e:
+            self.LOGGER.warning("%s", e)
+            self.LOGGER.info("Reconnecting to queue")
+            self.connect()
+            self._publish(msg)
+
+    def close(self):
+        if self._conn and self._conn.is_open:
+            self.LOGGER.info("Closing connection")
+            self._conn.close()

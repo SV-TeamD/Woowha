@@ -7,10 +7,15 @@ from database.cache import Cache
 from database.postgresql import Database
 from network.runner import Runner
 
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
+IMAGE_QUEUE = os.getenv("IMAGE_QUEUE")
+ROUTING_KEY = os.getenv("ROUTING_KEY")
+EXCHANGE = os.getenv("EXCHANGE")
+
 INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
 
-parameters = pika.ConnectionParameters("rabbitmq", heartbeat=600, blocked_connection_timeout=300)
+parameters = pika.ConnectionParameters(RABBITMQ_HOST, heartbeat=600, blocked_connection_timeout=300)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 runner = Runner(input_dir=INPUT_FOLDER, output_dir=OUTPUT_FOLDER)
@@ -19,14 +24,19 @@ runner = Runner(input_dir=INPUT_FOLDER, output_dir=OUTPUT_FOLDER)
 class JobConsumer:
     @classmethod
     def __init__(self):
-        channel.queue_declare(queue="job_queue", durable=True)
+        channel.queue_declare(queue=IMAGE_QUEUE, durable=True)
+        channel.queue_bind(IMAGE_QUEUE, EXCHANGE, routing_key=ROUTING_KEY)
         channel.basic_qos(prefetch_count=1)
         print("hi Job Consumer")
 
     @classmethod
     def start(cls):
-        channel.basic_consume(queue="job_queue", auto_ack=False, on_message_callback=cls.consume)
-        channel.start_consuming()
+        channel.basic_consume(queue=IMAGE_QUEUE, auto_ack=False, on_message_callback=cls.consume)
+        try:
+            channel.start_consuming()
+        except KeyboardInterrupt:
+            channel.stop_consuming()
+            connection.close()
 
     @classmethod
     def consume(cls, _channel, method, _, body):
@@ -61,10 +71,6 @@ class JobConsumer:
         except Exception as e:
             _channel.basic_reject(delivery_tag, requeue=False)
             raise e from e
-
-    @classmethod
-    def close_connection(cls):
-        connection.close()
 
 
 if __name__ == "__main__":
