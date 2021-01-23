@@ -44,14 +44,14 @@ class Cache:
         return bool(cache.sismember(style, filename))
 
     @classmethod
-    def wait_for_image(cls, filename: str, style: str):
+    def wait_for_image(cls, fileid: str, style: str):
         count = 0
         try:
             while count < 10:
-                if cls.exist_output_image(filename, style):
+                if cls.exist_output_image(fileid, style):
                     break
                 count += 1
                 time.sleep(2)  # 2초마다 실행
         except TimeoutError as timeout_err:
-            print("Timeout : {}, {}".format(filename, style))
+            print("Timeout : {}, {}".format(fileid, style))
             raise TimeoutError from timeout_err

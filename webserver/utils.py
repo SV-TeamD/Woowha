@@ -20,6 +20,10 @@ class _Utils:
         return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
     @classmethod
+    def get_output_path(cls, output_filename):
+        path = os.path.join(OUTPUT_FOLDER, output_filename)
+
+    @classmethod
     def is_file_until_yes(cls, output_filename):
         path = os.path.join(OUTPUT_FOLDER, output_filename)
         while not cls._exist_file(path):
@@ -31,14 +35,18 @@ class _Utils:
         return os.path.isfile(path)
 
     @classmethod
-    def get_file_id(cls, img):
+    def get_fileid_from_image(cls, img):
         return str(imagehash.phash(img))
 
     @classmethod
+    def get_fileid_from_filename(cls, filename: str):
+        return str(filename).split(".")[0]
+
+    @classmethod
     def get_input_filename(cls, img, filename):
-        file_id = cls.get_file_id(img)
+        fileid = cls.get_fileid_from_image(img)
         extension = cls.get_file_extension(filename)
-        return ".".join([file_id, extension])
+        return ".".join([fileid, extension])
 
     @classmethod
     def save_image(cls, img, input_filename):
