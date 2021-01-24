@@ -6,7 +6,6 @@ import pika
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
 IMAGE_QUEUE = os.getenv("IMAGE_QUEUE")
 ROUTING_KEY = os.getenv("ROUTING_KEY")
-EXCHANGE = os.getenv("EXCHANGE")
 
 
 class JobProducer:
@@ -29,7 +28,7 @@ class JobProducer:
         self._channel.queue_declare(queue=IMAGE_QUEUE, durable=True)
 
     def _publish(self, msg):
-        self._channel.basic_publish(exchange=EXCHANGE, routing_key=ROUTING_KEY, body=msg)
+        self._channel.basic_publish(exchange="", routing_key=ROUTING_KEY, body=msg)
         self.LOGGER.info("Published message : %s", msg)
 
     def publish(self, msg):

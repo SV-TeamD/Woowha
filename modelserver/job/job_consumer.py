@@ -10,7 +10,6 @@ from network.runner import Runner
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
 IMAGE_QUEUE = os.getenv("IMAGE_QUEUE")
 ROUTING_KEY = os.getenv("ROUTING_KEY")
-EXCHANGE = os.getenv("EXCHANGE")
 
 INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
@@ -25,7 +24,6 @@ class JobConsumer:
     @classmethod
     def __init__(self):
         channel.queue_declare(queue=IMAGE_QUEUE, durable=True)
-        channel.queue_bind(IMAGE_QUEUE, EXCHANGE, routing_key=ROUTING_KEY)
         channel.basic_qos(prefetch_count=1)
         print("hi Job Consumer")
 
