@@ -1,6 +1,7 @@
 import os
-import time
 import json
+import logging
+from flask.json import jsonify
 
 import imagehash
 
@@ -8,44 +9,67 @@ ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS")
 INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
 WAIT_FOR_OUTPUT_IMAGE_SECOND = os.getenv("WAIT_FOR_OUTPUT_IMAGE_SECOND")
+STYLES = os.getenv("STYLES")
 
 
 class _Utils:
+    LOGGER = logging.getLogger(__name__)
+
     @classmethod
-    def get_file_extension(cls, filename):
+    def _file_extension(cls, filename):
+        if not "." in filename:
+            return None
         return filename.split(".")[1]
 
     @classmethod
-    def allowed_file(cls, filename):
-        return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-    @classmethod
-    def get_output_path(cls, output_filename):
-        path = os.path.join(OUTPUT_FOLDER, output_filename)
-
-    @classmethod
-    def is_file_until_yes(cls, output_filename):
-        path = os.path.join(OUTPUT_FOLDER, output_filename)
-        while not cls._exist_file(path):
-            print("please wait for second...")
-            time.sleep(1)
-
-    @classmethod
-    def _exist_file(cls, path):
-        return os.path.isfile(path)
-
-    @classmethod
-    def get_fileid_from_image(cls, img):
+    def _fileid_from_image(cls, img):
         return str(imagehash.phash(img))
 
     @classmethod
-    def get_fileid_from_filename(cls, filename: str):
-        return str(filename).split(".")[0]
+    def verify_file_style(cls, file, style):
+        try:
+            filename = file.filename
+            return cls.verify_filename_style(filename, style)
+        except Exception as e:
+            return False
 
     @classmethod
-    def get_input_filename(cls, img, filename):
-        fileid = cls.get_fileid_from_image(img)
-        extension = cls.get_file_extension(filename)
+    def verify_filename_style(cls, filename, style):
+        try:
+            cls.verify_extension(filename)
+            cls.verify_style(style)
+            return True
+        except Exception as e:
+            return False
+
+    @classmethod
+    def verify_extension(cls, filename):
+        if not cls._file_extension(filename) in ALLOWED_EXTENSIONS:
+            err_msg = "File extension({}) not allowed. we can only {}".format(
+                cls._file_extension(filename), ALLOWED_EXTENSIONS
+            )
+            cls.LOGGER.error(err_msg)
+            raise TypeError(err_msg)
+
+    @classmethod
+    def verify_style(cls, style):
+        if not style in STYLES:
+            err_msg = "{} Style not allowed. we can only {}".format(style, STYLES)
+            cls.LOGGER.error(err_msg)
+            raise ValueError(err_msg)
+
+    @classmethod
+    def output_path(cls, output_filename):
+        return os.path.join(OUTPUT_FOLDER, output_filename)
+
+    @classmethod
+    def response_message(cls, input_filename):
+        return jsonify({"filename": input_filename})
+
+    @classmethod
+    def input_filename(cls, img, filename):
+        fileid = cls._fileid_from_image(img)
+        extension = cls._file_extension(filename)
         return ".".join([fileid, extension])
 
     @classmethod
@@ -53,5 +77,5 @@ class _Utils:
         img.save(os.path.join(INPUT_FOLDER, input_filename))
 
     @classmethod
-    def get_job_message(cls, filename, style):
+    def job_message(cls, filename, style):
         return json.dumps({"filename": filename, "style": style})

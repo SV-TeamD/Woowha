@@ -11,7 +11,7 @@
   "handlers": {
     "console": {
       "class": "logging.StreamHandler",
-      "level": "INFO",
+      "level": "DEBUG",
       "formatter": "basic"
     },
     "file_debug": {
@@ -30,10 +30,15 @@
   "loggers": {
     "":{
       "level": "INFO",
-      "handlers": ["console"],
+      "handlers": ["console", "file_debug", "file_error"],
       "propagate": true
     },
     "app.api":{
+      "level": "DEBUG",
+      "handlers": ["console", "file_debug", "file_error"],
+      "propagate": false
+    },
+    "database.cache": {
       "level": "DEBUG",
       "handlers": ["console", "file_debug", "file_error"],
       "propagate": false

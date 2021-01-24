@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 
 from flask import Flask, request
 
@@ -10,31 +9,22 @@ from logs import logger
 
 
 def create_app():
-    _app = Flask(__name__)
-    _app.config.from_object("config")
+    app = Flask(__name__)
+    app.config.from_object("config")
 
-    register_extensions(_app)
-    register_blueprints(_app)
+    register_extensions(app)
+    register_blueprints(app)
 
-    @_app.after_request
+    @app.after_request
     def after_request(response):
         """ Logging after every request. """
-        logger = logging.getLogger("app.api")
-        logger.info(
-            "%s [%s] %s %s %s %s %s %s %s",
-            request.remote_addr,
-            datetime.utcnow().strftime("%d/%b/%Y:%H:%M:%S.%f")[:-3],
-            request.method,
-            request.path,
-            request.scheme,
-            response.status,
-            response.content_length,
-            request.referrer,
-            request.user_agent,
+        api_logger = logging.getLogger("app.api")
+        api_logger.info(
+            "%s %s %s %s", request.remote_addr, request.method, request.path, response.status
         )
         return response
 
-    return _app
+    return app
 
 
 def register_extensions(app):
@@ -58,5 +48,5 @@ def register_blueprints(app):
 
 
 if __name__ == "__main__":
-    app = create_app()
-    app.run(host="0.0.0.0", debug=True)
+    _app = create_app()
+    _app.run(host="0.0.0.0", debug=True)
