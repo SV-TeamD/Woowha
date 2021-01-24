@@ -15,7 +15,7 @@ def upload_file():
     """upload file route
 
     Returns:
-        str: fileid
+        json: { "filename": input_filename }
     """
     if "file" not in request.files:
         print("No file")
@@ -37,19 +37,20 @@ def upload_file():
         print("no image in cache")
         _Utils.save_image(img, input_filename)
 
-    jobProducer.add_job(message=_Utils.get_job_message(input_filename, style))
+    jobProducer.publish(msg=_Utils.get_job_message(input_filename, style))
     print("SEND : {} to {}".format(input_filename, style))
 
-    return _Utils.get_fileid_from_filename(input_filename)
+    return jsonify({"filename": input_filename})
+    # return _Utils.get_fileid_from_filename(input_filename)
 
 
-# http://locahost:5000/image/result/fileid?style=Hayao
-@bp.route("/result/<string:fileid>", methods=["GET"])
-def result_page(fileid: str):
+# http://locahost:5000/image/result/filename?style=Hayao
+@bp.route("/result/<string:filename>", methods=["GET"])
+def result_page(filename: str):
     """result page
 
     Args:
-        fileid (str): fileid
+        filename (str): filename
 
     Returns:
         json: { "url": url of result image }
@@ -57,11 +58,12 @@ def result_page(fileid: str):
     style = request.args.get("style")
     if not style:
         raise Exception("no style in url")
+    if not _Utils.allowed_file(filename):
+        raise Exception("지원되지 않는 확장자입니다.")
 
     try:
-        Cache.wait_for_image(fileid, style)
+        Cache.wait_for_image(filename, style)
 
-        return "success", 200
-        # return jsonify({'url': })
+        return jsonify({"url": _Utils.get_output_path(filename)})
     except TimeoutError:
-        return "faile", 500
+        return "fail", 500
