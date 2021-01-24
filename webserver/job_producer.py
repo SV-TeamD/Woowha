@@ -35,7 +35,7 @@ class JobProducer:
         """Publish msg, reconnecting if necessary."""
         try:
             self._publish(msg)
-        except pika.exceptions.ConnectionClosed as e:
+        except Exception as e:
             self.LOGGER.warning("%s", e)
             self.LOGGER.info("Reconnecting to queue")
             self.connect()
