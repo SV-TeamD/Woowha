@@ -23,6 +23,14 @@ class mainpage extends Component {
     window.scrollTo(0, 1250);
   };
 
+  handleOver(e) {
+    e.preventDefault();
+  }
+
+  handleOut(e) {
+    e.preventDefault();
+  }
+
   _handleImageChange(e) {
     e.preventDefault();
 
@@ -175,7 +183,14 @@ class mainpage extends Component {
         <div className="overview">
           <h2>Overveiw</h2>
           <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
+          <img
+            src={img}
+            alt="empty_image"
+            style={ov_img_style}
+            onMouseOver={(event) => {
+              $imagePreview;
+            }}
+          />
           <img src={img} alt="empty_image" style={ov_img_style} />
           <img src={img} alt="empty_image" style={ov_img_style} />
           <img src={img} alt="empty_image" style={ov_img_style} />
