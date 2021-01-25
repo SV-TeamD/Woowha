@@ -61,7 +61,7 @@ div.about {
   text-align: center;
 }
 
-div.upload label[id="file"] {
+div.upload label[id="file_id"] {
   display: inline-block;
   background-color: #7fc4fd;
   color: white;

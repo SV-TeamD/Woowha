@@ -23,13 +23,8 @@ class mainpage extends Component {
     window.scrollTo(0, 1250);
   };
 
-  handleOver(e) {
-    e.preventDefault();
-  }
-
-  handleOut(e) {
-    e.preventDefault();
-  }
+  handleOver(e) {}
+  handleOut(e) {}
 
   _handleImageChange(e) {
     e.preventDefault();
@@ -59,6 +54,7 @@ class mainpage extends Component {
 
     let { imagePreviewUrl } = this.state;
     let $imagePreview = <img src={img} />;
+    let $imgover = <img src={img} />;
     if (imagePreviewUrl) {
       $imagePreview = <img src={imagePreviewUrl} />;
     }
@@ -101,7 +97,7 @@ class mainpage extends Component {
             method="post"
             encType="multipart/form-data"
           >
-            <label id="file">
+            <label id="file_id">
               Upload
               <input
                 type="file"
@@ -124,7 +120,7 @@ class mainpage extends Component {
                 <h3>Hayao</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" img_style="Hayao" />
+                  <input type="radio" name="author" value="Hayao" />
                 </label>
               </div>
 
@@ -137,7 +133,7 @@ class mainpage extends Component {
                 <h3>Shinkai</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" img_style="Shinkai" />
+                  <input type="radio" name="author" value="Shinkai" />
                 </label>
               </div>
 
@@ -150,7 +146,7 @@ class mainpage extends Component {
                 <h3>Paprika</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" img_style="Paprika" />
+                  <input type="radio" name="author" value="Paprika" />
                 </label>
               </div>
 
@@ -163,17 +159,14 @@ class mainpage extends Component {
                 <h3>Hosoda</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" img_style="Hosoda" />
+                  <input type="radio" name="author" value="Hosoda" />
                 </label>
               </div>
 
               <br />
               <br />
               <br />
-              <Route path="/resultpage" component={resultpage} />
-              <Link to="resultpage">
-                <button type="submit">Convert</button>
-              </Link>
+              <button type="submit">Convert</button>
             </div>
           </form>
         </div>
@@ -187,9 +180,7 @@ class mainpage extends Component {
             src={img}
             alt="empty_image"
             style={ov_img_style}
-            onMouseOver={(event) => {
-              $imagePreview;
-            }}
+            onMouseOver={(event) => {}}
           />
           <img src={img} alt="empty_image" style={ov_img_style} />
           <img src={img} alt="empty_image" style={ov_img_style} />
