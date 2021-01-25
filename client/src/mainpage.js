@@ -8,7 +8,6 @@ import hayao_example from "./img/hayao_example.PNG";
 import paprika_example from "./img/paprika_example.PNG";
 import shinkai_example from "./img/shinkai_example.PNG";
 import afimg from "./img/iu.jpg";
-import Overlay from "react-image-overlay";
 class mainpage extends Component {
   constructor(props) {
     super(props);
@@ -48,6 +47,10 @@ class mainpage extends Component {
       width: "200px",
       heigh: "200px",
       marginRight: "10px",
+    };
+    const ov_afimg_style = {
+      width: "200px",
+      height: "200px",
     };
 
     let { imagePreviewUrl } = this.state;
@@ -174,34 +177,34 @@ class mainpage extends Component {
         <div className="overview">
           <h2>Overveiw</h2>
           <br />
-          <Overlay>
-            url={img}; overlayUrl = {afimg}; watermark={false}
-          </Overlay>
           <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
+          <div className="overlay">
+            <img src={afimg} style={ov_img_style} />
+          </div>
         </div>
-
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <br />
+        <br />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <br />
+        <br />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <br />
+        <br />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <img src={img} alt="empty_image" style={ov_img_style} />
+        <br />
+        <br />
         <div className="about">
           <h2>About</h2>
           <p>Thank you!</p>
