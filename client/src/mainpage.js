@@ -7,7 +7,8 @@ import hosoda_example from "./img/hosoda_example.PNG";
 import hayao_example from "./img/hayao_example.PNG";
 import paprika_example from "./img/paprika_example.PNG";
 import shinkai_example from "./img/shinkai_example.PNG";
-
+import afimg from "./img/iu.jpg";
+import Overlay from "react-image-overlay";
 class mainpage extends Component {
   constructor(props) {
     super(props);
@@ -22,9 +23,6 @@ class mainpage extends Component {
   scrollToOverview = (event) => {
     window.scrollTo(0, 1250);
   };
-
-  handleOver(e) {}
-  handleOut(e) {}
 
   _handleImageChange(e) {
     e.preventDefault();
@@ -54,7 +52,7 @@ class mainpage extends Component {
 
     let { imagePreviewUrl } = this.state;
     let $imagePreview = <img src={img} />;
-    let $imgover = <img src={img} />;
+
     if (imagePreviewUrl) {
       $imagePreview = <img src={imagePreviewUrl} />;
     }
@@ -93,7 +91,7 @@ class mainpage extends Component {
           <br />
           <form
             id="upload_form"
-            action="http://locahost:5000/image/upload"
+            action="http://localhost:5000/image/upload"
             method="post"
             encType="multipart/form-data"
           >
@@ -176,12 +174,9 @@ class mainpage extends Component {
         <div className="overview">
           <h2>Overveiw</h2>
           <br />
-          <img
-            src={img}
-            alt="empty_image"
-            style={ov_img_style}
-            onMouseOver={(event) => {}}
-          />
+          <Overlay>
+            url={img}; overlayUrl = {afimg}; watermark={false}
+          </Overlay>
           <img src={img} alt="empty_image" style={ov_img_style} />
           <img src={img} alt="empty_image" style={ov_img_style} />
           <img src={img} alt="empty_image" style={ov_img_style} />

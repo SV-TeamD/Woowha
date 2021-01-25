@@ -50,7 +50,7 @@ class resultpage extends Component {
         <header className="head">
           <ul>
             <li>
-              <a href="mainpage">Woowha</a>
+              <a href="/">Woowha</a>
             </li>
             <li>
               <a href="#image" onClick={this.scrollToTop}>

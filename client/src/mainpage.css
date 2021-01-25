@@ -100,3 +100,7 @@ div.author4 {
   display: inline-block;
   margin-right: 40px;
 }
+
+div.col1 {
+  display: block;
+}
