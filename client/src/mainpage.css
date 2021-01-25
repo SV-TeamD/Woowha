@@ -42,7 +42,6 @@ button {
   font-size: 23px;
   border: 0;
   outline: 0;
-  position: relative;
   cursor: pointer;
 }
 
@@ -56,12 +55,10 @@ div.select {
 
 div.overview {
   text-align: center;
-  position: relative;
 }
 
 div.about {
   text-align: center;
-  position: relative;
 }
 
 div.upload label[id="file"] {

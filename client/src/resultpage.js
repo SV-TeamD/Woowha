@@ -1,11 +1,22 @@
 import React, { Component } from "react";
+import { Route, Link } from "react-router-dom";
 import "./resultpage.css";
+import mainpage from "./mainpage";
 import img from "./img/empty_image.PNG";
 import facebook from "./img/facebookicon.PNG";
 import twitter from "./img/twittericon.PNG";
 import instagram from "./img/instagramicon.PNG";
 
 class resultpage extends Component {
+  scrollToTop = (event) => {
+    window.scrollTo(0, 0);
+  };
+  scrollToAbout = (event) => {
+    window.scrollTo(0, 1000);
+  };
+  scrollToOverview = (event) => {
+    window.scrollTo(0, 810);
+  };
   _handleImageChange(e) {
     e.preventDefault();
 
@@ -27,8 +38,8 @@ class resultpage extends Component {
       marginRight: "50px",
     };
     const ov_img_style = {
-      width: "80px",
-      heigh: "80px",
+      width: "200px",
+      heigh: "200px",
       marginRight: "10px",
     };
 
@@ -39,18 +50,22 @@ class resultpage extends Component {
         <header className="head">
           <ul>
             <li>
-              <a className="active" href="#home">
-                Woowha
+              <a href="mainpage">Woowha</a>
+            </li>
+            <li>
+              <a href="#image" onClick={this.scrollToTop}>
+                Image
               </a>
             </li>
             <li>
-              <a href="#image">Image</a>
+              <a href="#overview" onClick={this.scrollToOverview}>
+                Overveiw
+              </a>
             </li>
             <li>
-              <a href="#overview">Overveiw</a>
-            </li>
-            <li>
-              <a href="#about">About</a>
+              <a href="#about" onClick={this.scrollToAbout}>
+                About
+              </a>
             </li>
           </ul>
         </header>
@@ -61,7 +76,10 @@ class resultpage extends Component {
           <br />
           <br />
           <button style={sns_img_style}>Save</button>
-          <button>Retry</button>
+          <Route path="/mainpage" component={mainpage} />
+          <Link to="mainpage">
+            <button>Retry</button>
+          </Link>
           <br />
           <br />
           <br />

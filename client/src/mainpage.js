@@ -13,6 +13,15 @@ class mainpage extends Component {
     super(props);
     this.state = { file: "", imagePreviewUrl: "" };
   }
+  scrollToTop = (event) => {
+    window.scrollTo(0, 0);
+  };
+  scrollToAbout = (event) => {
+    window.scrollTo(0, 1500);
+  };
+  scrollToOverview = (event) => {
+    window.scrollTo(0, 1250);
+  };
 
   _handleImageChange(e) {
     e.preventDefault();
@@ -35,15 +44,9 @@ class mainpage extends Component {
       height: "267px",
     };
     const ov_img_style = {
-      width: "80px",
-      heigh: "80px",
+      width: "200px",
+      heigh: "200px",
       marginRight: "10px",
-    };
-    const author_name = {
-      width: "220px",
-      marginRight: "40px",
-      fontWeight: "bold",
-      fontSize: "20px",
     };
 
     let { imagePreviewUrl } = this.state;
@@ -59,18 +62,22 @@ class mainpage extends Component {
         <header className="head">
           <ul>
             <li>
-              <a classNamde="active" href="#home">
-                Woowha
+              <a href="/">Woowha</a>
+            </li>
+            <li>
+              <a href="#image" onClick={this.scrollToTop}>
+                Image
               </a>
             </li>
             <li>
-              <a href="#image">Image</a>
+              <a href="#overview" onClick={this.scrollToOverview}>
+                Overveiw
+              </a>
             </li>
             <li>
-              <a href="#overview">Overveiw</a>
-            </li>
-            <li>
-              <a href="#about">About</a>
+              <a href="#about" onClick={this.scrollToAbout}>
+                About
+              </a>
             </li>
           </ul>
         </header>
@@ -91,7 +98,6 @@ class mainpage extends Component {
               <input
                 type="file"
                 name="file"
-                img_style="Hayao"
                 onChange={(e) => this._handleImageChange(e)}
               />
             </label>
@@ -110,7 +116,7 @@ class mainpage extends Component {
                 <h3>Hayao</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Hayao" />
+                  <input type="radio" name="author" img_style="Hayao" />
                 </label>
               </div>
 
@@ -123,7 +129,7 @@ class mainpage extends Component {
                 <h3>Shinkai</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Shinkai" />
+                  <input type="radio" name="author" img_style="Shinkai" />
                 </label>
               </div>
 
@@ -136,7 +142,7 @@ class mainpage extends Component {
                 <h3>Paprika</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Paprika" />
+                  <input type="radio" name="author" img_style="Paprika" />
                 </label>
               </div>
 
@@ -149,7 +155,7 @@ class mainpage extends Component {
                 <h3>Hosoda</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Hosoda" />
+                  <input type="radio" name="author" img_style="Hosoda" />
                 </label>
               </div>
 
@@ -157,8 +163,9 @@ class mainpage extends Component {
               <br />
               <br />
               <Route path="/resultpage" component={resultpage} />
-
-              <button type="submit">Convert</button>
+              <Link to="resultpage">
+                <button type="submit">Convert</button>
+              </Link>
             </div>
           </form>
         </div>
