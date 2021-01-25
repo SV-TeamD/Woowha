@@ -24,12 +24,12 @@ def upload_file():
     if "file" not in request.files:
         LOGGER.error("No file in request")
         return redirect(request.url)
-    if "style" not in request.form:
+    if "author" not in request.form:
         LOGGER.error("No style in request")
         return redirect(request.url)
 
     file = request.files["file"]
-    style = request.form["style"]
+    style = request.form["author"]
 
     if not _Utils.verify_file_style(file, style):
         LOGGER.error("Fail verifing file. Redirect %s", request.url)
