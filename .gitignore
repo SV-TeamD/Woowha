@@ -42,6 +42,7 @@ image_output/*
 postgresql/
 redis/data/
 redis/logs/
+*.db
 
 **/*lock.json
 **/*.lock
@@ -56,3 +57,7 @@ rabbitmq/logs/
 # model stuff
 dataset/
 checkpoints/
+
+# monitoring
+prometheus/data/
+grafana/data/

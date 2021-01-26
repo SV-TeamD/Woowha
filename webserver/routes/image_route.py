@@ -6,6 +6,7 @@ from PIL import Image
 
 from database.cache import Cache
 from job_producer import JobProducer
+from metrics import metrics
 from utils import _Utils
 
 LOGGER = logging.getLogger(current_app)
@@ -15,6 +16,7 @@ jobProducer = JobProducer()
 
 # http://locahost:5000/image/upload
 @bp.route("/upload", methods=["POST"])
+@metrics.common_counter
 def upload_file():
     """upload file route
 
@@ -50,6 +52,7 @@ def upload_file():
 
 # http://locahost:5000/image/result/filename?style=Hayao
 @bp.route("/result/<string:filename>", methods=["GET"])
+@metrics.common_counter
 def result_page(filename: str):
     """result page
 

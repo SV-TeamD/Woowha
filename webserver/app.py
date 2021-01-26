@@ -2,15 +2,16 @@ import logging
 
 from flask import Flask, request
 
-from database import db
+from database import db, migrate
 from database.cache import Cache
-from routes import main_route, image_route
 from logs import logger
+from metrics import metrics
+import config
 
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object("config")
+    app.config.from_object(config)
 
     register_extensions(app)
     register_blueprints(app)
@@ -31,17 +32,23 @@ def register_extensions(app):
     with app.app_context():
         """Logs"""
         logger.init_app(app)
+        metrics.init_app(app)
 
         """ORM"""
+        from database import image_model
+
         db.init_app(app)
-        # db.drop_all()
         db.create_all()
+        migrate.init_app(app, db)
+        from database import image_model
 
         """Cache"""
         Cache()
 
 
 def register_blueprints(app):
+    from routes import main_route, image_route
+
     """Blueprints"""
     app.register_blueprint(main_route.bp)
     app.register_blueprint(image_route.bp)

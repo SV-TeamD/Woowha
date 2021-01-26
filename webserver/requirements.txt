@@ -12,3 +12,4 @@ psycopg2
 pillow
 imagehash
 redis
+prometheus-flask-exporter
