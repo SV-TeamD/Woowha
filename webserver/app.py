@@ -12,7 +12,6 @@ def create_app():
     # ORM
     db.init_app(_app)
     with _app.app_context():
-        db.drop_all()
         db.create_all()
         Cache()
 
@@ -21,8 +20,3 @@ def create_app():
     _app.register_blueprint(image_route.bp)
 
     return _app
-
-
-if __name__ == "__main__":
-    app = create_app()
-    app.run(host="0.0.0.0", debug=True)
