@@ -12,7 +12,7 @@ class ImageModel(db.Model):
         self.styles = styles
 
     def __repr__(self):
-        return "<ImageModel %r>" % self.styles
+        return "<ImageModel {} {}>".format(self.filename, self.styles)
 
     @classmethod
     def serialize(cls):
