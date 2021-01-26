@@ -1,13 +1,13 @@
-from .model import model as models
-from .train import Trainer
-from .config import Config as Config
-from .dataloader import load_image_dataloader
-
 import torch
 import argparse
 import torchvision.utils as tvutils
 import os
 from torchvision import transforms
+
+import CartoonGAN_model as models
+from .CartoonGAN_train import CartoonGANTrainer
+from .config import CartoonGANConfig as Config
+from .dataloader import load_image_dataloader
 
 
 def get_args():
