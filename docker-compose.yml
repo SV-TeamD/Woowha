@@ -49,11 +49,17 @@ services:
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8
 
   webserver:
-    build:
-      context: ./webserver
-      dockerfile: Dockerfile
+    build: ./webserver
+    #build:
+    #context: ./webserver
+    #dockerfile: Dockerfile
+    image: nginx:latest
+    container_name: webserver
+    restart: always
+
     ports:
       - 5000:5000
+      #- 8000:8000
     networks:
       - team-d
     depends_on:
@@ -69,7 +75,18 @@ services:
       - ./image_input:/data/image_input
       - ./image_output:/data/image_output
       - ./webserver:/app
+      - ./webserver/nginx.conf:/etc/nginx/nginx.conf
+
     command: [sh, /app/start-dev.sh]
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - webserver
 
   modelserver:
     build:
