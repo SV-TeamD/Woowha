@@ -3,10 +3,10 @@ import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from .config import Config as Config
+from .config import CartoonGANConfig as Config
 
 
-class Trainer:
+class CartoonGANTrainer:
     def __init__(
         self,
         generator,
