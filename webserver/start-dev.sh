@@ -11,4 +11,4 @@ echo "${LCYAN}Web Server Start"
 bash ../wait-for-it.sh rabbitmq:15672 -s -t 30
 
 #python3 app.py
-gunicorn -w 1 -b 0.0.0.0:5000 wsgi:server
+gunicorn -w 2 -b 0.0.0.0:8000 manage:app
