@@ -2,11 +2,12 @@ import logging
 
 from flask import Flask, request
 
+import config
 from database import db, migrate
 from database.cache import Cache
 from logs import logger
 from metrics import metrics
-import config
+from metrics.metrics_register import MetricsRegister
 
 
 def create_app():
@@ -35,12 +36,12 @@ def register_extensions(app):
         metrics.init_app(app)
 
         """ORM"""
-        from database import image_model
-
         db.init_app(app)
         db.create_all()
         migrate.init_app(app, db)
         from database import image_model
+
+        MetricsRegister.register_defaults()
 
         """Cache"""
         Cache()

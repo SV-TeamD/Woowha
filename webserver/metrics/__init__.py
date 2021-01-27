@@ -1,7 +1,7 @@
-from .metrics_by_path import Metrics
+import os
 
-metrics = Metrics()
+from prometheus_flask_exporter import PrometheusMetrics
 
-# from prometheus_flask_exporter import PrometheusMetrics
 
-# metrics = PrometheusMetrics.for_app_factory()
+os.environ["DEBUG_METRICS"] = "1"
+metrics = PrometheusMetrics(app=None)

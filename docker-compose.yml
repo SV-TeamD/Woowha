@@ -153,9 +153,12 @@ services:
 
   redis-exporter:
     image: oliver006/redis_exporter
-    command: -redis.addr redis://redis:6379
     ports:
       - 9121:9121
+    command:
+      - --redis.addr=redis:6379
+    networks:
+      - team-d
 
   alertmanager:
     image: prom/alertmanager
