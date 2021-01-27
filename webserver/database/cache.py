@@ -11,21 +11,13 @@ cache = redis.Redis(host="redis", port=6379)
 
 class Cache:
     file_list_key = "images:file_list"
+    working_key = "images:working"
     LOGGER = logging.getLogger("database.cache")
 
     @classmethod
     def __init__(cls):
         cls.LOGGER.debug("Cache init!")
         # cls.load_db() # DB에 저장된 이미지를 캐시로 불러온다
-
-    @classmethod
-    def load_db(cls):
-        all_data_in_db = ImageModel.query.all()
-        if not all_data_in_db:
-            return
-        cls.add_all_db_data(all_data_in_db)
-        cls.LOGGER.debug("Image list: {}".format(cache.smembers(cls.file_list_key)))
-        cls.LOGGER.info("Caching image files from DB Done")
 
     @classmethod
     def add_all_db_data(cls, all_data_in_db: List[ImageModel]):
@@ -38,16 +30,41 @@ class Cache:
 
     @classmethod
     def exist_image(cls, filename: str):
-        cls.LOGGER.debug("Image does not exist in cache.")
-        cls.LOGGER.debug("Save image")
-        return bool(cache.sismember(cls.file_list_key, filename))
+        result = bool(cache.sismember(cls.file_list_key, filename))
+        if result:
+            cls.LOGGER.debug("Image does not exist in cache.")
+            cls.LOGGER.debug("Save image %s" % filename)
+        return result
 
     @classmethod
     def exist_output_image(cls, filename: str, style: str):
-        cls.LOGGER.debug("Output image exists in cache. Response input filename")
-        return bool(cache.sismember(style, filename))
+        result = bool(cache.sismember(style, filename))
+        if result:
+            cls.LOGGER.debug("Output image exists in cache. Response input filename")
+        return result
 
     @classmethod
+    def exist_working(cls, filename: str, style: str):
+        result = bool(cache.sismember(cls.working_key, cls.working_job_name(filename, style)))
+        if result:
+            cls.LOGGER.debug("Job in queue already. {}, {}".format(filename, style))
+        return result
+
+    @classmethod
+    def load_db(cls):
+        # TODO: Add checking storage
+        all_data_in_db = ImageModel.query.all()
+        if not all_data_in_db:
+            return
+        cls.add_all_db_data(all_data_in_db)
+        cls.LOGGER.debug("Image list: {}".format(cache.smembers(cls.file_list_key)))
+        cls.LOGGER.info("Caching image files from DB Done")
+
+    @classmethod
+    def put_working(cls, filename: str, style: str):
+        cache.sadd(cls.working_key, cls.working_job_name(filename, style))
+        cls.LOGGER.debug("Add job in queue. {}, {}".format(filename, style))
+
     def wait_for_image(cls, filename: str, style: str):
         count = 0
         try:
@@ -59,3 +76,7 @@ class Cache:
         except TimeoutError as timeout_err:
             cls.LOGGER.error("Timeout : %s, %s", filename, style)
             raise TimeoutError from timeout_err
+
+    @classmethod
+    def working_job_name(cls, filename: str, style: str):
+        return "_".join([filename, style])

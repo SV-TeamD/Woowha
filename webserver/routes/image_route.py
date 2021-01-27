@@ -14,6 +14,7 @@ LOGGER = logging.getLogger(current_app)
 
 bp = Blueprint("image_route", __name__, url_prefix="/image")
 jobProducer = JobProducer()
+
 # http://locahost:5000/image/upload
 @bp.route("/upload", methods=["POST"])
 @MetricsRegister.common_counter
@@ -45,8 +46,9 @@ def upload_file():
         return _Utils.response_message(input_filename)
     if not Cache.exist_image(input_filename):
         _Utils.save_image(img, input_filename)
-
-    jobProducer.publish(msg=_Utils.job_message(input_filename, style))
+    if not Cache.exist_working(input_filename, style):
+        Cache.put_working(input_filename, style)
+        jobProducer.publish(msg=_Utils.job_message(input_filename, style))
 
     return _Utils.response_message(input_filename)
 

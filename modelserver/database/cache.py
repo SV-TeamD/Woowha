@@ -9,6 +9,7 @@ cache = redis.Redis(host="redis", port=6379)
 
 class Cache:
     file_list_key = "images:file_list"
+    working_key = "images:working"
 
     @classmethod
     def add(cls, filename: str, style: str):
@@ -31,3 +32,11 @@ class Cache:
     @classmethod
     def exist_output_image(cls, filename: str, style: str):
         return bool(cache.sismember(style, filename))
+
+    @classmethod
+    def remove_working(cls, filename: str, style: str):
+        cache.srem(cls.working_key, cls.working_job_name(filename, style))
+
+    @classmethod
+    def working_job_name(cls, filename: str, style: str):
+        return "_".join([filename, style])

@@ -21,7 +21,6 @@ runner = Runner(input_dir=INPUT_FOLDER, output_dir=OUTPUT_FOLDER)
 
 
 class JobConsumer:
-    @classmethod
     def __init__(self):
         channel.queue_declare(queue=IMAGE_QUEUE, durable=True)
         channel.basic_qos(prefetch_count=1)
@@ -58,7 +57,7 @@ class JobConsumer:
         else:
             Database.insert(filename, [style])
             print("{} {} inserted in database".format(filename, style))
-        Database.select_image(filename)
+        Cache.remove_working(filename, style)
 
     @classmethod
     def generate_image(cls, _channel, delivery_tag, filename, style):
@@ -69,8 +68,3 @@ class JobConsumer:
         except Exception as e:
             _channel.basic_reject(delivery_tag, requeue=False)
             raise e from e
-
-
-if __name__ == "__main__":
-    jc = JobConsumer()
-    jc.start()
