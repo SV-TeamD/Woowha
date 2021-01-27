@@ -60,19 +60,29 @@ div.select {
   opacity: 1;
 }
 .overlay {
-  opacity: 0;
+  position: absolute;
   top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+.olimg {
   position: absolute;
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  margin-right: 10px;
 }
 
 div.about {
   text-align: center;
 }
 
-div.upload label[id="file_id"] {
+div.upload label[id="file"] {
   display: inline-block;
   background-color: #7fc4fd;
   color: white;

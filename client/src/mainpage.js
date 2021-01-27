@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./mainpage.css";
-import { Route, Link } from "react-router-dom";
-import resultpage from "./resultpage";
 import img from "./img/empty_image.PNG";
+import ov_1 from "./overviewimg/ov_1.jpg";
+import ol_1 from "./overlayimg/ol_1.png";
 import hosoda_example from "./img/hosoda_example.PNG";
 import hayao_example from "./img/hayao_example.PNG";
 import paprika_example from "./img/paprika_example.PNG";
@@ -43,15 +43,12 @@ class mainpage extends Component {
       height: "267px",
     };
     const ov_img_style = {
-      width: "200px",
-      heigh: "200px",
-      marginRight: "10px",
-    };
-    const ov_afimg_style = {
+      display: "inline-block",
       width: "200px",
       height: "200px",
       marginRight: "10px",
     };
+    const ov_afimg_style = {};
 
     let { imagePreviewUrl } = this.state;
     let $imagePreview = <img src={img} />;
@@ -94,11 +91,11 @@ class mainpage extends Component {
           <br />
           <form
             id="upload_form"
-            action="http://localhost:5000/image/upload"
+            action="http://locahost:5000/image/upload"
             method="post"
             encType="multipart/form-data"
           >
-            <label id="file_id">
+            <label id="file">
               Upload
               <input
                 type="file"
@@ -178,49 +175,18 @@ class mainpage extends Component {
           <h2>Overveiw</h2>
           <br />
           <div className="col1">
-            <img src={img} alt="empty_image" style={ov_img_style} />
+            <img src={ov_1} alt="empty_image" style={ov_img_style} />
             <div className="overlay">
-              <img src={img} style={ov_afimg_style} />
+              <img className="olimg" src={ol_1} style={ov_afimg_style} />
             </div>
           </div>
+
           <div className="col1">
-            <img src={img} alt="empty_image" style={ov_img_style} />
+            <img src={ov_1} alt="empty_image" style={ov_img_style} />
             <div className="overlay">
-              <img src={img} style={ov_afimg_style} />
+              <img className="olimg" src={img} style={ov_afimg_style} />
             </div>
           </div>
-          <div className="col1">
-            <img src={img} alt="empty_image" style={ov_img_style} />
-            <div className="overlay">
-              <img src={img} style={ov_afimg_style} />
-            </div>
-          </div>
-          <div className="col1">
-            <img src={img} alt="empty_image" style={ov_img_style} />
-            <div className="overlay">
-              <img src={img} style={ov_afimg_style} />
-            </div>
-          </div>
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
         </div>
 
         <div className="about">

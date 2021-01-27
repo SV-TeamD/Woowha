@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./resultpage.css";
-import mainpage from "./mainpage";
 import img from "./img/empty_image.PNG";
 import facebook from "./img/facebookicon.PNG";
 import twitter from "./img/twittericon.PNG";
@@ -17,6 +16,12 @@ class resultpage extends Component {
   scrollToOverview = (event) => {
     window.scrollTo(0, 810);
   };
+  componentDidMount() {
+    fetch("http://locahost:5000/image/result/filename?style=Hayao")
+      .then((response) => response.json())
+      .then((response) => this.setState({ users: response }));
+  }
+
   _handleImageChange(e) {
     e.preventDefault();
 
@@ -76,8 +81,7 @@ class resultpage extends Component {
           <br />
           <br />
           <button style={sns_img_style}>Save</button>
-          <Route path="/mainpage" component={mainpage} />
-          <Link to="mainpage">
+          <Link to="/">
             <button>Retry</button>
           </Link>
           <br />
