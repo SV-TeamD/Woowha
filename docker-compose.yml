@@ -102,8 +102,10 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./client:/app
+      - ./image_input:/data/image_input
+      - ./image_output:/data/image_output
       - /app/node_modules
+      - ./client:/app
     networks:
       - team-d
     environment:

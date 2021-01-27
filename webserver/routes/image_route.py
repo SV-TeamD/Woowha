@@ -51,18 +51,21 @@ def upload_file():
     return _Utils.response_message(input_filename)
 
 
-# http://locahost:5000/image/result/filename?style=Hayao
-@bp.route("/result/<string:filename>", methods=["GET"])
+# http://locahost:5000/image/result?style=Hayao
+@bp.route("/result", methods=["POST"])
 @MetricsRegister.common_counter
-def result_page(filename: str):
+def result_page():
     """result page
+    MIMI Type: application/json
 
     Args:
-        filename (str): filename
+        { "filename": filename } (include extension)
 
     Returns:
         json: { "url": url of result image }
     """
+    req_data = request.get_json()
+    filename = req_data["filename"]
     style = request.args.get("style")
     if not _Utils.verify_filename_style(filename, style):
         return "Fail", 500
