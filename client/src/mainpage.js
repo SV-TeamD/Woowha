@@ -44,23 +44,7 @@ class mainpage extends Component {
 
     reader.readAsDataURL(file);
   }
-  componentDidMount() {
-    this.handleButton();
-  }
-  handleButton = () => {
-    fetch("http://localhost/image/result", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        res.json();
-      })
-      .then((data) => {
-        this.setState({ url: data });
-      });
-  };
+
   render() {
     const st_img_style = {
       width: "220px",
@@ -73,10 +57,10 @@ class mainpage extends Component {
     };
 
     let { imagePreviewUrl } = this.state;
-    let $imagePreview = <img src={img} />;
+    let $imagePreview = <img src={img} alt="" />;
 
     if (imagePreviewUrl) {
-      $imagePreview = <img src={imagePreviewUrl} />;
+      $imagePreview = <img src={imagePreviewUrl} alt="" />;
     }
 
     return (
