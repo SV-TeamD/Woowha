@@ -31,7 +31,9 @@ header {
 div.upload {
   text-align: center;
 }
-
+h2 {
+  text-align: center;
+}
 button {
   background-color: #7fc4fd;
   color: white;
@@ -55,27 +57,30 @@ div.select {
 
 .overview {
   position: relative;
+  display: inline-block;
+  margin-left: 3px;
+  width: 263px;
+  height: 220px;
+  text-align: center;
 }
 .overview:hover .overlay {
   opacity: 1;
 }
 .overlay {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
+  height: 220px;
+  width: 263px;
   opacity: 0;
   transition: 0.5s ease;
 }
 .olimg {
   position: absolute;
-  display: inline-block;
-  width: 200px;
-  height: 200px;
-  margin-right: 10px;
+  height: 220px;
+  width: 263px;
+  bottom: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 div.about {
@@ -120,8 +125,4 @@ div.author3 {
 div.author4 {
   display: inline-block;
   margin-right: 40px;
-}
-
-div.col1 {
-  display: inline-block;
 }

@@ -41,8 +41,32 @@ div.sns {
   margin-right: auto;
 }
 
-div.overview {
+.overview {
+  position: relative;
+  display: inline-block;
+  margin-left: 3px;
+  width: 263px;
+  height: 220px;
   text-align: center;
+}
+.overview:hover .overlay {
+  opacity: 1;
+}
+.overlay {
+  position: absolute;
+  height: 220px;
+  width: 263px;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+.olimg {
+  position: absolute;
+  height: 220px;
+  width: 263px;
+  bottom: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 div.about {

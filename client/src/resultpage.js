@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./resultpage.css";
+import ov_1 from "./overviewimg/ov_1.jpg";
+import ol_1 from "./overlayimg/ol_1.png";
 import img from "./img/empty_image.PNG";
 import facebook from "./img/facebookicon.PNG";
 import twitter from "./img/twittericon.PNG";
 import instagram from "./img/instagramicon.PNG";
-
 class resultpage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { url: null };
+  }
+
   scrollToTop = (event) => {
     window.scrollTo(0, 0);
   };
@@ -16,26 +22,23 @@ class resultpage extends Component {
   scrollToOverview = (event) => {
     window.scrollTo(0, 810);
   };
+
   componentDidMount() {
-    fetch("http://locahost:5000/image/result/filename?style=Hayao")
-      .then((response) => response.json())
-      .then((response) => this.setState({ users: response }));
+    this._getImage();
   }
-
-  _handleImageChange(e) {
-    e.preventDefault();
-
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result,
+  _getImage() {
+    fetch("http://localhost/image/result", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        res.json();
+      })
+      .then((data) => {
+        this.setState({ url: data });
       });
-    };
-
-    reader.readAsDataURL(file);
   }
 
   render() {
@@ -43,15 +46,15 @@ class resultpage extends Component {
       marginRight: "50px",
     };
     const ov_img_style = {
-      width: "200px",
-      heigh: "200px",
-      marginRight: "10px",
+      display: "block",
+      width: "263px",
+      height: "220px",
     };
-
     return (
       <div>
         <br />
         <br />
+
         <header className="head">
           <ul>
             <li>
@@ -97,34 +100,106 @@ class resultpage extends Component {
           <br />
           <br />
         </div>
+
+        <h2>Overveiw</h2>
+        <br />
+
         <div className="overview">
-          <h2>Overveiw</h2>
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <img src={img} alt="empty_image" style={ov_img_style} />
-          <br />
-          <br />
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
         </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
 
         <div className="about">
           <h2>About</h2>

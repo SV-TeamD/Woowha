@@ -10,7 +10,7 @@ import shinkai_example from "./img/shinkai_example.PNG";
 class mainpage extends Component {
   constructor(props) {
     super(props);
-    this.state = { file: "", imagePreviewUrl: "" };
+    this.state = { file: "", imagePreviewUrl: "", url: "" };
   }
   scrollToTop = (event) => {
     window.scrollTo(0, 0);
@@ -37,18 +37,33 @@ class mainpage extends Component {
 
     reader.readAsDataURL(file);
   }
+  componentDidMount() {
+    this.handleButton();
+  }
+  handleButton = () => {
+    fetch("http://localhost/image/result", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        res.json();
+      })
+      .then((data) => {
+        this.setState({ url: data });
+      });
+  };
   render() {
     const st_img_style = {
       width: "220px",
       height: "267px",
     };
     const ov_img_style = {
-      display: "inline-block",
-      width: "200px",
-      height: "200px",
-      marginRight: "10px",
+      display: "block",
+      width: "263px",
+      height: "220px",
     };
-    const ov_afimg_style = {};
 
     let { imagePreviewUrl } = this.state;
     let $imagePreview = <img src={img} />;
@@ -91,7 +106,7 @@ class mainpage extends Component {
           <br />
           <form
             id="upload_form"
-            action="http://locahost:5000/image/upload"
+            action="http://localhost/image/upload"
             method="post"
             encType="multipart/form-data"
           >
@@ -170,24 +185,104 @@ class mainpage extends Component {
         </div>
         <br />
         <br />
-
+        <h2>Overveiw</h2>
+        <br />
         <div className="overview">
-          <h2>Overveiw</h2>
-          <br />
-          <div className="col1">
-            <img src={ov_1} alt="empty_image" style={ov_img_style} />
-            <div className="overlay">
-              <img className="olimg" src={ol_1} style={ov_afimg_style} />
-            </div>
-          </div>
-
-          <div className="col1">
-            <img src={ov_1} alt="empty_image" style={ov_img_style} />
-            <div className="overlay">
-              <img className="olimg" src={img} style={ov_afimg_style} />
-            </div>
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
           </div>
         </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <div className="overview">
+          <img src={ov_1} alt="empty_image" style={ov_img_style} />
+          <div className="overlay">
+            <img className="olimg" alt="" src={ol_1} />
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
 
         <div className="about">
           <h2>About</h2>
