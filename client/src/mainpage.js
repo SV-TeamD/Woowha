@@ -7,6 +7,13 @@ import hosoda_example from "./img/hosoda_example.PNG";
 import hayao_example from "./img/hayao_example.PNG";
 import paprika_example from "./img/paprika_example.PNG";
 import shinkai_example from "./img/shinkai_example.PNG";
+import cezanne_example from "./img/Cezanne_example.png";
+import monet_example from "./img/Monet_example.png";
+import pelissero_example from "./img/Pelissero_example.jpg";
+import sonagi_example from "./img/Sonagi_example.png";
+import vangogh_example from "./img/Vangogh_example.jpg";
+import ukiyoe_example from "./img/Ukiyoe_example.png";
+
 class mainpage extends Component {
   constructor(props) {
     super(props);
@@ -16,10 +23,10 @@ class mainpage extends Component {
     window.scrollTo(0, 0);
   };
   scrollToAbout = (event) => {
-    window.scrollTo(0, 1500);
+    window.scrollTo(0, 1800);
   };
   scrollToOverview = (event) => {
-    window.scrollTo(0, 1250);
+    window.scrollTo(0, 1600);
   };
 
   _handleImageChange(e) {
@@ -176,6 +183,82 @@ class mainpage extends Component {
                 </label>
               </div>
 
+              <div className="author5">
+                <img
+                  src={pelissero_example}
+                  alt="empty_image"
+                  style={st_img_style}
+                />
+                <h3>Pelissero</h3>
+                <p>Explain</p>
+                <label id="author">
+                  <input type="radio" name="author" value="Pelissero" />
+                </label>
+              </div>
+
+              <br />
+              <br />
+              <br />
+              <div className="author6">
+                <img
+                  src={monet_example}
+                  alt="empty_image"
+                  style={st_img_style}
+                />
+                <h3>Monet</h3>
+                <p>Explain</p>
+                <label id="author">
+                  <input type="radio" name="author" value="Monet" />
+                </label>
+              </div>
+              <div className="author7">
+                <img
+                  src={vangogh_example}
+                  alt="empty_image"
+                  style={st_img_style}
+                />
+                <h3>VanGogh</h3>
+                <p>Explain</p>
+                <label id="author">
+                  <input type="radio" name="author" value="VanGogh" />
+                </label>
+              </div>
+              <div className="author8">
+                <img
+                  src={cezanne_example}
+                  alt="empty_image"
+                  style={st_img_style}
+                />
+                <h3>Cezanne</h3>
+                <p>Explain</p>
+                <label id="author">
+                  <input type="radio" name="author" value="Cezanne" />
+                </label>
+              </div>
+              <div className="author9">
+                <img
+                  src={ukiyoe_example}
+                  alt="empty_image"
+                  style={st_img_style}
+                />
+                <h3>Ukiyoe</h3>
+                <p>Explain</p>
+                <label id="author">
+                  <input type="radio" name="author" value="Ukiyoe" />
+                </label>
+              </div>
+              <div className="author10">
+                <img
+                  src={sonagi_example}
+                  alt="empty_image"
+                  style={st_img_style}
+                />
+                <h3>Sonagi</h3>
+                <p>Explain</p>
+                <label id="author">
+                  <input type="radio" name="author" value="Sonagi" />
+                </label>
+              </div>
               <br />
               <br />
               <br />
