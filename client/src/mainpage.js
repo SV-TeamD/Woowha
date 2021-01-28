@@ -124,7 +124,7 @@ class mainpage extends Component {
                 <h3>Hayao</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Hayao" />
+                  <input type="radio" name="author" value="cartoongan_hayao.pth" />
                 </label>
               </div>
 
@@ -137,7 +137,7 @@ class mainpage extends Component {
                 <h3>Shinkai</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Shinkai" />
+                  <input type="radio" name="author" value="cartoongan_shinkai.pth" />
                 </label>
               </div>
 
@@ -150,7 +150,7 @@ class mainpage extends Component {
                 <h3>Paprika</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Paprika" />
+                  <input type="radio" name="author" value="cartoongan_paprika.pth" />
                 </label>
               </div>
 
@@ -163,7 +163,7 @@ class mainpage extends Component {
                 <h3>Hosoda</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Hosoda" />
+                  <input type="radio" name="author" value="cartoongan_hosoda.pth" />
                 </label>
               </div>
 
