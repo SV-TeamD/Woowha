@@ -5,11 +5,11 @@ from flask.json import jsonify
 
 import imagehash
 
-ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS")
+ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS").split(",")
 INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
 WAIT_FOR_OUTPUT_IMAGE_SECOND = os.getenv("WAIT_FOR_OUTPUT_IMAGE_SECOND")
-STYLES = os.getenv("STYLES")
+STYLES = os.getenv("STYLES").split(",")
 
 
 class _Utils:

@@ -8,7 +8,7 @@ echo "${LCYAN}Web Server Start"
 # Usage:
 #     ...
 #     -- COMMAND ARGS             Execute command with args after the test finishes
-bash ../wait-for-it.sh rabbitmq:15672 -s -t 30
+bash ../wait-for-it.sh rabbitmq:15672 -s -t 300
 
 #python3 app.py
 gunicorn -w 2 -b 0.0.0.0:8000 manage:app

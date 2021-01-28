@@ -176,7 +176,7 @@ class mainpage extends Component {
                 <h3>Pelissero</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Pelissero" />
+                  <input type="radio" name="author" value="cartoongan2_pelissero.ckpt" />
                 </label>
               </div>
 
@@ -192,7 +192,7 @@ class mainpage extends Component {
                 <h3>Monet</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Monet" />
+                  <input type="radio" name="author" value="cyclegan_monet.pth" />
                 </label>
               </div>
               <div className="author7">
@@ -204,7 +204,7 @@ class mainpage extends Component {
                 <h3>VanGogh</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="VanGogh" />
+                  <input type="radio" name="author" value="cyclegan_vangogh.pth" />
                 </label>
               </div>
               <div className="author8">
@@ -216,7 +216,7 @@ class mainpage extends Component {
                 <h3>Cezanne</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Cezanne" />
+                  <input type="radio" name="author" value="cyclegan_cezanne.pth" />
                 </label>
               </div>
               <div className="author9">
@@ -228,10 +228,10 @@ class mainpage extends Component {
                 <h3>Ukiyoe</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="Ukiyoe" />
+                  <input type="radio" name="author" value="cyclegan_ukiyoe.pth" />
                 </label>
               </div>
-              <div className="author10">
+              {/* <div className="author10">
                 <img
                   src={sonagi_example}
                   alt="empty_image"
@@ -242,7 +242,7 @@ class mainpage extends Component {
                 <label id="author">
                   <input type="radio" name="author" value="Sonagi" />
                 </label>
-              </div>
+              </div> */}
               <br />
               <br />
               <br />

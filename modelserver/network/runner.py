@@ -6,9 +6,10 @@ import torchvision.utils as vutils
 import numpy as np
 from PIL import Image
 
-from network.transformer import Transformer, STYLES
+from network.transformer import Transformer
 
-ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS")
+ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS").split(",")
+STYLES = os.getenv("STYLES").split(",")
 
 
 class Runner:
@@ -26,7 +27,7 @@ class Runner:
         cls.prev_style = None
 
     @classmethod
-    def run(cls, imagefile_name, style="Hayao", load_size=450):
+    def run(cls, imagefile_name, style, load_size=450):
         input_image_path = os.path.join(cls.input_dir, imagefile_name)
         try:
             cls.is_file(input_image_path)
@@ -59,7 +60,7 @@ class Runner:
         if cls.prev_style and cls.prev_style == style:
             return
         cls.prev_style = style
-        model_path = os.path.join(model_dir, style + "_net_G_float.pth")
+        model_path = os.path.join(model_dir, style)
         try:
             cls.model = Transformer()
             cls.model.load_state_dict(torch.load(model_path))

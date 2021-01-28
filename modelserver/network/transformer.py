@@ -6,9 +6,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-STYLES = os.getenv("STYLES")
-
-
 class Transformer(nn.Module):
     def __init__(self):
         super(Transformer, self).__init__()
