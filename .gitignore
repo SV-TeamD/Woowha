@@ -28,7 +28,7 @@ yarn-error.log*
 **/*.log
 
 # models
-*.pth
+modelserver/network/pretrained_model/*
 
 # statics
 image_input/*
@@ -47,7 +47,6 @@ redis/logs/
 **/*lock.json
 **/*.lock
 
-*.pth
 .pytest*
 
 # message queue
