@@ -49,7 +49,7 @@ button {
 
 div.select {
   background-color: #bce0fd;
-  height: 570px;
+  height: 1000px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -84,7 +84,10 @@ div.select {
 }
 
 div.about {
+  padding-top: 30px;
   text-align: center;
+  height: 150px;
+  background-color: #bce0fd;
 }
 
 div.upload label[id="file"] {
@@ -123,6 +126,36 @@ div.author3 {
 }
 
 div.author4 {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+div.author5 {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+div.author6 {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+div.author7 {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+div.author8 {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+div.author9 {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+div.author10 {
   display: inline-block;
   margin-right: 40px;
 }
