@@ -18,10 +18,10 @@ class JSONBadRequest(BadRequest):
         return [("Content-Type", "application/json")]
 
 
-def on_json_loading_failed(self):
+def on_json_loading_failed(e):
     ctx = _request_ctx_stack.top
     if ctx is not None and ctx.app.config.get("DEBUG", False):
-        raise JSONBadRequest("Failed to decode JSON object")
+        raise JSONBadRequest("Failed to decode JSON object: {0}".format(e))
     raise JSONBadRequest()
 
 

@@ -124,7 +124,11 @@ class mainpage extends Component {
                 <h3>Hayao</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cartoongan_hayao.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cartoongan_hayao.pth"
+                  />
                 </label>
               </div>
 
@@ -137,7 +141,11 @@ class mainpage extends Component {
                 <h3>Shinkai</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cartoongan_shinkai.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cartoongan_shinkai.pth"
+                  />
                 </label>
               </div>
 
@@ -150,7 +158,11 @@ class mainpage extends Component {
                 <h3>Paprika</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cartoongan_paprika.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cartoongan_paprika.pth"
+                  />
                 </label>
               </div>
 
@@ -163,7 +175,11 @@ class mainpage extends Component {
                 <h3>Hosoda</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cartoongan_hosoda.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cartoongan_hosoda.pth"
+                  />
                 </label>
               </div>
 
@@ -176,7 +192,11 @@ class mainpage extends Component {
                 <h3>Pelissero</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cartoongan2_pelissero.ckpt" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cartoongan2_pelissero.ckpt"
+                  />
                 </label>
               </div>
 
@@ -192,7 +212,11 @@ class mainpage extends Component {
                 <h3>Monet</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cyclegan_monet.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cyclegan_monet.pth"
+                  />
                 </label>
               </div>
               <div className="author7">
@@ -204,7 +228,11 @@ class mainpage extends Component {
                 <h3>VanGogh</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cyclegan_vangogh.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cyclegan_vangogh.pth"
+                  />
                 </label>
               </div>
               <div className="author8">
@@ -216,7 +244,11 @@ class mainpage extends Component {
                 <h3>Cezanne</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cyclegan_cezanne.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cyclegan_cezanne.pth"
+                  />
                 </label>
               </div>
               <div className="author9">
@@ -228,7 +260,11 @@ class mainpage extends Component {
                 <h3>Ukiyoe</h3>
                 <p>Explain</p>
                 <label id="author">
-                  <input type="radio" name="author" value="cyclegan_ukiyoe.pth" />
+                  <input
+                    type="radio"
+                    name="author"
+                    value="cyclegan_ukiyoe.pth"
+                  />
                 </label>
               </div>
               {/* <div className="author10">

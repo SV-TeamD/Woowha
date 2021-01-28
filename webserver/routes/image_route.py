@@ -16,7 +16,7 @@ bp = Blueprint("image_route", __name__, url_prefix="/image")
 jobProducer = JobProducer()
 
 # http://locahost:5000/image/upload
-@bp.route("/upload", methods=["POST"])
+@bp.route("/upload", methods=["GET", "POST"])
 @MetricsRegister.common_counter
 def upload_file():
     """upload file route
@@ -52,7 +52,7 @@ def upload_file():
 
 
 # http://locahost:5000/image/result?style=Hayao
-@bp.route("/result", methods=["POST"])
+@bp.route("/result", methods=["GET", "POST"])
 @MetricsRegister.common_counter
 def result_page():
     """result page

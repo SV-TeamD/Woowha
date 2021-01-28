@@ -2,7 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import mainpage from "./mainpage";
 import resultpage from "./resultpage";
-import testpage from "./testpage";
+import testpage from "./test";
 
 const App = () => {
   return (

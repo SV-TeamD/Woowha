@@ -7,6 +7,8 @@ import img from "./img/empty_image.PNG";
 import facebook from "./img/facebookicon.PNG";
 import twitter from "./img/twittericon.PNG";
 import instagram from "./img/instagramicon.PNG";
+import axios from "axios";
+
 class resultpage extends Component {
   constructor(props) {
     super(props);
@@ -23,23 +25,7 @@ class resultpage extends Component {
     window.scrollTo(0, 810);
   };
 
-  componentDidMount() {
-    this._getImage();
-  }
-  _getImage() {
-    fetch("http://localhost/image/result", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        res.json();
-      })
-      .then((data) => {
-        this.setState({ url: data });
-      });
-  }
+  componentDidMount() {}
 
   render() {
     const sns_img_style = {
