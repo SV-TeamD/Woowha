@@ -41,19 +41,20 @@ def upload_file():
     img = Image.open(file)
     filename = str(file.filename)
     input_filename = _Utils.input_filename(img, filename)
+    style_no_extension = style.split(".")[0]
 
-    if Cache.exist_output_image(input_filename, style):
+    if Cache.exist_output_image(input_filename, style_no_extension):
         return _Utils.response_message(input_filename)
     if not Cache.exist_image(input_filename):
         _Utils.save_image(img, input_filename)
-    if not Cache.exist_working(input_filename, style):
-        Cache.put_working(input_filename, style)
+    if not Cache.exist_working(input_filename, style_no_extension):
+        Cache.put_working(input_filename, style_no_extension)
         jobProducer.publish(msg=_Utils.job_message(input_filename, style))
 
     return _Utils.response_message(input_filename)
 
 
-# http://locahost:5000/image/result?style=Hayao
+# http://locahost:5000/image/result
 @bp.route("/result", methods=["POST"])
 @MetricsRegister.common_counter
 def result_page():
@@ -61,7 +62,10 @@ def result_page():
     MIMI Type: application/json
 
     Args:
-        { "filename": filename } (include extension)
+        {
+            "filename": "8bd7299c705c7a2c.jpg", (include extension)
+            "style": "cartoongan_hayao.pth" (include extension)
+        }
 
     Returns:
         json: { "url": url of result image }
@@ -69,7 +73,7 @@ def result_page():
 
     req_data = request.get_json()
     filename = req_data["filename"]
-    style = request.args.get("style")
+    style = req_data["style"].split(".")[0]
     if not _Utils.verify_filename_style(filename, style):
         return "Fail", 500
 

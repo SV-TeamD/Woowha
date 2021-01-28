@@ -5,6 +5,7 @@ import logging
 import redis
 
 from .image_model import ImageModel
+from .postgresql import Database
 
 cache = redis.Redis(host="redis", port=6379)
 
@@ -21,12 +22,14 @@ class Cache:
 
     @classmethod
     def add_all_db_data(cls, all_data_in_db: List[ImageModel]):
-        all_filename = [x.filename for x in all_data_in_db]
-        cache.sadd(cls.file_list_key, *all_filename)
-        for image_model in all_data_in_db:
-            filename = image_model.filename
-            for style in image_model.styles:
-                cache.sadd(style, filename)
+        print("@@@@@@@add_all_db_data in database.cache!")
+        exist_data_in_storage = Database.sync_image_models() # storage에서 db에 담은 정보. 이제 캐시에 넣자
+        print(exist_data_in_storage)
+        print(exist_data_in_storage[0])
+        print(exist_data_in_storage[1])
+        # print(list(map(lambda x: x[0], exist_data_in_storage)))
+        cache.sadd(cls.file_list_key, *list(map(lambda x: x[0], exist_data_in_storage))) # FIXME: list로 감싸야하는지 확실하지 않음
+        [cache.sadd(style, filename) for [filename, style] in exist_data_in_storage]
 
     @classmethod
     def exist_image(cls, filename: str):
@@ -52,11 +55,12 @@ class Cache:
 
     @classmethod
     def load_db(cls):
-        # TODO: Add checking storage
+        Database.sync_image_models()  # DB를 storage와 동기화
         all_data_in_db = ImageModel.query.all()
+        print("all_data_in_db: {}".format(all_data_in_db))
         if not all_data_in_db:
             return
-        cls.add_all_db_data(all_data_in_db)
+        cls.add_all_db_data(all_data_in_db)  # Cache를 DB와 동기화
         cls.LOGGER.debug("Image list: {}".format(cache.smembers(cls.file_list_key)))
         cls.LOGGER.info("Caching image files from DB Done")
 

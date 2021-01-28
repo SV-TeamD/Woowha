@@ -28,7 +28,7 @@ class Runner:
         cls.prev_style = None
 
     @classmethod
-    def run(cls, imagefile_name, style, load_size=450):
+    def run(cls, imagefile_name, style="cartoongan_hayao", load_size=450):
         input_image_path = os.path.join(cls.input_dir, imagefile_name)
         try:
             cls.is_file(input_image_path)

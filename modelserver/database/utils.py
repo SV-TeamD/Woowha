@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
-ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS")
+ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS").split(",")
 
 Base = declarative_base()
 engine = create_engine(SQLALCHEMY_DATABASE_URI)

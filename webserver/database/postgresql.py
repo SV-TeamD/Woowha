@@ -1,33 +1,34 @@
-import os
-from typing import List
-
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-
-from utils import _Utils, INPUT_FOLDER, OUTPUT_FOLDER, ALLOWED_EXTENSIONS
+from utils import _Utils, OUTPUT_FOLDER
+from . import db
 from .image_model import ImageModel
 from .utils import SQLAlchemyDBConnection
 
-db = SQLAlchemy()
-migrate = Migrate()
+"""Table "public.images"
 
+  Column  |          Type          | Collation | Nullable | Default
+----------+------------------------+-----------+----------+---------
+ filename | character varying(100) |           | not null |
+ styles   | character varying[]    |           | not null |
+Indexes:
+    "images_pkey" PRIMARY KEY, btree (filename)
 
-class DataBase:
+filename:  daa24daad3393865.jpg
+styles:  {cartoongan_hayao.pth, cartoongan_hosoda.pth}
+"""
+
+class Database:
     @classmethod
-    def input_file_list_from_storage(cls):
-        file_list = os.listdir(INPUT_FOLDER)
-        return [file for file in file_list if os.path.splitext(file)[-1] in ALLOWED_EXTENSIONS]
-
-    @classmethod
-    def output_file_list_from_storage(cls):
-        file_list = os.listdir(OUTPUT_FOLDER)
-        return [file for file in file_list if os.path.splitext(file)[-1] in ALLOWED_EXTENSIONS]
-
-    @classmethod
-    def sync_image_models(cls, image_models: List[ImageModel]):
-        exist_data_in_storage = set(filter(lambda x: _Utils.exist_file(x.filename), image_models))
-        no_exist_data_in_storage = set(image_models) - exist_data_in_storage
+    def sync_image_models(cls):
         with SQLAlchemyDBConnection(db) as session:
-            for delete_image_model in no_exist_data_in_storage:
-                session.delete(delete_image_model)
-        return list(exist_data_in_storage)
+            files = []
+            print(_Utils.file_from_storage(OUTPUT_FOLDER))
+            for file in _Utils.file_from_storage(OUTPUT_FOLDER):
+                [filename, style] = _Utils.filename_and_style(file)
+                files.append([filename, style])
+                exist_model = ImageModel.query.filter_by(filename=filename).first()
+                if exist_model is None: # db에 없으면
+                    session.add(ImageModel(filename, style)) # add
+                else:
+                    exist_model.styles.append(style) # db에 이미 있으면 update (style 추가)
+
+            return files # [[filename, style]]

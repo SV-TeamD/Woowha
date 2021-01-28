@@ -37,6 +37,13 @@ class JobConsumer:
 
     @classmethod
     def consume(cls, _channel, method, _, body):
+        """
+        body (json): Message in MessageQueue
+        {
+            "filename": e26ae327a16505f6.jpg,
+            "style": cartoongan_hayao.pth
+        }
+        """
         print(" [x] Received {}".format(body.decode()))
         delivery_tag = method.delivery_tag
         message = json.loads(body)
@@ -49,15 +56,15 @@ class JobConsumer:
             print(e)
             print("{}를 생성하는데 실패하였습니다.".format(filename))
             return
-        Cache.add(filename=filename, style=style)
+        Cache.add(filename=filename, style=style) # Cache의 file_list랑 style에 추가
         print("{} {} saved in cache".format(filename, style))
-        if Database.select_image(filename):
+        if Database.select_image(filename): # DB에 있다면 style update
             Database.update(filename, style)
             print("{} {} updated in database".format(filename, style))
         else:
-            Database.insert(filename, [style])
+            Database.insert(filename, [style]) # DB에 없다면 insert
             print("{} {} inserted in database".format(filename, style))
-        Cache.remove_working(filename, style)
+        Cache.remove_working(filename, style) # Cache에서 working 제거
 
     @classmethod
     def generate_image(cls, _channel, delivery_tag, filename, style):
