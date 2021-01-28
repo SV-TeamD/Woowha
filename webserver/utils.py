@@ -10,6 +10,7 @@ INPUT_FOLDER = os.getenv("INPUT_IMAGE_PATH")
 OUTPUT_FOLDER = os.getenv("OUTPUT_IMAGE_PATH")
 WAIT_FOR_OUTPUT_IMAGE_SECOND = os.getenv("WAIT_FOR_OUTPUT_IMAGE_SECOND")
 STYLES = os.getenv("STYLES").split(",")
+STYLES_BACKUP = os.getenv("STYLES_BACKUP").split(",")
 
 
 class _Utils:
@@ -53,7 +54,7 @@ class _Utils:
 
     @classmethod
     def verify_style(cls, style):
-        if not style in STYLES:
+        if not style in STYLES and not style in STYLES_BACKUP:
             err_msg = "{} Style not allowed. we can only {}".format(style, STYLES)
             cls.LOGGER.error(err_msg)
             raise ValueError(err_msg)

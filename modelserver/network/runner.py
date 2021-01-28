@@ -10,6 +10,7 @@ from network.transformer import Transformer
 
 ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS").split(",")
 STYLES = os.getenv("STYLES").split(",")
+STYLES_BACKUP = os.getenv("STYLES_BACKUP").split(",")
 
 
 class Runner:
@@ -83,7 +84,7 @@ class Runner:
 
     @classmethod
     def validate_style(cls, style: str):
-        if style not in STYLES:
+        if style not in STYLES and style not in STYLES_BACKUP:
             raise Exception("지원하지 않는 모델입니다.")
 
     @classmethod
@@ -124,7 +125,7 @@ class Runner:
     @classmethod
     def output_image_filename(cls, imagefile_name: str, style: str):
         imagefile_name_parts = imagefile_name.split(".")
-        imagefile_name_parts[0] += "_{}".format(style)
+        imagefile_name_parts[0] += "_{}".format(style.split(".")[0])
         return ".".join(imagefile_name_parts)
 
     @classmethod

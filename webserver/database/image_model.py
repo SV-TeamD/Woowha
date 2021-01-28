@@ -4,7 +4,7 @@ from . import db
 class ImageModel(db.Model):
     __tablename__ = "images"
 
-    filename = db.Column(db.String(20), primary_key=True)
+    filename = db.Column(db.String(100), primary_key=True)
     styles = db.Column(db.ARRAY(db.String, dimensions=1), nullable=False)
 
     def __init__(self, filename: str, styles: str):

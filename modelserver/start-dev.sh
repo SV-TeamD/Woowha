@@ -6,6 +6,7 @@ LCYAN="\033[1;36m"
 echo ""
 echo "${LWHITE}Download Pretrained Model Weights"
 bash ./load-models.sh
+bash ./load-models-backup.sh
 # echo ""
 # echo "${LWHITE}RUN TEST"
 # pytest

@@ -28,7 +28,7 @@ class MutableList(Mutable, list):
 class ImageModel(Base):
     __tablename__ = "images"
 
-    filename = Column(String(20), primary_key=True)
+    filename = Column(String(100), primary_key=True)
     styles = Column(MutableList.as_mutable(ARRAY(String, dimensions=1)), nullable=False)
 
     def __init__(self, filename: str, styles: str):
