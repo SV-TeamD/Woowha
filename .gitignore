@@ -29,6 +29,7 @@ yarn-error.log*
 
 # models
 *.pth
+*.ckpt
 
 # statics
 image_input/*
