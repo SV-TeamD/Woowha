@@ -3,6 +3,7 @@ BASE_PWD=$PWD
 
 # download pretrained models
 PRETRAINED_MODEL_PATH="./network/pretrained_model/"
+<<<<<<< HEAD
 STYLES=("cartoongan_hayao.pth" "cartoongan_hosoda.pth" "cartoongan_paprika.pth" "cartoongan_shinkai.pth"
         "cyclegan_cezanne.pth" "cyclegan_monet.pth" "cyclegan_ukiyoe.pth" "cyclegan_vangogh.pth"
         "cartoongan_vangogh.ckpt" "cartoongan2_mulan.ckpt" "cartoongan2_pelissero.ckpt")
