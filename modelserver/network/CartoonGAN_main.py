@@ -4,7 +4,8 @@ import torchvision.utils as tvutils
 import os
 from torchvision import transforms
 
-import CartoonGAN_model as models
+from .CartoonGAN_model import CartoonGAN_model as models
+from .CartoonGAN_model_modified import CartoonGAN_model_modified as modified_models
 from .CartoonGAN_train import CartoonGANTrainer
 from .config import CartoonGANConfig as Config
 from .dataloader import load_image_dataloader
@@ -101,9 +102,14 @@ def main():
     print("PyTorch running with device {0}".format(device))
 
     print("Creating models...")
-    Generator = models.Generator
-    Discriminator = models.Discriminator
-    FeatureExtractor = models.FeatureExtractor
+    if args.use_modified_model:
+        Generator = models.Generator
+        Discriminator = models.Discriminator
+        FeatureExtractor = models.FeatureExtractor
+    else:
+        Generator = models.Generator
+        Discriminator = models.Discriminator
+        FeatureExtractor = models.FeatureExtractor
 
     generator = Generator().to(device)
 
@@ -167,7 +173,7 @@ def main():
         )
 
         print("Loading Trainer...")
-        trainer = Trainer(
+        trainer = CartoonGANTrainer(
             generator,
             discriminator,
             feature_extractor,
