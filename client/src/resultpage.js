@@ -28,17 +28,16 @@ class resultpage extends Component {
   }
   _getImage() {
     fetch("http://localhost/image/result", {
-      method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
     })
       .then((res) => {
         res.json();
       })
-      .then((data) => {
-        this.setState({ url: data });
-      });
+      .then((message) => {
+      console.log(message);});
   }
 
   render() {

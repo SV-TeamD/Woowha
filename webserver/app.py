@@ -1,7 +1,7 @@
 import logging
 
 from flask import Flask, request
-
+from flask_cors import CORS
 import config
 from database import db, migrate
 from database.cache import Cache
@@ -12,6 +12,7 @@ from metrics.metrics_register import MetricsRegister
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(config)
 
     register_extensions(app)
