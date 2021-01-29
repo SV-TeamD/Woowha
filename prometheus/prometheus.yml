@@ -35,7 +35,7 @@ scrape_configs:
     scrape_interval: 5s
     dns_sd_configs:
       - names: ["webserver"]
-        port: 5000
+        port: 8000
         type: A
         refresh_interval: 5s
 

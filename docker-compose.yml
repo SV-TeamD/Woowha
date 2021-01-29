@@ -83,6 +83,8 @@ services:
     restart: always
     networks:
       - team-d
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
   modelserver:
     build:
