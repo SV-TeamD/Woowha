@@ -4,8 +4,6 @@ import logging
 
 import redis
 
-from routes.image_route import LOGGER
-
 from .image_model import ImageModel
 
 cache = redis.Redis(host="redis", port=6379)
@@ -17,7 +15,7 @@ class Cache:
 
     @classmethod
     def __init__(cls):
-        LOGGER.debug("Cache init!")
+        cls.LOGGER.debug("Cache init!")
         # cls.load_db() # DB에 저장된 이미지를 캐시로 불러온다
 
     @classmethod
