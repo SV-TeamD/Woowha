@@ -10,7 +10,8 @@ import instagram from "./img/instagramicon.PNG";
 class resultpage extends Component {
   constructor(props) {
     super(props);
-    this.state = { url: null };
+    const [resultBody, setResultBody] = this.setState({"filename": "f86609259527dada.jpg"})
+    // this.state = { url: null };
   }
 
   scrollToTop = (event) => {
@@ -27,11 +28,13 @@ class resultpage extends Component {
     this._getImage();
   }
   _getImage() {
-    fetch("http://localhost/image/result", {
+    fetch("http://localhost/image/result?style=Hayao_net_G_float", { // FIXME: style parameter 필수
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      method: "POST",
+      body: this.resultBody // image/upload의 결과 그대로 {"filename": "f86609259527dada.jpg"}
     })
       .then((res) => {
         res.json();

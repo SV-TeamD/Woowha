@@ -48,12 +48,12 @@ def upload_file():
 
     jobProducer.publish(msg=_Utils.job_message(input_filename, style))
     _Utils.response_message(input_filename)
-    
+
     return redirect("http://localhost:3000/resultpage")
 
 
 # http://locahost:5000/image/result?style=Hayao
-@bp.route("/result", methods=["GET", "POST"])
+@bp.route("/result", methods=["POST"])
 @MetricsRegister.common_counter
 def result_page():
     """result page
