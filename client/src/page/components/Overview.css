@@ -1,0 +1,30 @@
+.overview-center {
+  text-align: center;
+}
+.overview {
+  position: relative;
+  display: inline-block;
+  margin-left: 4px;
+  width: 250px;
+  height: 220px;
+  text-align: center;
+}
+.overview:hover .overlay {
+  opacity: 1;
+}
+.overlay {
+  position: absolute;
+  height: 220px;
+  width: 250px;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+.olimg {
+  position: absolute;
+  height: 220px;
+  width: 250px;
+  bottom: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

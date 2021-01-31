@@ -1,15 +1,14 @@
 import React from "react";
-import { Route } from "react-router-dom";
-import mainpage from "./mainpage";
-import resultpage from "./resultpage";
-import testpage from "./testpage";
-
+import { BrowserRouter, Route } from "react-router-dom";
+import Home from "./page/Home";
+import Result from "./page/Result";
 const App = () => {
   return (
-    <div>
-      <Route path="/" component={mainpage} exact={true} />
-      <Route path="/resultpage" component={resultpage} />
-      <Route path="/test" component={testpage} />
+    <div className="App">
+      <BrowserRouter>
+        <Route path="/" component={Home} exact={true} />
+        <Route path="/resultpage" component={Result} />
+      </BrowserRouter>
     </div>
   );
 };

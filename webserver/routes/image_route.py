@@ -47,9 +47,8 @@ def upload_file():
         _Utils.save_image(img, input_filename)
 
     jobProducer.publish(msg=_Utils.job_message(input_filename, style))
-    _Utils.response_message(input_filename)
 
-    return redirect("http://localhost:3000/resultpage")
+    return _Utils.response_message(input_filename)
 
 
 # http://locahost:5000/image/result?style=Hayao

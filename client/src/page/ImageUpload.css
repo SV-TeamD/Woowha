@@ -1,0 +1,42 @@
+div.upload {
+  display: relative;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+div.upload label[id="file"] {
+  display: inline-block;
+  background-color: #7fc4fd;
+  color: white;
+  width: 148px;
+  height: 48px;
+  border-radius: 6px;
+  font-size: 23px;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+div.upload input[type="file"] {
+  position: absolute;
+  overflow: hidden;
+  text-align: center;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+div.upload label:hover {
+  background-color: #2699fb;
+}
+
+div.select {
+  background-color: #bce0fd;
+  height: 1000px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.author {
+  display: inline-block;
+  margin-right: 40px;
+}
