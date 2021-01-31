@@ -45,10 +45,10 @@ const ImageUpload = () => {
       })
       .then((res) => {
         console.log(res.data);
+        console.log(style);
         setFilename(res.data);
+        <ImageResult filename={filename} style={style} />;
       });
-
-    <ImageResult filename={filename} style={style} />;
   };
 
   const handleImageChange = async (e) => {

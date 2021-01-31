@@ -1,8 +1,7 @@
-import React from 'react';
-import './Header.css';
+import React from "react";
+import "./Header.css";
 
 const Header = () => {
-
   const scrollToTop = (event) => {
     window.scrollTo(0, 0);
   };
@@ -14,11 +13,13 @@ const Header = () => {
   };
 
   return (
-    <div class ="top-header">
+    <div className="top-header">
       <header>
         <ul>
           <li>
-            <a href="/" style={{fontWeight:"bold"}}>Woowha</a>
+            <a href="/" style={{ fontWeight: "bold" }}>
+              Woowha
+            </a>
           </li>
           <li>
             <a href="#image" onClick={scrollToTop}>
@@ -38,7 +39,7 @@ const Header = () => {
         </ul>
       </header>
     </div>
-  )
-}
+  );
+};
 
 export default Header;
