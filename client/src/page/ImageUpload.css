@@ -8,12 +8,9 @@ div.upload label[id="file"] {
   display: inline-block;
   background-color: #7fc4fd;
   color: white;
-  width: 148px;
-  height: 48px;
   border-radius: 6px;
-  font-size: 23px;
-  border: 0;
-  outline: 0;
+  font-size: 1.5rem;
+  padding: 0.6rem 2rem;
   cursor: pointer;
 }
 div.upload input[type="file"] {
@@ -24,19 +21,39 @@ div.upload input[type="file"] {
   border: 0;
 }
 
-div.upload label:hover {
-  background-color: #2699fb;
-}
-
-div.select {
+#style-select-wrapper {
   background-color: #bce0fd;
-  height: 1000px;
+  height: 100%;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 2rem auto;
+  padding: 2rem 2rem;
 }
 
 div.author {
   display: inline-block;
   margin-right: 40px;
+}
+
+div.radio-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="radio"],
+input[type="radio"]:checked {
+  appearance: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 100%;
+  margin-right: 0.1rem;
+}
+
+input[type="radio"] {
+  background-color: white;
+  border: 2px solid blue;
+}
+input[type="radio"]:checked {
+  background-color: skyblue;
 }

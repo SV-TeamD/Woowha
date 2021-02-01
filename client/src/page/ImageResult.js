@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./ImageResult.css";
 import empty from "./img/empty_image.PNG";
 
-const ImageResult = ({inputImage, inputStyle, isDone}) => {
+const ImageResult = ({ inputImage, inputStyle }) => {
   const [filepath, setFilepath] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -18,6 +18,7 @@ const ImageResult = ({inputImage, inputStyle, isDone}) => {
       const fd = new FormData();
       fd.append("file", inputImage);
       fd.append("author", inputStyle);
+      console.log('getFileName', fd.get("author")) // FIXME: undefined
       axios
         .post("http://127.0.0.1:8000/image/upload", fd, {
           headers: {
@@ -30,10 +31,11 @@ const ImageResult = ({inputImage, inputStyle, isDone}) => {
         });
       };
 
-      const getimg = async () => {
-        try {
-          const result = await axios
-          .post("http://127.0.0.1:8000/image/result?style=" + inputStyle, JSON.stringify({ filename: filename }), {
+    const getimg = async () => {
+      try {
+        const result = await axios
+          .post("http://127.0.0.1:8000/image/result",
+            JSON.stringify({ "filename": filename, "style": inputStyle }), {
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
@@ -50,6 +52,7 @@ const ImageResult = ({inputImage, inputStyle, isDone}) => {
       } finally {
         setLoading(false);
       }
+    }
 
       try {
         getFilename().then((res) => {
@@ -63,8 +66,7 @@ const ImageResult = ({inputImage, inputStyle, isDone}) => {
       } finally {
         setLoading(false);
       }
-    }
-  }, [isDone]);
+  }, []);
 
 
   return (
