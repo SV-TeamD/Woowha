@@ -8,6 +8,14 @@ STYLES=("cartoongan_hayao.pth" "cartoongan_hosoda.pth" "cartoongan_paprika.pth" 
         "cartoongan_vangogh.ckpt" "cartoongan2_mulan.ckpt" "cartoongan2_pelissero.ckpt")
 
 len=${#STYLES[@]}
+
+if [ ! -d $PRETRAINED_MODEL_PATH ]; then
+  echo "creating $PRETRAINED_MODEL_PATH"
+  mkdir -p $PRETRAINED_MODEL_PATH;
+else
+  echo "$PRETRAINED_MODEL_PATH already exists"
+fi
+
 cd $PRETRAINED_MODEL_PATH
 for ((i=0;i<len;i++)); do
   FILEPATH="${STYLES[$i]}"
