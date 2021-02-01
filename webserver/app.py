@@ -12,7 +12,7 @@ from metrics.metrics_register import MetricsRegister
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, resources={r'*': {'origins': 'http://localhost:3000'}})
     app.config.from_object(config)
 
     register_extensions(app)

@@ -16,11 +16,10 @@ import vangogh_example from "./img/Vangogh_example.jpg";
 import ukiyoe_example from "./img/Ukiyoe_example.png";
 
 const ImageUpload = () => {
-  const [img, setImage] = useState(null);
+  const [inputImage, setInputImage] = useState(null);
   const [style, setStyle] = useState("");
-  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
-  const [imgfile, setImgfile] = useState(null);
-  const [filename, setFilename] = useState(null);
+  const [inputImagePreviewUrl, setInputImagePreviewUrl] = useState(empty);
+  const [isDone, setIsDone] = useState(false);
 
   const st_img_style = {
     width: "256px",
@@ -32,38 +31,6 @@ const ImageUpload = () => {
     setStyle(styleinfo);
   };
 
-  const onClickHandler = async () => {
-    const fd = new FormData();
-    fd.append("file", img);
-    fd.append("author", style);
-    try {
-      const res = await axios
-        .post("http://localhost/image/upload", fd, {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        })
-        .then((json) => {
-          console.log(json.data);
-          const resp = axios
-            .post("http://localhost/image/result?style=cyclegan_monet.pth", {
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              method: "POST",
-              body: json.data,
-            })
-            .then((resp) => {
-              const filepath = resp.data;
-              console.log(filepath);
-            });
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const handleImageChange = async (e) => {
     e.preventDefault();
     const options = {
@@ -71,29 +38,24 @@ const ImageUpload = () => {
       maxWidthOrHeight: 500,
     };
     let imgfile = e.target.files[0];
-    setImage(imgfile);
+    setInputImage(imgfile);
     try {
       const compressedFile = await imageCompression(imgfile, options);
 
-      setImgfile(compressedFile);
+      setInputImage(compressedFile);
       const promise = imageCompression.getDataUrlFromFile(compressedFile);
       promise.then((result) => {
-        setImagePreviewUrl(result);
+        setInputImagePreviewUrl(result);
       });
     } catch (error) {
       console.log(error);
     }
   };
 
-  let $imagePreview = <img src={empty} alt="" />;
-  if (imagePreviewUrl) {
-    $imagePreview = <img src={imagePreviewUrl} alt="" />;
-  }
-
   return (
     <div className="upload">
       <h1>Image Upload</h1>
-      <div>{$imagePreview}</div>
+      <div><img src={inputImagePreviewUrl} alt="image preview" /></div>
       <br />
       <br />
       <label id="file">
@@ -209,10 +171,10 @@ const ImageUpload = () => {
         <br />
         <br />
         <br />
-
-        <button className="blue_button" onClick={onClick}>
-          Convert
-        </button>
+        <Link to="/resultpage" onClick={()=>{setIsDone(true)}}>
+          <ImageResult inputImage={inputImage} inputStyle={style} isDone={isDone}/>
+          <button className="blue_button">Convert</button>
+        </Link>
       </div>
     </div>
   );
