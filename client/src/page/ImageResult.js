@@ -8,13 +8,11 @@ const ImageResult = (props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [origin, setOrigin] = useState("");
-
   useEffect(() => {
     const getimg = async () => {
       try {
         setError(null);
         setLoading(true);
-
         const res = await axios
           .post("http://localhost/image/result?style=" + props.inputstyle, {
             headers: {
@@ -27,20 +25,15 @@ const ImageResult = (props) => {
           .then((res) => {
             const filepath = res.data;
             setFilepath(filepath);
-          });
+          }, []);
       } catch (e) {
         setError(e);
       }
       setLoading(false);
     };
-    const getinfo = async () => {
-      const res = await axios.get("http://localhost:3000/");
-    };
     getimg();
     setOrigin("input/" + props.filename);
-  }, []);
-  if (loading) return <div>로딩중..</div>;
-  if (error) return <div>에러</div>;
+  }, [props.inputstyle]);
 
   let $imageResult = <img src={empty} alt="" />;
   let $origin = <img src={empty} alt="" />;

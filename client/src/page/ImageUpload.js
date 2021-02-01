@@ -20,7 +20,7 @@ const ImageUpload = () => {
   const [style, setStyle] = useState("");
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
   const [imgfile, setImgfile] = useState(null);
-  const [filename, setFilename] = useState("");
+  const [filename, setFilename] = useState(null);
 
   const st_img_style = {
     width: "256px",
@@ -36,18 +36,32 @@ const ImageUpload = () => {
     const fd = new FormData();
     fd.append("file", img);
     fd.append("author", style);
-    const res = await axios
-      .post("http://localhost/image/upload", fd, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        const filename = res.data;
-        setFilename(filename);
-        console.log(filename);
-        console.log(style);
-      });
+    try {
+      const res = await axios
+        .post("http://localhost/image/upload", fd, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        })
+        .then((json) => {
+          console.log(json.data);
+          const resp = axios
+            .post("http://localhost/image/result?style=cyclegan_monet.pth", {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              method: "POST",
+              body: json.data,
+            })
+            .then((resp) => {
+              const filepath = resp.data;
+              console.log(filepath);
+            });
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleImageChange = async (e) => {
@@ -195,10 +209,10 @@ const ImageUpload = () => {
         <br />
         <br />
         <br />
-        <Link to="/resultpage" onClick={onClick}>
-          <ImageResult inputname={filename} inputstyle={style} />
-          <button className="blue_button">Convert</button>
-        </Link>
+
+        <button className="blue_button" onClick={onClick}>
+          Convert
+        </button>
       </div>
     </div>
   );
