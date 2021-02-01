@@ -32,7 +32,7 @@ const ImageUpload = () => {
     setStyle(styleinfo);
   };
 
-  const onClick = async () => {
+  const onClickHandler = async () => {
     const fd = new FormData();
     fd.append("file", img);
     fd.append("author", style);

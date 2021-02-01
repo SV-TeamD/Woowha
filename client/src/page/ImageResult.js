@@ -5,7 +5,7 @@ import empty from "./img/empty_image.PNG";
 
 const ImageResult = (props) => {
   const [filepath, setFilepath] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [origin, setOrigin] = useState("");
   useEffect(() => {
@@ -35,17 +35,13 @@ const ImageResult = (props) => {
     setOrigin("input/" + props.filename);
   }, [props.inputstyle]);
 
-  let $imageResult = <img src={empty} alt="" />;
-  let $origin = <img src={empty} alt="" />;
-  if (filepath) {
-    $imageResult = <img src={filepath} alt="" />;
-    $origin = <img src={origin} alt="" />;
-  }
   return (
     <div className="ImageResult">
       <h1>Image Result</h1>
-      <div>{$origin}</div>
-      <div>{$imageResult}</div>
+      {loading && <h3>로딩중</h3>}
+      {error && <h3>에러</h3>}
+      {props.filepath && <img src={filepath} />}
+      {origin && <img src={origin} />}
     </div>
   );
 };
