@@ -28,15 +28,14 @@ const ImageUpload = () => {
   };
 
   const onStyleChange = (e) => {
-    setStyle(e.target.value);
-    console.log(style);
+    const styleinfo = e.target.value;
+    setStyle(styleinfo);
   };
 
   const onClick = async () => {
     const fd = new FormData();
     fd.append("file", img);
     fd.append("author", style);
-    console.log(fd.file);
     const res = await axios
       .post("http://localhost/image/upload", fd, {
         headers: {
@@ -44,10 +43,10 @@ const ImageUpload = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        const filename = res.data;
+        setFilename(filename);
+        console.log(filename);
         console.log(style);
-        setFilename(res.data);
-        <ImageResult filename={filename} style={style} />;
       });
   };
 
@@ -58,7 +57,7 @@ const ImageUpload = () => {
       maxWidthOrHeight: 500,
     };
     let imgfile = e.target.files[0];
-    setImage(e.target.files[0]);
+    setImage(imgfile);
     try {
       const compressedFile = await imageCompression(imgfile, options);
 
@@ -197,6 +196,7 @@ const ImageUpload = () => {
         <br />
         <br />
         <Link to="/resultpage" onClick={onClick}>
+          <ImageResult inputname={filename} inputstyle={style} />
           <button className="blue_button">Convert</button>
         </Link>
       </div>

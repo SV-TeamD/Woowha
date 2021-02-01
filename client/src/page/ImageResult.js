@@ -4,8 +4,7 @@ import "./ImageResult.css";
 import empty from "./img/empty_image.PNG";
 
 const ImageResult = (props) => {
-  const [filepath, setFilepath] = useState(null);
-
+  const [filepath, setFilepath] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [origin, setOrigin] = useState("");
@@ -15,28 +14,31 @@ const ImageResult = (props) => {
       try {
         setError(null);
         setLoading(true);
+
         const res = await axios
-          .post("http://localhost/image/result?style=" + props.style, {
+          .post("http://localhost/image/result?style=" + props.inputstyle, {
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
             method: "POST",
-            body: props.filename,
+            body: props.inputname,
           })
           .then((res) => {
-            console.log(res.data);
-            setFilepath(res.data);
+            const filepath = res.data;
+            setFilepath(filepath);
           });
       } catch (e) {
         setError(e);
       }
       setLoading(false);
     };
+    const getinfo = async () => {
+      const res = await axios.get("http://localhost:3000/");
+    };
     getimg();
+    setOrigin("input/" + props.filename);
   }, []);
-  setOrigin("input/" + props.filename);
-  console.log(origin);
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러</div>;
 
