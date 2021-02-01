@@ -10,41 +10,51 @@ const ImageResult = ({ inputImage, inputStyle }) => {
   const [origin, setOrigin] = useState("");
   const [filename, setFilename] = useState("");
 
-
   useEffect(() => {
-    console.log("=== useEffect ===")
+    console.log("=== useEffect ===");
 
     const getFilename = async () => {
       const fd = new FormData();
       fd.append("file", inputImage);
       fd.append("author", inputStyle);
-      console.log('getFileName', fd.get("author")) // FIXME: undefined
-      axios
+      console.log(inputImage);
+      console.log(inputStyle);
+      for (var key of fd.keys()) {
+        console.log(key);
+      }
+      for (var value of fd.values()) {
+        console.log(value);
+      }
+
+      const res = await axios
         .post("http://127.0.0.1:8000/image/upload", fd, {
           headers: {
             "content-type": "multipart/form-data",
           },
         })
         .then((res) => {
-          console.log('call getFilename')
+          console.log("call getFilename");
           setFilename(res.data.filename);
         });
-      };
+    };
 
     const getimg = async () => {
       try {
         const result = await axios
-          .post("http://127.0.0.1:8000/image/result",
-            JSON.stringify({ "filename": filename, "style": inputStyle }), {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            method: "POST"
-          })
+          .post(
+            "http://127.0.0.1:8000/image/result",
+            JSON.stringify({ filename: filename, style: inputStyle }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              method: "POST",
+            }
+          )
           .then((res) => {
-            console.log('call getimg')
-            console.log('res.data: ', res.data)
+            console.log("call getimg");
+            console.log("res.data: ", res.data);
             setFilepath(res.data);
           });
       } catch (e) {
@@ -52,22 +62,21 @@ const ImageResult = ({ inputImage, inputStyle }) => {
       } finally {
         setLoading(false);
       }
+    };
+
+    try {
+      getFilename().then((res) => {
+        getimg();
+      });
+      setOrigin("input/" + inputImage);
+      console.log(inputImage);
+      console.log(origin);
+    } catch (e) {
+      setError(e);
+    } finally {
+      setLoading(false);
     }
-
-      try {
-        getFilename().then((res) => {
-          getimg()
-        })
-        setOrigin("input/" + inputImage);
-        console.log(inputImage)
-        console.log(origin)
-      } catch (e) {
-        setError(e)
-      } finally {
-        setLoading(false);
-      }
   }, []);
-
 
   return (
     <div className="ImageResult">

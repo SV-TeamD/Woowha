@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import imageCompression from "browser-image-compression";
 import { Link } from "react-router-dom";
-import StyleCard from "./components/StyleCard"
+import StyleCard from "./components/StyleCard";
 import "./ImageUpload.css";
 import ImageResult from "./ImageResult";
-import styleInfo from "../styleInfo"
+import styleInfo from "../styleInfo";
 import empty from "./img/empty_image.PNG";
 
 const ImageUpload = () => {
@@ -38,7 +38,7 @@ const ImageUpload = () => {
 
   const resultPageClickHandler = (e) => {
     setIsDone(true);
-  }
+  };
 
   return (
     <div className="upload">
@@ -47,26 +47,33 @@ const ImageUpload = () => {
         <img src={inputImagePreviewUrl} alt="image preview" />
       </div>
       <label className="blue_button" htmlFor="file_upload">
-        <input id="file_upload" name="file" type="file" onChange={handleImageChange} />
+        <input
+          id="file_upload"
+          name="file"
+          type="file"
+          onChange={handleImageChange}
+        />
         Upload
       </label>
       <div id="style-select-wrapper">
         {styleInfo.map((data, index) => {
-          return <StyleCard
-            key={index}
-            imageSrc={data.imageSrc}
-            style={data.style}
-            explain={data.explain}
-            value={data.value}
-            onChangeHandler={onStyleChange}
-          ></StyleCard>
+          return (
+            <StyleCard
+              key={index}
+              imageSrc={data.imageSrc}
+              style={data.style}
+              explain={data.explain}
+              value={data.value}
+              onChangeHandler={onStyleChange}
+            ></StyleCard>
+          );
         })}
-        <Link to="/resultpage" onClick={resultPageClickHandler}>
-          <div>
-            {isDone && <ImageResult inputImage={inputImage} inputStyle={style} />}
-          </div>
-          <div className="blue_button">Convert</div>
-        </Link>
+        <button className="blue_button" onClick={resultPageClickHandler}>
+          click
+        </button>
+        <div>
+          {isDone && <ImageResult inputImage={inputImage} inputStyle={style} />}
+        </div>
       </div>
     </div>
   );
