@@ -6,6 +6,14 @@ from .image_model import ImageModel
 
 cache = redis.Redis(host="redis", port=6379)
 
+""" Cache Structure
+  key             |       Type     |   Data Format   |  Example (key: value)
+------------------+----------------+-----------------+---------------------------------------------------
+ images:file_list |  Set           | filename        | images:file_list: 8f9478cbf3182768.jpg
+ images:working   |  Set           | filename_style  | images:working: 8f9478cbf3182768.jpg_cartoongan_hayao
+ style            |  Array(String) | [filename]      | cartoongan_hayao: [8f9478cbf3182768.jpg, 8f9478cbf3182768.jpg, ...]
+
+"""
 
 class Cache:
     file_list_key = "images:file_list"

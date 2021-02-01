@@ -61,7 +61,8 @@ class Runner:
         if cls.prev_style and cls.prev_style == style:
             return
         cls.prev_style = style
-        model_path = os.path.join(model_dir, style)
+        model_path = cls.model_path(model_dir, style)
+
         try:
             cls.model = Transformer()
             cls.model.load_state_dict(torch.load(model_path))
@@ -75,6 +76,21 @@ class Runner:
             raise FileExistsError("{} 모델을 불러오는데 오류가 발생하였습니다.".format(style)) from file_exists_err
         except Exception as e:
             raise Exception("{} 예외가 발생하였습니다.".format(e)) from e
+
+    @classmethod
+    def model_path(cls, model_dir:str, style:str):
+        """확장자를 제외한 파일 이름이 같은 style을 찾아 모델 파일 경로 찾는다
+
+        Args:
+            model_dir (str): 모델 파일들이 있는 폴더 경로
+            style (str): 확장자를 제외한 style
+
+        Returns:
+            str: style에 해당하는 모델 파일의 전체 경로
+        """
+        model_list = os.listdir(model_dir)
+        model_filename = list(filter(lambda x: x.split(".")[0] == style, model_list))[0]
+        return os.path.join(model_dir, model_filename)
 
     @classmethod
     def validate_ext(cls, imagefile_name):

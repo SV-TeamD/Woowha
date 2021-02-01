@@ -9,6 +9,14 @@ from .postgresql import Database
 
 cache = redis.Redis(host="redis", port=6379)
 
+""" Cache Structure
+  key             |       Type     |   Data Format   |  Example (key: value)
+------------------+----------------+-----------------+---------------------------------------------------
+ images:file_list |  Set           | filename        | images:file_list: 8f9478cbf3182768.jpg
+ images:working   |  Set           | filename_style  | images:working: 8f9478cbf3182768.jpg_cartoongan_hayao
+ style            |  Array(String) | [filename]      | cartoongan_hayao: [8f9478cbf3182768.jpg, 8f9478cbf3182768.jpg, ...]
+
+"""
 
 class Cache:
     file_list_key = "images:file_list"
@@ -22,12 +30,7 @@ class Cache:
 
     @classmethod
     def add_all_db_data(cls, all_data_in_db: List[ImageModel]):
-        print("@@@@@@@add_all_db_data in database.cache!")
         exist_data_in_storage = Database.sync_image_models() # storage에서 db에 담은 정보. 이제 캐시에 넣자
-        print(exist_data_in_storage)
-        print(exist_data_in_storage[0])
-        print(exist_data_in_storage[1])
-        # print(list(map(lambda x: x[0], exist_data_in_storage)))
         cache.sadd(cls.file_list_key, *list(map(lambda x: x[0], exist_data_in_storage))) # FIXME: list로 감싸야하는지 확실하지 않음
         [cache.sadd(style, filename) for [filename, style] in exist_data_in_storage]
 

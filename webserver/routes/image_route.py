@@ -15,11 +15,18 @@ LOGGER = logging.getLogger(current_app)
 bp = Blueprint("image_route", __name__, url_prefix="/image")
 jobProducer = JobProducer()
 
-# http://locahost:5000/image/upload
+# http://locahost:8000/image/upload
 @bp.route("/upload", methods=["POST"])
 @MetricsRegister.common_counter
 def upload_file():
     """upload file route
+    MIMI Type: application/json
+
+    Args:
+        {
+            "filename": "8bd7299c705c7a2c.jpg", (include extension)
+            "author": "cartoongan_hayao" (exclude extension)
+        }
 
     Returns:
         json: { "filename": input_filename }
@@ -41,20 +48,19 @@ def upload_file():
     img = Image.open(file)
     filename = str(file.filename)
     input_filename = _Utils.input_filename(img, filename)
-    style_no_extension = style.split(".")[0]
 
-    if Cache.exist_output_image(input_filename, style_no_extension):
+    if Cache.exist_output_image(input_filename, style):
         return _Utils.response_message(input_filename)
     if not Cache.exist_image(input_filename):
         _Utils.save_image(img, input_filename)
-    if not Cache.exist_working(input_filename, style_no_extension):
-        Cache.put_working(input_filename, style_no_extension)
+    if not Cache.exist_working(input_filename, style):
+        Cache.put_working(input_filename, style)
         jobProducer.publish(msg=_Utils.job_message(input_filename, style))
 
     return _Utils.response_message(input_filename)
 
 
-# http://locahost:5000/image/result
+# http://locahost:8000/image/result
 @bp.route("/result", methods=["POST"])
 @MetricsRegister.common_counter
 def result_page():
@@ -64,7 +70,7 @@ def result_page():
     Args:
         {
             "filename": "8bd7299c705c7a2c.jpg", (include extension)
-            "style": "cartoongan_hayao.pth" (include extension)
+            "style": "cartoongan_hayao" (exclude extension)
         }
 
     Returns:
@@ -73,7 +79,7 @@ def result_page():
 
     req_data = request.get_json()
     filename = req_data["filename"]
-    style = req_data["style"].split(".")[0]
+    style = req_data["style"]
     if not _Utils.verify_filename_style(filename, style):
         return "Fail", 500
 

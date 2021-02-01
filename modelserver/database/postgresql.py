@@ -3,6 +3,18 @@ from typing import List
 from .image_model import ImageModel
 from .utils import SQLAlchemyDBConnection
 
+"""Table "public.images"
+
+  Column  |          Type          | Collation | Nullable | Default
+----------+------------------------+-----------+----------+---------
+ filename | character varying(100) |           | not null |
+ styles   | character varying[]    |           | not null |
+Indexes:
+    "images_pkey" PRIMARY KEY, btree (filename)
+
+filename:  daa24daad3393865.jpg
+styles:  {cartoongan_hayao, cartoongan_hosoda}
+"""
 
 class Database:
     @classmethod

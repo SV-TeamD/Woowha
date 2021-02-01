@@ -13,7 +13,7 @@ Indexes:
     "images_pkey" PRIMARY KEY, btree (filename)
 
 filename:  daa24daad3393865.jpg
-styles:  {cartoongan_hayao.pth, cartoongan_hosoda.pth}
+styles:  {cartoongan_hayao, cartoongan_hosoda}
 """
 
 class Database:

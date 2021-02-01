@@ -35,7 +35,7 @@ class _Utils:
         filenames = os.listdir(path)
         files = []
         for filename in filenames:
-            ext = filename.split(".")[-1]
+            ext = cls._file_extension(filename)
             if ext in ALLOWED_EXTENSIONS:
                 files.append(filename)
         return files
@@ -116,19 +116,13 @@ class _Utils:
         return ".".join([fileid, extension])
 
     @classmethod
-    def output_filename(cls, input_filename:str, style:str):
-        filename = input_filename.split(".")[0]
-        style = style.split(".")[0]
-        extension = cls._file_extension(input_filename)
-        return "{}_{}.{}".format(filename, style, extension)
-
-    @classmethod
     def save_image(cls, img, input_filename):
         img.save(os.path.join(INPUT_FOLDER, input_filename))
 
     @classmethod
     def job_message(cls, filename, style):
         return json.dumps({"filename": filename, "style": style})
+
     def verify_extension(cls, filename):
         if not cls._file_extension(filename) in ALLOWED_EXTENSIONS:
             err_msg = "File extension({}) not allowed. we can only {}".format(

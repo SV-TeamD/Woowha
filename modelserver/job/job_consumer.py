@@ -41,7 +41,7 @@ class JobConsumer:
         body (json): Message in MessageQueue
         {
             "filename": e26ae327a16505f6.jpg,
-            "style": cartoongan_hayao.pth
+            "style": cartoongan_hayao
         }
         """
         print(" [x] Received {}".format(body.decode()))
