@@ -7,10 +7,28 @@ import numpy as np
 from PIL import Image
 
 from network.transformer import Transformer
+from network.CartoonGAN_model_modified import Generator as CartoonGAN_modified_Transformer
+from network.CartoonGAN_model import Generator as CartoonGAN_Transformer
+from network.CycleGAN_model import Generator as CycleGAN_Transformer
+
 
 ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS").split(",")
 STYLES = os.getenv("STYLES").split(",")
 STYLES_BACKUP = os.getenv("STYLES_BACKUP").split(",")
+
+original_cartoongan_styles = [
+    "Hayao_net_G_float",
+    "Hosoda_net_G_float",
+    "Paprika_net_G_float",
+    "Shinkai_net_G_float",
+    "cartoongan_hayao",
+    "cartoongan_hosoda",
+    "cartoongan_paprika",
+    "cartoongan_shinkai",
+]
+cartoongan_styles = ["cartoongan_vangogh, cartoongan_pelissero"]
+modified_cartoongan_styles = ["cartoongan2_mulan, cartoongan2_pelissero"]
+cyclegan_styles = ["cyclegan_cezanne, cyclegan_monet, cyclegan_ukiyoe, cyclegan_vangogh"]
 
 
 class Runner:
@@ -31,16 +49,18 @@ class Runner:
     def run(cls, imagefile_name, style="cartoongan_hayao", load_size=450):
         input_image_path = os.path.join(cls.input_dir, imagefile_name)
         try:
+            print("create {} style image : {}".format(style, imagefile_name))
+
             cls.is_file(input_image_path)
             cls.validate_style(style)
             cls.validate_ext(imagefile_name)
+
             cls.load_weights(style, cls.model_dir)
             input_image = cls.preprocess_image(input_image_path, load_size)
             output_image = cls.output_image(input_image)
 
             cls.exist_dir(cls.output_dir)
             cls.save_image(output_image, imagefile_name, style)
-            print("create {} style image : {}".format(style, imagefile_name))
         except FileExistsError as file_exist_error:
             print(file_exist_error)
         except RuntimeError as e:
@@ -64,21 +84,30 @@ class Runner:
         model_path = cls.model_path(model_dir, style)
 
         try:
-            cls.model = Transformer()
+            if style in original_cartoongan_styles:
+                cls.model = Transformer()
+            elif style in cartoongan_styles:
+                cls.model = CartoonGAN_Transformer()
+            elif style in modified_cartoongan_styles:
+                cls.model = CartoonGAN_modified_Transformer()
+            elif style in cyclegan_styles:
+                cls.model = CycleGAN_Transformer()
+
             cls.model.load_state_dict(torch.load(model_path))
             cls.model.eval()
             cls.model.float()
-        except FileNotFoundError as file_not_founr_err:
+
+        except FileNotFoundError as file_not_found_err:
             raise FileNotFoundError(
                 "{} 모델을 불러오는데 오류가 발생하였습니다.".format(style)
-            ) from file_not_founr_err
+            ) from file_not_found_err
         except FileExistsError as file_exists_err:
             raise FileExistsError("{} 모델을 불러오는데 오류가 발생하였습니다.".format(style)) from file_exists_err
         except Exception as e:
             raise Exception("{} 예외가 발생하였습니다.".format(e)) from e
 
     @classmethod
-    def model_path(cls, model_dir:str, style:str):
+    def model_path(cls, model_dir: str, style: str):
         """확장자를 제외한 파일 이름이 같은 style을 찾아 모델 파일 경로 찾는다
 
         Args:
