@@ -53,7 +53,7 @@ class Cache:
         try:
             while count < 10:
                 if cls.exist_output_image(filename, style):
-                    break
+                    return
                 count += 1
                 time.sleep(2)  # 2초마다 실행
         except TimeoutError as timeout_err:

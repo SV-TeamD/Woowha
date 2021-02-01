@@ -73,7 +73,7 @@ def result_page():
 
     try:
         Cache.wait_for_image(filename, style)
-        return jsonify({"url": _Utils.output_path(filename)})
+        return jsonify({"url": _Utils.output_path(filename, style)})
     except TimeoutError:
         return "Time out Error", 500
     except Exception:

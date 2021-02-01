@@ -60,7 +60,8 @@ class _Utils:
             raise ValueError(err_msg)
 
     @classmethod
-    def output_path(cls, output_filename):
+    def output_path(cls, input_filename, style):
+        output_filename = cls.output_filename(input_filename, style)
         return os.path.join(OUTPUT_FOLDER, output_filename)
 
     @classmethod
@@ -72,6 +73,13 @@ class _Utils:
         fileid = cls._fileid_from_image(img)
         extension = cls._file_extension(filename)
         return ".".join([fileid, extension])
+
+    @classmethod
+    def output_filename(cls, input_filename:str, style:str):
+        filename = input_filename.split(".")[0]
+        style = style.split(".")[0]
+        extension = cls._file_extension(input_filename)
+        return "{}_{}.{}".format(filename, style, extension)
 
     @classmethod
     def save_image(cls, img, input_filename):
