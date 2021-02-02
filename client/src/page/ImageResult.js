@@ -12,66 +12,67 @@ const ImageResult = ({ inputImage, inputStyle }) => {
 
   useEffect(() => {
     console.log("=== useEffect ===");
-    (async ()=> {
-    try {
-      const fd = new FormData();
-      fd.append("file", inputImage, inputImage.name);
-      fd.append("author", inputStyle);
+    (async () => {
+      try {
+        const fd = new FormData();
+        fd.append("file", inputImage, inputImage.name);
+        fd.append("author", inputStyle);
 
-      console.log(inputImage);
-      console.log(inputStyle);
-      for (var key of fd.keys()) {
-        console.log(key);
-      }
-      for (var value of fd.values()) {
-        console.log(value);
-      }
+        console.log(inputImage);
+        console.log(inputStyle);
+        for (var key of fd.keys()) {
+          console.log(key);
+        }
+        for (var value of fd.values()) {
+          console.log(value);
+        }
 
-      // 1. image upload
-      const res1 = await axios
-        .post("http://127.0.0.1:8000/image/upload", fd, {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          console.log(res.data['filename'])
-          setFilename(res.data['filename']); // FIXME: 안 먹힘
-          console.log(`filename (image/upload의 응답) : ${res.data['filename']}`)
-          console.log(`filename (image/upload의 응답) : ${filename}`) // FIXME: 여기서 초기값 '' 찍힘
-        });
-
-      // 2. image result
-      if (!filename) return; // filename이 비어있으면 그냥 return
-      const res2 = await axios
-        .post(
-          "http://127.0.0.1:8000/image/result",
-          JSON.stringify({ filename: filename, style: inputStyle }),
-          {
+        // 1. image upload
+        const res1 = await axios
+          .post("http://127.0.0.1:8000/image/upload", fd, {
             headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
+              "content-type": "multipart/form-data",
             },
-            method: "POST",
-          }
-        )
-        .then((res) => {
-          setFilepath(res.data);
-          console.log(`filepath (image/result의 응답) : ${filepath}`)
-        });
+          })
+          .then((res) => {
+            console.log(res.data["filename"]);
+            setFilename(res.data["filename"]);
+            console.log(
+              `filename (image/upload의 응답) : ${res.data["filename"]}`
+            );
+            console.log(`filename (image/upload의 응답) : ${filename}`);
+          });
 
+        // 2. image result
+        if (!filename) return; // filename이 비어있으면 그냥 return
+        const res2 = await axios
+          .post(
+            "http://127.0.0.1:8000/image/result",
+            JSON.stringify({ filename: filename, style: inputStyle }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              method: "POST",
+            }
+          )
+          .then((res) => {
+            setFilepath(res.data["filename"]);
+            console.log(`filepath (image/result의 응답) : ${filepath}`);
+          });
 
-      setOrigin("input/" + inputImage);
-      console.log(`inputImage : ${inputImage}`);
-      console.log(`origin : ${origin}`);
-
-    } catch (e) {
-      console.error(e);
-      setError(e);
-    } finally {
-      setLoading(false);
-    }})()
-  }, []);
+        setOrigin("input/" + inputImage);
+        console.log(`inputImage : ${inputImage}`);
+        console.log(`origin : ${origin}`);
+      } catch (e) {
+        console.error(e);
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [filename]);
 
   return (
     <div className="ImageResult">
