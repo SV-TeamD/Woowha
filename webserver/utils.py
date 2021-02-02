@@ -20,7 +20,7 @@ class _Utils:
     def _file_extension(cls, filename):
         if not "." in filename:
             return None
-        return filename.split(".")[1]
+        return filename.split(".")[1].lower()
 
     @classmethod
     def _fileid_from_image(cls, img):
@@ -28,7 +28,7 @@ class _Utils:
 
     @classmethod
     def exist_file(cls, filename):
-        return os.path.isfile(cls.output_path(filename))
+        return os.path.isfile(os.path.join(OUTPUT_FOLDER, filename))
 
     @classmethod
     def file_from_storage(cls, path):
@@ -64,9 +64,6 @@ class _Utils:
         filename_parts = input_filename.split(".")
         return "{}_{}.{}".format(filename_parts[0], style, filename_parts[1])
 
-    @classmethod
-    def output_path(cls, output_filename):
-        return os.path.join(OUTPUT_FOLDER, output_filename)
 
     @classmethod
     def response_message(cls, input_filename):
@@ -106,21 +103,3 @@ class _Utils:
     def output_path(cls, input_filename, style):
         output_filename = cls.output_filename(input_filename, style)
         return os.path.join(OUTPUT_FOLDER, output_filename)
-
-    @classmethod
-    def response_message(cls, input_filename):
-        return jsonify({"filename": input_filename})
-
-    @classmethod
-    def input_filename(cls, img, filename):
-        fileid = cls._fileid_from_image(img)
-        extension = cls._file_extension(filename)
-        return ".".join([fileid, extension])
-
-    @classmethod
-    def save_image(cls, img, input_filename):
-        img.save(os.path.join(INPUT_FOLDER, input_filename))
-
-    @classmethod
-    def job_message(cls, filename, style):
-        return json.dumps({"filename": filename, "style": style})

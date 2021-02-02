@@ -41,8 +41,11 @@ def upload_file():
 
     file = request.files["file"]
     style = request.form["author"]
-    filename = str(file.filename)
+    filename = str(file.filename).strip()
+    LOGGER.info("file: {}, filename: {}".format(file, filename))
 
+    if not filename:
+        return 200
     if not _Utils.verify_filename_style(filename, style):
         LOGGER.error("Fail verifing file. Redirect %s", request.url)
         return redirect(request.url)

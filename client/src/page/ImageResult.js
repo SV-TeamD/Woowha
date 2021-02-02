@@ -15,7 +15,7 @@ const ImageResult = ({ inputImage, inputStyle }) => {
 
     const getFilename = async () => {
       const fd = new FormData();
-      fd.append("file", inputImage);
+      fd.append("file", inputImage, inputImage.name);
       fd.append("author", inputStyle);
       console.log(inputImage);
       console.log(inputStyle);
