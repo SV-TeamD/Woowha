@@ -93,7 +93,7 @@ class Runner:
             elif style in cyclegan_styles:
                 cls.model = CycleGAN_Transformer()
 
-            cls.model.load_state_dict(torch.load(model_path))
+            cls.model.load_state_dict(torch.load(model_path, encoding="latin1"))
             cls.model.eval()
             cls.model.float()
 

@@ -12,57 +12,73 @@ import ukiyoe_example from "./page/img/Ukiyoe_example.png";
 export default [
   {
     "style": "cartoongan_hayao",
-    "explain":"style by cartoongan_hayao",
+    "explain": "style by cartoongan_hayao",
     "imageSrc": hayao_example,
-    "value": "cartoongan_hayao" },
+    // "value": "cartoongan_hayao"
+    "value": "Hayao_net_G_float"
+  },
   {
     "style": "cartoongan_hosoda",
-    "explain":"style by cartoongan_hosoda",
+    "explain": "style by cartoongan_hosoda",
     "imageSrc": hosoda_example,
-    "value": "cartoongan_hosoda" },
+    // "value": "cartoongan_hosoda"
+    "value": "Hosoda_net_G_float"
+  },
   {
     "style": "cartoongan_paprika",
-    "explain":"style by cartoongan_paprika",
+    "explain": "style by cartoongan_paprika",
     "imageSrc": paprika_example,
-    "value": "cartoongan_paprika" },
+    // "value": "cartoongan_paprika"
+    "value": "Paprika_net_G_float"
+
+  },
   {
     "style": "cartoongan_shinkai",
-    "explain":"style by cartoongan_shinkai",
+    "explain": "style by cartoongan_shinkai",
     "imageSrc": shinkai_example,
-    "value": "cartoongan_shinkai" },
+    // "value": "cartoongan_shinkai"
+    "value": "Shinkai_net_G_float"
+  },
   {
     "style": "cyclegan_cezanne",
-    "explain":"style by cyclegan_cezanne",
+    "explain": "style by cyclegan_cezanne",
     "imageSrc": cezanne_example,
-    "value": "cyclegan_cezanne" },
+    "value": "cyclegan_cezanne"
+  },
   {
     "style": "cyclegan_monet",
-    "explain":"style by cyclegan_monet",
+    "explain": "style by cyclegan_monet",
     "imageSrc": monet_example,
-    "value": "cyclegan_monet" },
+    "value": "cyclegan_monet"
+  },
   {
     "style": "cyclegan_ukiyoe",
-    "explain":"style by cyclegan_ukiyoe",
+    "explain": "style by cyclegan_ukiyoe",
     "imageSrc": ukiyoe_example,
-    "value": "cyclegan_ukiyoe" },
+    "value": "cyclegan_ukiyoe"
+  },
   {
     "style": "cyclegan_vangogh",
-    "explain":"style by cyclegan_vangogh",
+    "explain": "style by cyclegan_vangogh",
     "imageSrc": vangogh_example,
-    "value": "cyclegan_vangogh" },
+    "value": "cyclegan_vangogh"
+  },
   {
     "style": "cartoongan_vangogh",
-    "explain":"style by cartoongan_vangogh",
+    "explain": "style by cartoongan_vangogh",
     "imageSrc": vangogh_example,
-    "value": "cartoongan_vangogh" },
+    "value": "cartoongan_vangogh"
+  },
   {
     "style": "cartoongan2_mulan",
-    "explain":"style by cartoongan2_mulan",
+    "explain": "style by cartoongan2_mulan",
     "imageSrc": empty,
-    "value": "cartoongan2_mulan" },
+    "value": "cartoongan2_mulan"
+  },
   {
     "style": "cartoongan2_pelissero",
-    "explain":"style by cartoongan2_pelissero",
+    "explain": "style by cartoongan2_pelissero",
     "imageSrc": pelissero_example,
-    "value": "cartoongan2_pelissero" }
+    "value": "cartoongan2_pelissero"
+  }
 ]

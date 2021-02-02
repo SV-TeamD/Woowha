@@ -1,6 +1,6 @@
 requests
 cmake
-torch
+torch==1.7.1
 torchvision
 numpy
 pillow
