@@ -26,9 +26,9 @@ original_cartoongan_styles = [
     "cartoongan_paprika",
     "cartoongan_shinkai",
 ]
-cartoongan_styles = ["cartoongan_vangogh, cartoongan_pelissero"]
-modified_cartoongan_styles = ["cartoongan2_mulan, cartoongan2_pelissero"]
-cyclegan_styles = ["cyclegan_cezanne, cyclegan_monet, cyclegan_ukiyoe, cyclegan_vangogh"]
+cartoongan_styles = ["cartoongan_vangogh", "cartoongan_pelissero"]
+modified_cartoongan_styles = ["cartoongan2_mulan", "cartoongan2_pelissero"]
+cyclegan_styles = ["cyclegan_cezanne", "cyclegan_monet", "cyclegan_ukiyoe", "cyclegan_vangogh"]
 
 
 class Runner:
