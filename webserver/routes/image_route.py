@@ -84,6 +84,9 @@ def result_page():
     req_data = request.get_json()
     filename = req_data["filename"]
     style = req_data["style"]
+    LOGGER.info(req_data)
+    LOGGER.info(filename)
+    LOGGER.info(style)
     if not _Utils.verify_filename_style(filename, style):
         return "Fail", 500
 
