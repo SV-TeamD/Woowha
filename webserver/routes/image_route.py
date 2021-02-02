@@ -20,17 +20,18 @@ jobProducer = JobProducer()
 @MetricsRegister.common_counter
 def upload_file():
     """upload file route
-    MIMI Type: application/json
+    MIMI Type: multipart/form-data
 
     Args:
         {
-            "filename": "8bd7299c705c7a2c.jpg", (include extension)
+            'file', <FileStorage: '03.jpg' ('image/jpeg')>
             "author": "cartoongan_hayao" (exclude extension)
         }
 
     Returns:
         json: { "filename": input_filename }
     """
+
     if "file" not in request.files:
         LOGGER.error("No file in request")
         return redirect(request.url)
@@ -40,13 +41,13 @@ def upload_file():
 
     file = request.files["file"]
     style = request.form["author"]
+    filename = str(file.filename)
 
-    if not _Utils.verify_file_style(file, style):
+    if not _Utils.verify_filename_style(filename, style):
         LOGGER.error("Fail verifing file. Redirect %s", request.url)
         return redirect(request.url)
 
     img = Image.open(file)
-    filename = str(file.filename)
     input_filename = _Utils.input_filename(img, filename)
 
     if Cache.exist_output_image(input_filename, style):

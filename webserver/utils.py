@@ -77,21 +77,23 @@ class _Utils:
         img.save(os.path.join(INPUT_FOLDER, input_filename))
 
     @classmethod
-    def verify_file_style(cls, file, style):
-        try:
-            filename = file.filename
-            return cls.verify_filename_style(filename, style)
-        except Exception as e:
-            return False
-
-    @classmethod
     def verify_filename_style(cls, filename, style):
         try:
             cls.verify_extension(filename)
             cls.verify_style(style)
             return True
         except Exception as e:
+            cls.LOGGER.error(e)
             return False
+
+    @classmethod
+    def verify_extension(cls, filename):
+        if not cls._file_extension(filename) in ALLOWED_EXTENSIONS:
+            err_msg = "File extension({}) not allowed. we can only {}".format(
+                cls._file_extension(filename), ALLOWED_EXTENSIONS
+            )
+            cls.LOGGER.error(err_msg)
+            raise TypeError(err_msg)
 
     @classmethod
     def verify_style(cls, style):
@@ -122,11 +124,3 @@ class _Utils:
     @classmethod
     def job_message(cls, filename, style):
         return json.dumps({"filename": filename, "style": style})
-
-    def verify_extension(cls, filename):
-        if not cls._file_extension(filename) in ALLOWED_EXTENSIONS:
-            err_msg = "File extension({}) not allowed. we can only {}".format(
-                cls._file_extension(filename), ALLOWED_EXTENSIONS
-            )
-            cls.LOGGER.error(err_msg)
-            raise TypeError(err_msg)
