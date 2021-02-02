@@ -4,11 +4,13 @@ import "./ImageResult.css";
 import empty from "./img/empty_image.PNG";
 
 const ImageResult = ({ inputImage, inputStyle }) => {
-  const [filepath, setFilepath] = useState("");
+  const [inputImagePath, setInputImagePath] = useState("");
+  const [outputImagePath, setOutputImagePath] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [origin, setOrigin] = useState("");
   const [filename, setFilename] = useState("");
+  const baseInputImage = "assets/image_input/"
+  const baseOutputImage = "assets/image_output/"
 
   useEffect(() => {
     console.log("=== useEffect ===");
@@ -37,14 +39,27 @@ const ImageResult = ({ inputImage, inputStyle }) => {
           .then((res) => {
             console.log(res.data["filename"]);
             setFilename(res.data["filename"]);
+            // setInputImagePath('assets/image_input/e26ae327a16505f6.jpg')
+            setInputImagePath(baseInputImage + res.data["filename"])
             console.log(
               `filename (image/upload의 응답) : ${res.data["filename"]}`
             );
             console.log(`filename (image/upload의 응답) : ${filename}`);
           });
 
-        // 2. image result
-        if (!filename) return; // filename이 비어있으면 그냥 return
+    } catch (e) {
+      console.error(e);
+      setError(e);
+    } finally {
+      setLoading(false);
+    }})()
+  }, [inputImage]);
+
+  useEffect(() => {
+    // 2. image result
+    (async () => {
+      console.log('filename 바뀜: ' + filename)
+      if (!filename) return; // filename이 비어있으면 그냥 return
         const res2 = await axios
           .post(
             "http://127.0.0.1:8000/image/result",
@@ -58,29 +73,25 @@ const ImageResult = ({ inputImage, inputStyle }) => {
             }
           )
           .then((res) => {
-            setFilepath(res.data["filename"]);
-            console.log(`filepath (image/result의 응답) : ${filepath}`);
+            // setInputImagePath(baseInputImage + res.data["filename"])
+            setOutputImagePath(baseOutputImage + res.data['filename']);
+            console.log(`outputImagePath (image/result의 응답) : ${res.data['filename']}`)
           });
 
-        setOrigin("input/" + inputImage);
         console.log(`inputImage : ${inputImage}`);
-        console.log(`origin : ${origin}`);
-      } catch (e) {
-        console.error(e);
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [filename]);
+        console.log(`outputImagePath : ${outputImagePath}`);
+    })()
+  }, [filename])
+
 
   return (
     <div className="ImageResult">
       <h1>Image Result</h1>
       {loading && <h3>로딩중</h3>}
       {error && <h3>에러</h3>}
-      {filepath && <img src={filepath} />}
-      {origin && <img src={origin} />}
+      {/* 매개변수의 앞에 .이 들어가면 안 된다. 여기서 붙여주어야 한다. webpack 때문임. */}
+      {inputImagePath && <img src={require('.././' + inputImagePath).default} />}
+      {outputImagePath && <img src={require('.././' + outputImagePath).default} />}
     </div>
   );
 };

@@ -117,10 +117,10 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./image_input:/data/image_input
-      - ./image_output:/data/image_output
-      - /app/node_modules
       - ./client:/app
+      - /app/node_modules
+      - ./image_input:/app/src/assets/image_input
+      - ./image_output:/app/src/assets/image_output
     networks:
       - team-d
     environment:

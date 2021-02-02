@@ -98,8 +98,3 @@ class _Utils:
             err_msg = "{} Style not allowed. we can only {}".format(style, STYLES)
             cls.LOGGER.error(err_msg)
             raise ValueError(err_msg)
-
-    @classmethod
-    def output_path(cls, input_filename, style):
-        output_filename = cls.output_filename(input_filename, style)
-        return os.path.join(OUTPUT_FOLDER, output_filename)

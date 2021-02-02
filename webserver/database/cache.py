@@ -72,7 +72,9 @@ class Cache:
         cache.sadd(cls.working_key, cls.working_job_name(filename, style))
         cls.LOGGER.debug("Add job in queue. {}, {}".format(filename, style))
 
+    @classmethod
     def wait_for_image(cls, filename: str, style: str):
+        cls.LOGGER.debug('CALL wait for image')
         count = 0
         try:
             while count < 10:

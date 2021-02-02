@@ -56,7 +56,7 @@ def upload_file():
     if Cache.exist_output_image(input_filename, style):
         return _Utils.response_message(input_filename)
     if not Cache.exist_image(input_filename):
-        _Utils.save_image(img, input_filename)
+        _Utils.save_image(img, input_filename) # TODO: 저장하고 보내야 함
     if not Cache.exist_working(input_filename, style):
         Cache.put_working(input_filename, style)
         jobProducer.publish(msg=_Utils.job_message(input_filename, style))
@@ -78,22 +78,20 @@ def result_page():
         }
 
     Returns:
-        json: { "url": url of result image }
+        json: { "filename": filename of result image }
     """
 
     req_data = request.get_json()
     filename = req_data["filename"]
     style = req_data["style"]
-    LOGGER.info(req_data)
-    LOGGER.info(filename)
-    LOGGER.info(style)
     if not _Utils.verify_filename_style(filename, style):
         return "Fail", 500
-
     try:
         Cache.wait_for_image(filename, style)
-        return jsonify({"url": _Utils.output_path(filename, style)})
-    except TimeoutError:
+        return jsonify({"filename": _Utils.output_filename(filename, style)})
+    except TimeoutError as timeout_error:
+        LOGGER.error(timeout_error)
         return "Time out Error", 500
-    except Exception:
+    except Exception as e:
+        LOGGER.error(e)
         return "Fail", 500
