@@ -6,6 +6,9 @@ import torchvision.utils as vutils
 import numpy as np
 from PIL import Image
 
+from functools import partial
+import pickle
+
 from network.transformer import Transformer
 from network.CartoonGAN_model_modified import Generator as CartoonGAN_modified_Transformer
 from network.CartoonGAN_model import Generator as CartoonGAN_Transformer
@@ -92,6 +95,9 @@ class Runner:
                 cls.model = CartoonGAN_modified_Transformer()
             elif style in cyclegan_styles:
                 cls.model = CycleGAN_Transformer()
+
+            pickle.load = partial(pickle.load, encoding="latin1")
+            pickle.Unpickler = partial(pickle.Unpickler, encoding="latin1", pickle_module=pickle)
 
             cls.model.load_state_dict(torch.load(model_path, encoding="latin1"))
             cls.model.eval()
