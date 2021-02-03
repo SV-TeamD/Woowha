@@ -68,6 +68,7 @@ const ImageUpload = () => {
             ></StyleCard>
           );
         })}
+        {/* FIXME: onClick 이벤트가 한 번밖에 안 먹힘 */}
         <button className="blue_button" onClick={resultPageClickHandler}>
           click
         </button>
