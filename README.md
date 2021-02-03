@@ -12,8 +12,7 @@
 
 ## Architecture
 
-![3주차](https://user-images.githubusercontent.com/25628507/105339511-166ec880-5c20-11eb-80c6-69b4e058b047.png)
-~~Not the final version yet~~
+![architecture](https://user-images.githubusercontent.com/57690870/106702452-ba4a7200-662b-11eb-97e4-de0ca46d5299.PNG)
 
 ## Getting started
 ### Docker
