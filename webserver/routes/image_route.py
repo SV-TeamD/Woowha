@@ -86,8 +86,10 @@ def result_page():
     style = req_data["style"]
     if not _Utils.verify_filename_style(filename, style):
         return "Fail", 500
+
     try:
-        Cache.wait_for_image(filename, style)
+        if not Cache.exist_output_image(filename, style):
+            Cache.wait_for_image(filename, style)
         return jsonify({"filename": _Utils.output_filename(filename, style)})
     except TimeoutError as timeout_error:
         LOGGER.error(timeout_error)
