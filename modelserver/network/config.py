@@ -21,7 +21,7 @@ class CartoonGANConfig:
 
 
 class CycleGANConfig:
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # dataloader.py
     batch_size = 4
     num_workers = 4
@@ -32,7 +32,9 @@ class CycleGANConfig:
 
     # CycleGAN_train.py
     lambda_cycle = 10.0  # lambda parameter for cycle loss, X -> Y -> X and Y -> X -> Y
-    lambda_identity = 0.5  # lambda parameter for identity loss, helpful for image style transfer task
+    lambda_identity = (
+        0.5  # lambda parameter for identity loss, helpful for image style transfer task
+    )
 
     adam_beta1 = 0.5  # dcgan
     lr = 0.0002
@@ -40,4 +42,3 @@ class CycleGANConfig:
     initialization_epochs = 0
     content_loss_weight = 10
     print_every = 100
-

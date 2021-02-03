@@ -1,6 +1,7 @@
 import os
 
 import torch
+import torch.nn as nn
 import torchvision.transforms as transforms
 import torchvision.utils as vutils
 import numpy as np
@@ -85,21 +86,43 @@ class Runner:
             return
         cls.prev_style = style
         model_path = cls.model_path(model_dir, style)
+        print("Model_path is " + model_path)
 
         try:
             if style in original_cartoongan_styles:
                 cls.model = Transformer()
+                print("Model is Transformer")
+                cls.model.load_state_dict(
+                    torch.load(model_path, encoding="latin1", map_location="cpu"), strict=True
+                )
             elif style in cartoongan_styles:
                 cls.model = CartoonGAN_Transformer()
+                print("Model is CartoonGAN_Transformer")
+                cls.model.load_state_dict(
+                    torch.load(model_path, map_location="cpu")["generator_state_dict"]
+                )
+
             elif style in modified_cartoongan_styles:
                 cls.model = CartoonGAN_modified_Transformer()
+                print("Model is CartoonGAN_modified_Transformer")
+                cls.model.load_state_dict(
+                    torch.load(model_path, map_location="cpu")["generator_state_dict"]
+                )
+
             elif style in cyclegan_styles:
                 cls.model = CycleGAN_Transformer()
+                print("Model is CycleGAN_Transformer")
+                cls.model.load_state_dict(
+                    torch.load(model_path, map_location="cpu")["G_state_dict"]
+                )
 
-            pickle.load = partial(pickle.load, encoding="latin1")
-            pickle.Unpickler = partial(pickle.Unpickler, encoding="latin1", pickle_module=pickle)
+            # pickle.load = partial(pickle.load, encoding="latin1")
+            # pickle.Unpickler = partial(pickle.Unpickler, encoding="latin1", pickle_module=pickle)
 
-            cls.model.load_state_dict(torch.load(model_path, encoding="latin1"))
+            # cls.model = nn.DataParallel(cls.model)
+            # cls.model.load_state_dict(
+            #     torch.load(model_path, encoding="latin1", map_location="cpu"), strict=True
+            # )
             cls.model.eval()
             cls.model.float()
 
