@@ -10,7 +10,7 @@ const Overview = () => {
   };
   return (
     <div className="overview-center">
-      <h1>Overveiw</h1>
+      <h1>Overview</h1>
       <br />
       <div className="overview">
         <img src={ov_1} alt="empty_image" style={ov_img_style} />

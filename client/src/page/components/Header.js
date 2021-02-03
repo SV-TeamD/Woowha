@@ -28,7 +28,7 @@ const Header = () => {
           </li>
           <li>
             <a href="#overview" onClick={scrollToOverview}>
-              Overveiw
+              Overview
             </a>
           </li>
           <li>
