@@ -12,7 +12,7 @@
 
 ## Architecture
 
-![architecture](https://user-images.githubusercontent.com/57690870/106702452-ba4a7200-662b-11eb-97e4-de0ca46d5299.PNG)
+![architecture](https://user-images.githubusercontent.com/57690870/106793757-34660f80-669b-11eb-981f-e5f484662c6b.PNG)
 
 ## Getting started
 ### Docker
