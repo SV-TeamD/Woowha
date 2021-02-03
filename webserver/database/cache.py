@@ -79,9 +79,10 @@ class Cache:
         try:
             while count < 10:
                 if cls.exist_output_image(filename, style):
+                    time.sleep(1) # sync file in docker containers
                     return
                 count += 1
-                time.sleep(2)  # 2초마다 실행
+                time.sleep(1)  # 2초마다 실행
         except TimeoutError as timeout_err:
             cls.LOGGER.error("Timeout : %s, %s", filename, style)
             raise TimeoutError from timeout_err

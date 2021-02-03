@@ -56,7 +56,7 @@ def upload_file():
     if Cache.exist_output_image(input_filename, style):
         return _Utils.response_message(input_filename)
     if not Cache.exist_image(input_filename):
-        _Utils.save_image(img, input_filename) # TODO: 저장하고 보내야 함
+        _Utils.wait_until_save_image(img, input_filename)
     if not Cache.exist_working(input_filename, style):
         Cache.put_working(input_filename, style)
         jobProducer.publish(msg=_Utils.job_message(input_filename, style))

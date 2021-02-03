@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import logging
 from flask.json import jsonify
 
@@ -27,8 +28,8 @@ class _Utils:
         return str(imagehash.phash(img))
 
     @classmethod
-    def exist_file(cls, filename):
-        return os.path.isfile(os.path.join(OUTPUT_FOLDER, filename))
+    def exist_file(cls, filepath):
+        return os.path.exists(filepath)
 
     @classmethod
     def file_from_storage(cls, path):
@@ -70,8 +71,24 @@ class _Utils:
         return jsonify({"filename": input_filename})
 
     @classmethod
-    def save_image(cls, img, input_filename):
-        img.save(os.path.join(INPUT_FOLDER, input_filename))
+    def wait_until_save_image(cls, img, input_filename):
+        """storage에 이미지를 저장하고 완료될 때까지 기다린다.
+
+        Args:
+            img (cv2.Image): 저장할 이미지
+            input_filename (str): 저장할 이미지의 파일 이름
+        """
+        save_path = os.path.join(INPUT_FOLDER, input_filename)
+        img.save(save_path)
+        cls.LOGGER.debug("Image saving.")
+        while not cls.exist_file(save_path): # 파일이 존재할 때까지 반복
+            time.sleep(0.5)
+            cls.LOGGER.debug("Image doesn't saved yet.")
+
+        if cls.exist_file(save_path):
+            cls.LOGGER.debug("Image saving.")
+        time.sleep(1)
+
 
     @classmethod
     def verify_filename_style(cls, filename, style):
