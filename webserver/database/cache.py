@@ -18,6 +18,7 @@ cache = redis.Redis(host="redis", port=6379)
 
 """
 
+
 class Cache:
     file_list_key = "images:file_list"
     working_key = "images:working"
@@ -30,8 +31,10 @@ class Cache:
 
     @classmethod
     def add_all_db_data(cls, all_data_in_db: List[ImageModel]):
-        exist_data_in_storage = Database.sync_image_models() # storage에서 db에 담은 정보. 이제 캐시에 넣자
-        cache.sadd(cls.file_list_key, *list(map(lambda x: x[0], exist_data_in_storage))) # FIXME: list로 감싸야하는지 확실하지 않음
+        exist_data_in_storage = Database.sync_image_models()  # storage에서 db에 담은 정보. 이제 캐시에 넣자
+        cache.sadd(
+            cls.file_list_key, *list(map(lambda x: x[0], exist_data_in_storage))
+        )  # FIXME: list로 감싸야하는지 확실하지 않음
         [cache.sadd(style, filename) for [filename, style] in exist_data_in_storage]
 
     @classmethod
@@ -74,15 +77,15 @@ class Cache:
 
     @classmethod
     def wait_for_image(cls, filename: str, style: str):
-        cls.LOGGER.debug('CALL wait for image')
+        cls.LOGGER.debug("CALL wait for image")
         count = 0
         try:
-            while count < 10:
+            while count < 100:  # 100초
                 if cls.exist_output_image(filename, style):
-                    time.sleep(1.5) # sync file in docker containers
+                    time.sleep(1.5)  # sync file in docker containers
                     return
                 count += 1
-                time.sleep(1)  # 2초마다 실행
+                time.sleep(1)
         except TimeoutError as timeout_err:
             cls.LOGGER.error("Timeout : %s, %s", filename, style)
             raise TimeoutError from timeout_err
