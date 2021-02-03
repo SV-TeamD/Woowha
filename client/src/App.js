@@ -1,17 +1,18 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./page/Home";
-import Result from "./page/Result";
-import TestPage from "./page/TestPage";
+import { BrowserRouter, Route } from "react-router-dom";
+import { Home, Result, TestPage } from "./page/index";
+import { Header, Overview, About } from "./page/components/index";
+
 const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-        <Switch>
-          <Route path="/" component={Home} exact={true} />
-          <Route path="/resultpage" component={Result} />
+        <Header />
+          <Route path="/" exact component={Home} />
+          <Route path="/result" component={Result} />
           <Route path="/test" component={TestPage} />
-        </Switch>
+        <Overview />
+        <About />
       </BrowserRouter>
     </div>
   );
