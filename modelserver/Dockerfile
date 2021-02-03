@@ -3,7 +3,7 @@ FROM python:3.7-slim-buster
 WORKDIR /app
 
 RUN  apt-get update \
-  && apt-get install -y wget python3-venv libpq-dev curl \
+  && apt-get install -y wget curl python3-venv libpq-dev curl \
   python3-pip python3-dev\
   && rm -rf /var/lib/apt/lists/*
 
