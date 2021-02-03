@@ -87,7 +87,7 @@ class _Utils:
 
         if cls.exist_file(save_path):
             cls.LOGGER.debug("Image saving.")
-        time.sleep(1)
+        time.sleep(1.5)
 
 
     @classmethod

@@ -79,7 +79,7 @@ class Cache:
         try:
             while count < 10:
                 if cls.exist_output_image(filename, style):
-                    time.sleep(1) # sync file in docker containers
+                    time.sleep(1.5) # sync file in docker containers
                     return
                 count += 1
                 time.sleep(1)  # 2초마다 실행
