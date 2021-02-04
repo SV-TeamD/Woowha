@@ -32,7 +32,12 @@ original_cartoongan_styles = [
     "cartoongan_shinkai",
 ]
 cartoongan_styles = ["cartoongan_vangogh", "cartoongan_pelissero"]
-modified_cartoongan_styles = ["cartoongan2_mulan", "cartoongan2_pelissero"]
+modified_cartoongan_styles = [
+    "cartoongan2_mulan",
+    "cartoongan2_pelissero",
+    "cartoongan2_generalddol",
+    "cartoongan2_conan",
+]
 cyclegan_styles = ["cyclegan_cezanne", "cyclegan_monet", "cyclegan_ukiyoe", "cyclegan_vangogh"]
 
 
