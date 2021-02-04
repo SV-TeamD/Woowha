@@ -3,7 +3,7 @@ import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from .config import CartoonGANConfig as Config
+from network.config import CartoonGANConfig as Config
 
 
 class CartoonGANTrainer:

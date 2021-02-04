@@ -4,11 +4,11 @@ import torchvision.utils as tvutils
 import os
 from torchvision import transforms
 
-from .CartoonGAN_model import CartoonGAN_model as models
-from .CartoonGAN_model_modified import CartoonGAN_model_modified as modified_models
-from .CartoonGAN_train import CartoonGANTrainer
-from .config import CartoonGANConfig as Config
-from .dataloader import load_image_dataloader
+from network.CartoonGAN_model import CartoonGAN_model as models
+from network.CartoonGAN_model_modified import CartoonGAN_model_modified as modified_models
+from network.CartoonGAN_train import CartoonGANTrainer
+from network.config import CartoonGANConfig as Config
+from network.dataloader import load_image_dataloader
 
 
 def get_args():

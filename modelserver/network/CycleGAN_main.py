@@ -4,14 +4,14 @@ import torchvision.utils as tvutils
 import os
 from torchvision import transforms
 
-from .CycleGAN_model import Generator, Discriminator
-from .CartoonGAN_model import (
+from network.CycleGAN_model import Generator, Discriminator
+from network.CartoonGAN_model import (
     Generator as CartoonGAN_Generator,
     Discriminator as CartoonGAN_Discriminator,
 )
-from .CycleGAN_train import CycleGANTrainer
-from .config import CycleGANConfig as Config
-from .dataloader import load_image_dataloader, load_image_dataloader_on_RAM
+from network.CycleGAN_train import CycleGANTrainer
+from network.config import CycleGANConfig as Config
+from network.dataloader import load_image_dataloader, load_image_dataloader_on_RAM
 
 
 def get_args():
