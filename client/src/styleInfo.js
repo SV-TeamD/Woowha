@@ -10,80 +10,87 @@ import vangogh_example from "./page/img/Vangogh_example.jpg";
 import ukiyoe_example from "./page/img/Ukiyoe_example.png";
 
 export default [
+  // {
+  //   "style": "Shinkai_net_G_float",
+  //   "explain": "style by Shinkai_net_G_float",
+  //   "imageSrc": empty,
+  //   "value": "Shinkai_net_G_float"
+  // },
   {
-    "style": "Shinkai_net_G_float",
-    "explain":"style by Shinkai_net_G_float",
-    "imageSrc": empty,
-    "value": "Shinkai_net_G_float" },
-  {
-    "style": "cartoongan_hayao",
+    "style": "Miyazaki Hayao",
     "explain": "style by cartoongan_hayao",
     "imageSrc": hayao_example,
     // "value": "cartoongan_hayao"
     "value": "Hayao_net_G_float"
   },
   {
-    "style": "cartoongan_hosoda",
+    "style": "Mamoru Hosoda",
     "explain": "style by cartoongan_hosoda",
     "imageSrc": hosoda_example,
     // "value": "cartoongan_hosoda"
     "value": "Hosoda_net_G_float"
   },
   {
-    "style": "cartoongan_paprika",
+    "style": "Satoshi Kon",
     "explain": "style by cartoongan_paprika",
     "imageSrc": paprika_example,
     // "value": "cartoongan_paprika"
     "value": "Paprika_net_G_float"
-
   },
   {
-    "style": "cartoongan_shinkai",
+    "style": "Makoto Shinkai",
     "explain": "style by cartoongan_shinkai",
     "imageSrc": shinkai_example,
     // "value": "cartoongan_shinkai"
     "value": "Shinkai_net_G_float"
   },
   {
-    "style": "cyclegan_cezanne",
+    "style": "Paul Cezanne",
     "explain": "style by cyclegan_cezanne",
     "imageSrc": cezanne_example,
     "value": "cyclegan_cezanne"
   },
   {
-    "style": "cyclegan_monet",
+    "style": "Claude Monet",
     "explain": "style by cyclegan_monet",
     "imageSrc": monet_example,
     "value": "cyclegan_monet"
   },
   {
-    "style": "cyclegan_ukiyoe",
+    "style": "Ukiyoe",
     "explain": "style by cyclegan_ukiyoe",
     "imageSrc": ukiyoe_example,
     "value": "cyclegan_ukiyoe"
   },
   {
-    "style": "cyclegan_vangogh",
-    "explain": "style by cyclegan_vangogh",
-    "imageSrc": vangogh_example,
-    "value": "cyclegan_vangogh"
-  },
-  {
-    "style": "cartoongan_vangogh",
+    "style": "Van Gogh",
     "explain": "style by cartoongan_vangogh",
     "imageSrc": vangogh_example,
     "value": "cartoongan_vangogh"
   },
   {
-    "style": "cartoongan2_mulan",
+    "style": "Silvia Pelissero",
+    "explain": "style by cartoongan2_pelissero",
+    "imageSrc": pelissero_example,
+    "value": "cartoongan2_pelissero"
+  },
+  {
+    "style": "Mulan",
     "explain": "style by cartoongan2_mulan",
     "imageSrc": empty,
     "value": "cartoongan2_mulan"
   },
   {
-    "style": "cartoongan2_pelissero",
-    "explain": "style by cartoongan2_pelissero",
-    "imageSrc": pelissero_example,
-    "value": "cartoongan2_pelissero"
-  }
+    "style": "Conan",
+    "explain": "style by Detective Concn",
+    "imageSrc": empty,
+    "value": "cartoongan2_conan"
+  },
+  {
+    "style": "똘이장군",
+    "explain": "style by 똘이장군 the old anti-communist cartoon",
+    "imageSrc": empty,
+    "value": "cartoongan2_generalddol"
+  },
+
 ]

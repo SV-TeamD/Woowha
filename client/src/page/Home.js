@@ -48,7 +48,9 @@ const Home = () => {
 
   return (
     <div id="Home-wrapper">
-      <h1>Image Upload</h1>
+      <h1>Convert your images to Styles of Artists!</h1>
+      <h3>Image to Image transition utilizing GAN : Cartoons, Artworks, and more</h3>
+      <h2>1. Upload your image(.png, .jpg, .jpeg)</h2>
       <div className="box">
         <img src={inputImagePreviewUrl} className="upload-image" htmlFor="file_upload" alt="image preview" />
       </div>
@@ -64,6 +66,7 @@ const Home = () => {
         </label>
       </div>
       <div id="style-select-wrapper">
+        <h2>2. Take your pick! Choose whatever art style you want</h2>
         {styleInfo.map((data, index) => {
           return (
             <StyleCard
@@ -76,11 +79,13 @@ const Home = () => {
             ></StyleCard>
           );
         })}
-        <div className="blue_button" onClick={resultPageClickHandler}>
+        <br />
+
+        <div id="convert_btn" className="blue_button" onClick={resultPageClickHandler}>
           Convert
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default Home;

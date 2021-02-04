@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+/* #Home-wrapper h1 {
+  font-size: 3em;
+}
+
+#Home-wrapper h3 {
+  font-size: 1.5em;
+} */
+
 input#file_upload {
   position: absolute;
   visibility: hidden;
@@ -72,4 +80,9 @@ input[type="radio"] {
 }
 input[type="radio"]:checked {
   background-color: skyblue;
+}
+
+#convert_btn {
+  margin: 0 auto;
+  align: center;
 }

@@ -55,12 +55,13 @@ const Result = () => {
             console.log(`filename (image/upload의 응답) : ${filename}`);
           });
 
-    } catch (e) {
-      console.error(e);
-      setError(e);
-    } finally {
-      setLoading(false);
-    }})()
+      } catch (e) {
+        console.error(e);
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    })()
   }, [inputImage]);
 
   useEffect(() => {
@@ -68,26 +69,26 @@ const Result = () => {
     (async () => {
       console.log('filename 바뀜: ' + filename)
       if (!filename) return; // filename이 비어있으면 그냥 return
-        const res2 = await axios
-          .post(
-            "http://127.0.0.1:8000/image/result",
-            JSON.stringify({ filename: filename, style: inputStyle }),
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              method: "POST",
-            }
-          )
-          .then((res) => {
-            // setInputImagePath(baseInputImage + res.data["filename"])
-            setOutputImagePath(baseOutputImage + res.data['filename']);
-            console.log(`outputImagePath (image/result의 응답) : ${res.data['filename']}`)
-          });
+      const res2 = await axios
+        .post(
+          "http://127.0.0.1:8000/image/result",
+          JSON.stringify({ filename: filename, style: inputStyle }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            method: "POST",
+          }
+        )
+        .then((res) => {
+          // setInputImagePath(baseInputImage + res.data["filename"])
+          setOutputImagePath(baseOutputImage + res.data['filename']);
+          console.log(`outputImagePath (image/result의 응답) : ${res.data['filename']}`)
+        });
 
-        console.log(`inputImage : ${inputImage}`);
-        console.log(`outputImagePath : ${outputImagePath}`);
+      console.log(`inputImage : ${inputImage}`);
+      console.log(`outputImagePath : ${outputImagePath}`);
     })()
   }, [filename])
 
@@ -95,9 +96,9 @@ const Result = () => {
   return (
     <>
       <div id="result-wrapper">
-        <h1>Image Result</h1>
-        {loading && <h3>로딩중</h3>}
-        {error && <h3>에러</h3>}
+        <h1>Converted Result</h1>
+        {loading && <h3>Loading...</h3>}
+        {error && <h3>Error Occurred</h3>}
         <div className="result-image-container">
           {/* 매개변수의 앞에 .이 들어가면 안 된다. 여기서 붙여주어야 한다. webpack 때문임. */}
           <div className="box">
@@ -108,7 +109,7 @@ const Result = () => {
           </div>
         </div>
         <div className="blue_button" onClick={retryClickHandler}>
-            Retry
+          Retry
         </div>
       </div>
     </>
