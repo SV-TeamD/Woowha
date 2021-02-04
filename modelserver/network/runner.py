@@ -14,6 +14,7 @@ from network.transformer import Transformer
 from network.CartoonGAN_model_modified import Generator as CartoonGAN_modified_Transformer
 from network.CartoonGAN_model import Generator as CartoonGAN_Transformer
 from network.CycleGAN_model import Generator as CycleGAN_Transformer
+from network.config import CycleGANConfig as Config
 
 
 ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS").split(",")
@@ -110,7 +111,7 @@ class Runner:
                 )
 
             elif style in cyclegan_styles:
-                cls.model = CycleGAN_Transformer()
+                cls.model = CycleGAN_Transformer().to(Config.device)
                 print("Model is CycleGAN_Transformer")
                 cls.model.load_state_dict(
                     torch.load(model_path, map_location="cpu")["G_state_dict"]

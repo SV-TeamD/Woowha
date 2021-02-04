@@ -5,8 +5,8 @@ import torch.nn as nn
 import torch.optim as optim
 import numpy as np
 
-from config import CycleGANConfig as Config
-from CartoonGAN_model import FeatureExtractor
+from network.config import CycleGANConfig as Config
+from network.CartoonGAN_model import FeatureExtractor
 
 
 class CycleGANTrainer:

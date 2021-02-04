@@ -4,7 +4,7 @@ import os
 import torch
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, Dataset
-from .config import CartoonGANConfig as Config
+from network.config import CartoonGANConfig as Config
 from torchvision.datasets.folder import pil_loader
 import glob
 
