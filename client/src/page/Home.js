@@ -66,7 +66,7 @@ const Home = () => {
         </label>
       </div>
       <div id="style-select-wrapper">
-        <h2>2. Take your pick! Choose whatever art style you want</h2>
+        <h2>2. Take your pick! Choose your Artstyle</h2>
         {styleInfo.map((data, index) => {
           return (
             <StyleCard

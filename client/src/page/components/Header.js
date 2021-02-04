@@ -2,14 +2,14 @@ import React from "react";
 import "./Header.css";
 
 const Header = () => {
-  const scrollToTop = (event) => {
+  const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
-  const scrollToAbout = (event) => {
-    window.scrollTo(0, 1800);
-  };
-  const scrollToOverview = (event) => {
+  const scrollToOverview = () => {
     window.scrollTo(0, 1600);
+  };
+  const scrollToAbout = () => {
+    window.scrollTo(0, 1800);
   };
 
   return (
