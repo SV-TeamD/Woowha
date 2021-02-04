@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "@material-ui/core/Button"
 
 const TestPage = () => {
   const [resultImage, setResultImage] = useState(null);
@@ -20,9 +21,11 @@ const TestPage = () => {
 
   return (<>
     <h3>TestPage</h3>
-    <button onClick={onCliekHandler}>
+    <Button varient="contained" color="primary">
       @@ Button @@
-    </button>
+    </Button>
+    {/* <button onClick={onCliekHandler}>
+    </button> */}
     {resultImage && <img src={resultImage}></img>}
   </>)
 }

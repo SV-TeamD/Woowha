@@ -13,12 +13,6 @@ import conan_example from "./page/img/Conan_example.jpg";
 import generalddol_example from "./page/img/Generalddol_example.PNG";
 
 export default [
-  // {
-  //   "style": "Shinkai_net_G_float",
-  //   "explain": "style by Shinkai_net_G_float",
-  //   "imageSrc": empty,
-  //   "value": "Shinkai_net_G_float"
-  // },
   {
     "style": "Miyazaki Hayao",
     "explain": "style by cartoongan_hayao",

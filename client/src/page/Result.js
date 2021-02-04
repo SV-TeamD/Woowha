@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { Box, Grid, Typography, Button, Card, CardMedia, CardContent } from "@material-ui/core"
+import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
-import "./components/Button.css";
-import "./Result.css";
+
+const useStyles = makeStyles((theme) => ({
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '100%'
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+}));
 
 const Result = () => {
   const [inputImagePath, setInputImagePath] = useState("");
@@ -12,6 +30,7 @@ const Result = () => {
   const [filename, setFilename] = useState("");
   const history = useHistory();
   const location = useLocation();
+  const classes = useStyles();
   const { inputImage, inputStyle } = location.state;
   const baseInputImage = "assets/image_input/"
   const baseOutputImage = "assets/image_output/"
@@ -96,23 +115,44 @@ const Result = () => {
 
   return (
     <>
-      <div id="result-wrapper">
-        <h1>Converted Result</h1>
-        {loading && <h3>Loading...</h3>}
-        {error && <h3>Error Occurred</h3>}
-        <div className="result-image-container">
-          {/* 매개변수의 앞에 .이 들어가면 안 된다. 여기서 붙여주어야 한다. webpack 때문임. */}
-          <div className="box">
-            {inputImagePath && <img src={require('.././' + inputImagePath).default} className="result-image" />}
-          </div>
-          <div className="box">
-            {outputImagePath && <img src={require('.././' + outputImagePath).default} className="result-image" />}
-          </div>
-        </div>
-        <div className="blue_button" onClick={retryClickHandler}>
+      <Box m="5rem">
+        <Typography variant="h3" align="center" color="textSecondary" paragraph>Converted Result</Typography>
+        {loading && <Typography variant="h5" align="center" color="textSecondary" paragraph>Loading...</Typography>}
+        {error && <Typography variant="h5" align="center" color="textSecondary" paragraph>Error Occurred</Typography>}
+
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={6}>
+            {inputImagePath &&
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={require('.././' + inputImagePath).default}
+                />{/* 매개변수의 앞에 .이 들어가면 안 된다. 여기서 붙여주어야 한다. webpack 때문임. */}
+              <CardContent className={classes.cardContent}>
+                <Typography variant="h6" align="center" color="textSecondary" paragraph>Original Image</Typography>
+              </CardContent>
+              </Card>}
+          </Grid>
+          <Grid item xs={6}>
+            {inputImagePath &&
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={require('.././' + outputImagePath).default}
+                />
+              <CardContent className={classes.cardContent}>
+                <Typography variant="h6" align="center" color="textSecondary" paragraph>Generated Image</Typography>
+              </CardContent>
+              </Card>}
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Grid container justify="center">
+        <Button variant="contained" size="large" component="label" color="primary" onClick={retryClickHandler}>
           Retry
-        </div>
-      </div>
+        </Button>
+      </Grid>
     </>
   );
 };

@@ -1,23 +1,39 @@
-const StyleCard = ({ imageSrc, style, explain, value, onChangeHandler }) => {
-  const cardStyle = {
-    width: "256px",
-    height: "256px",
-  };
+import { Grid, Radio, FormControlLabel, Card, CardMedia, CardContent } from "@material-ui/core"
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles((theme) => ({
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '100%'
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+}));
+
+const StyleCard = ({ imageSrc, style, explain, value }) => {
+  const classes = useStyles();
 
   return (
-    <div className="author">
-      <img src={imageSrc} alt={explain} style={cardStyle} />
-      <div className="radio-wrap">
-        <input
-          id={`radio-id-${style}`}
-          type="radio"
-          name="author"
-          value={value}
-          onChange={onChangeHandler}
+    <Grid item xs={6} sm={4} md={3}>
+      <Card className={classes.card}>
+        <CardMedia
+          className={classes.cardMedia}
+          image={imageSrc}
+          title={style}
         />
-        <label htmlFor={`radio-id-${style}`}><h3>{style}</h3></label>
-      </div>
-    </div>
+        <CardContent className={classes.cardContent}>
+            <FormControlLabel value={value} name="author" control={<Radio />} label={style}/>
+        </CardContent>
+      </Card>
+    </Grid>
   )
 }
 
