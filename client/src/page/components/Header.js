@@ -1,45 +1,37 @@
 import React from "react";
-import "./Header.css";
+import { AppBar, Toolbar, Grid, Typography } from '@material-ui/core'
 
 const Header = () => {
-  const scrollToTop = (event) => {
-    window.scrollTo(0, 0);
-  };
-  const scrollToAbout = (event) => {
-    window.scrollTo(0, 1800);
-  };
-  const scrollToOverview = (event) => {
-    window.scrollTo(0, 1600);
-  };
+  const scrollTo = (y) => {
+    window.scrollTo(0, y);
+  }
 
   return (
-    <div className="top-header">
-      <header>
-        <ul>
-          <li>
-            <a href="/" style={{ fontWeight: "bold" }}>
-              Woowha
-            </a>
-          </li>
-          <li>
-            <a href="#image" onClick={scrollToTop}>
-              Image
-            </a>
-          </li>
-          <li>
-            <a href="#overview" onClick={scrollToOverview}>
-              Overview
-            </a>
-          </li>
-          <li>
-            <a href="#about" onClick={scrollToAbout}>
-              About
-            </a>
-          </li>
-        </ul>
-      </header>
-    </div>
-  );
+    <AppBar position="fixed">
+      <Toolbar>
+        <Grid container spacing={3}>
+          <Grid item xs={4}>
+              <a href="#image" onClick={() => scrollTo(0)}>
+            <Typography variant="h5" align="center" noWrap>
+                UPLOAD
+            </Typography>
+              </a>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h5" align="center" noWrap>
+              <a href="#overview" onClick={()=>{scrollTo(1800)}}>OVERVIEW</a>
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h5" align="center" noWrap>
+              <a href="#about" onClick={()=>{scrollTo(3000)}}>ABOUT</a>
+            </Typography>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
+  )
+
 };
 
 export default Header;

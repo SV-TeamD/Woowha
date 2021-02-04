@@ -3,18 +3,33 @@ import { useHistory } from "react-router-dom"
 import imageCompression from "browser-image-compression";
 import StyleCard from "./components/StyleCard";
 import styleInfo from "../styleInfo";
-import empty from "./img/empty_image.PNG";
-import "./Home.css";
-import "./components/Button.css";
+import { Box, Container, Typography, Grid, Button, RadioGroup} from "@material-ui/core"
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+    },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  }
+}));
 
 const Home = () => {
   const [inputImage, setInputImage] = useState(null);
   const [style, setStyle] = useState("");
-  const [inputImagePreviewUrl, setInputImagePreviewUrl] = useState(empty);
+  const [inputImagePreviewUrl, setInputImagePreviewUrl] = useState("");
   const history = useHistory();
+  const classes = useStyles();
 
   const onStyleChange = (e) => {
     setStyle(e.target.value);
+    console.log(style)
   };
 
   const handleImageChange = async (e) => {
@@ -47,45 +62,66 @@ const Home = () => {
   };
 
   return (
-    <div id="Home-wrapper">
-      <h1>Convert your images to Styles of Artists!</h1>
-      <h3>Image to Image transition utilizing GAN : Cartoons, Artworks, and more</h3>
-      <h2>1. Upload your image(.png, .jpg, .jpeg)</h2>
-      <div className="box">
-        <img src={inputImagePreviewUrl} className="upload-image" htmlFor="file_upload" alt="image preview" />
-      </div>
-      <div>
-        <input
-          id="file_upload"
-          name="file"
-          type="file"
-          onChange={handleImageChange}
-        />
-        <label className="blue_button" htmlFor="file_upload">
-          Upload
-        </label>
-      </div>
-      <div id="style-select-wrapper">
-        <h2>2. Take your pick! Choose whatever art style you want</h2>
-        {styleInfo.map((data, index) => {
-          return (
-            <StyleCard
-              key={index}
-              imageSrc={data.imageSrc}
-              style={data.style}
-              explain={data.explain}
-              value={data.value}
-              onChangeHandler={onStyleChange}
-            ></StyleCard>
-          );
-        })}
-        <br />
-
-        <div id="convert_btn" className="blue_button" onClick={resultPageClickHandler}>
-          Convert
+    <div className={classes.heroContent}>
+      <Container maxWidth="sm">
+        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+          Convert your images to Styles of Artists!
+        </Typography>
+        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+          Image transition utilizing GAN : Cartoons, Artworks, and more<br />
+        </Typography>
+        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+          1. Upload your image (.png, .jpg, .jpeg)
+        </Typography>
+        <div className={classes.heroButtons}>
+          <Grid container spacing={1} justify="center">
+              <Grid item xs={12}>
+                {inputImagePreviewUrl && <img src={inputImagePreviewUrl} />}
+              </Grid>
+              <Grid item>
+              <Button variant="contained" size="large" component="label" color="primary">
+                Upload
+                <input
+                  name="file"
+                  type="file"
+                  hidden
+                  onChange={handleImageChange}
+                />
+              </Button>
+            </Grid>
+          </Grid>
         </div>
-      </div>
-    </div >
+      </Container>
+
+      <Box m="2rem">
+        <Typography variant="h5" align="center" color="textSecondary">
+          2. Take your pick! Choose whatever art style you want
+        </Typography>
+
+        <Container className={classes.cardGrid}>
+            <RadioGroup aria-label="author" name="author" onChange={onStyleChange}>
+              <Grid container spacing={4}>
+                  {styleInfo.map((data, index) => {
+                    return (
+                      <StyleCard
+                        key={index}
+                        imageSrc={data.imageSrc}
+                        style={data.style}
+                        explain={data.explain}
+                        value={data.value}
+                      ></StyleCard>
+                    );
+                  })}
+                </Grid>
+              </RadioGroup>
+        </Container>
+        <Grid container justify="center">
+          <Button variant="contained" size="large" component="label" color="primary" onClick={resultPageClickHandler}>
+            Convert
+          </Button>
+        </Grid>
+      </Box>
+    </div>
   );
 };
 export default Home;

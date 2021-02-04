@@ -10,12 +10,6 @@ import vangogh_example from "./page/img/Vangogh_example.jpg";
 import ukiyoe_example from "./page/img/Ukiyoe_example.png";
 
 export default [
-  // {
-  //   "style": "Shinkai_net_G_float",
-  //   "explain": "style by Shinkai_net_G_float",
-  //   "imageSrc": empty,
-  //   "value": "Shinkai_net_G_float"
-  // },
   {
     "style": "Miyazaki Hayao",
     "explain": "style by cartoongan_hayao",
